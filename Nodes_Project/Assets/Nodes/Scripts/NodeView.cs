@@ -6,11 +6,15 @@ public class NodeView : MonoBehaviour
 {
     [SerializeField]
     private SpriteRenderer fillBar;
+    private NodeData data;
 
-    public float speed = 1f;
+    //public float speed = 1f;
 
     private float maxTime = 4f; //seconds
     private float actualTime = 0f;
+
+    public delegate void nodeEvent(NodeData data);
+    public nodeEvent eventtt; // nombre cuestionable
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +25,11 @@ public class NodeView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        actualTime += Time.deltaTime * speed;
+        actualTime += Time.deltaTime * data.speed;
         if(actualTime > maxTime)
         {
             actualTime = 0;
-            // do event
+            eventtt?.Invoke(data);
         }
 
         var radial = (1 -(actualTime / maxTime)) * 360;
