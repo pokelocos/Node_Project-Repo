@@ -18,7 +18,8 @@ public class CameraHandler : MonoBehaviour
     [SerializeField]private float zoomChangeAmount = 80f;
 
     [Header("Boundries")]
-    [SerializeField] Vector2 zoomBoundries = new Vector2(5, 20);
+    [SerializeField] private Vector2 zoomBoundries = new Vector2(5, 20);
+    [SerializeField] private Rect movementBoundries;
 
     bool drag = false;
     Vector3 difference;
@@ -54,6 +55,12 @@ public class CameraHandler : MonoBehaviour
         if (distance > 0)
         {
             Vector3 newCameraPosition = transform.position + (cameraMoveDir * distance * cameraMoveSpeed * Time.deltaTime);
+
+            float x = Mathf.Clamp(newCameraPosition.x, movementBoundries.x - movementBoundries.width, movementBoundries.x + movementBoundries.width);
+            float y = Mathf.Clamp(newCameraPosition.y, movementBoundries.y - movementBoundries.height, movementBoundries.y + movementBoundries.height);
+
+            newCameraPosition = new Vector3(x, y, newCameraPosition.z);
+
             float distanceAfterMoving = Vector3.Distance(newCameraPosition, cameraFollowPosition);
 
             if (distanceAfterMoving > distance)
