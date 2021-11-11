@@ -9,4 +9,5 @@ public class NodeData : ScriptableObject
     public Sprite icon;
     public float speed = 1f;
     public float productionTime = 5f;
+    public float maintainCost = 1;
 }

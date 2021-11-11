@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41a9665f0b07f3e4da9c579ccccc99dd, type: 3}
-  m_Name: Materia prima
+  m_Script: {fileID: 11500000, guid: d6392b7698e7e2f458527cd511119892, type: 3}
+  m_Name: Ingredient
   m_EditorClassIdentifier: 
-  sprite: {fileID: -3570025443461304595, guid: 05244e8de91c4e748b80d5d2e64eb451, type: 3}
+  ingredientName: Cereal
+  price: 3
+  icon: {fileID: 21300000, guid: 63157190c40690543963df77fa042588, type: 3}
