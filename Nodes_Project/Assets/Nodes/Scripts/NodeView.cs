@@ -6,6 +6,7 @@ public class NodeView : MonoBehaviour
 {
     [SerializeField]
     private SpriteRenderer fillBar;
+    [SerializeField]
     private NodeData data;
 
     //public float speed = 1f;
@@ -26,13 +27,13 @@ public class NodeView : MonoBehaviour
     void Update()
     {
         actualTime += Time.deltaTime * data.speed;
-        if(actualTime > maxTime)
+        if(actualTime > data.productionTime)
         {
             actualTime = 0;
             eventtt?.Invoke(data);
         }
 
-        var radial = (1 -(actualTime / maxTime)) * 360;
+        var radial = (1 -(actualTime / data.productionTime)) * 360;
         fillBar.GetComponent<SpriteRenderer>().material.SetFloat("_Arc2", radial);
     }
 }
