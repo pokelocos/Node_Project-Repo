@@ -40,8 +40,6 @@ public class Supermarket_Node : NodeView
             }
         }
 
-        print(money);
-
         GameManager.AddMoney(money);
     }
 
