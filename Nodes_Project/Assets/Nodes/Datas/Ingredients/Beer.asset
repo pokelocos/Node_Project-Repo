@@ -9,6 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cff68c5b4f86f7e40a9ee5c737217a4c, type: 3}
-  m_Name: Pan
+  m_Script: {fileID: 11500000, guid: d6392b7698e7e2f458527cd511119892, type: 3}
+  m_Name: Beer
   m_EditorClassIdentifier: 
+  ingredientName: Beer
+  price: 8
+  icon: {fileID: 21300000, guid: 698cf03b12a6a6441bc19b093536456f, type: 3}

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0963106baaa381f49bcf0b1f7355bb30, type: 3}
-  m_Name: Farm
+  m_Name: Horticulture
   m_EditorClassIdentifier: 
   color: {r: 1, g: 0.37254903, b: 0.37254903, a: 1}
-  icon: {fileID: 21300000, guid: 512848e777ca78043a1a0ea214f60c40, type: 3}
+  icon: {fileID: 21300000, guid: ebc849adc61bc2f4d971aa0d953157c3, type: 3}
   speed: 1
-  productionTime: 5
-  maintainCost: 1
+  productionTime: 8
+  maintainCost: 5
   recipes:
-  - {fileID: 11400000, guid: c5b7d50c4cd5e33409febcb8b7818eb7, type: 2}
+  - {fileID: 11400000, guid: b9977ff50439b4f44a44f41e7e6850bc, type: 2}

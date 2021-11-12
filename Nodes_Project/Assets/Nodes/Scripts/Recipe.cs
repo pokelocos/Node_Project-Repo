@@ -19,7 +19,7 @@ public class Recipe : ScriptableObject
         return inputs;
     }
 
-    public bool HasIngredients(Ingredient[] listToCheck)
+    public bool HasInputIngredients(Ingredient[] listToCheck)
     {
         foreach(Ingredient ingredient in inputs)
         {

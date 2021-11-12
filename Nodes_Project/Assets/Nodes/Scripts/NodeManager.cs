@@ -17,29 +17,38 @@ public class NodeManager : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
 
-        if (hit.collider != null)
+        try
         {
-            var node = hit.collider.GetComponentInChildren<NodeView>();
-
-            if (node != null)
-            {
-                overNode = node;
-            }
+            overNode = hit.collider.GetComponentInChildren<NodeView>();
+        }
+        catch
+        {
+            overNode = null;
         }
 
         if (Input.GetMouseButtonDown(1))
         {
             originNode = overNode;
+
+            if (hit.collider != null)
+            {
+                var connection = hit.collider.GetComponentInChildren<ConectionView>();
+
+                if (connection != null)
+                {
+                    Destroy(connection.gameObject);
+                }
+            }
+
         }
 
         if (Input.GetMouseButtonUp(1))
         {
-            if (originNode != null && originNode != overNode)
+            if (originNode != null && overNode != null && originNode != overNode)
             {
                 destNode = overNode;
 
-                var conection = Instantiate(auxiliarConection, null);
-                conection.SetNodes(originNode, destNode);
+                originNode.TryConnectWith(destNode);
             }
 
             originNode = null;
