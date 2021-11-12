@@ -9,6 +9,7 @@ public class CameraHandler : MonoBehaviour
     private Vector3 cameraFollowPosition;
     private bool edgeScrolling;
     private float cameraZoom = 8;
+    private NodeView draggingNode = null;
 
     [Header("Variables de velocidad")]
     [SerializeField]private float cameraMoveSpeed = 3f;
@@ -35,15 +36,16 @@ public class CameraHandler : MonoBehaviour
     {       
         HandleManualMovement();
         HandleEdgeScrolling();
-        HandleMovement();
-
-        ZoomMovementFunction();
-        HandleZoom();             
+        
+        ZoomMovementFunction();                   
     }    
 
     void LateUpdate()
     {
+        HandleMovement();
+        HandleZoom();
         MoveByDrag();
+        MoveNodeByDrag();
     }
 
     void HandleMovement()
@@ -168,10 +170,9 @@ public class CameraHandler : MonoBehaviour
 
     private void MoveByDrag()
     {
+        if (draggingNode != null) return;
         if (Input.GetMouseButton(0))
         {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
-            if (hit) return;
 
             difference = (cameraFollow.ScreenToWorldPoint(Input.mousePosition)) - cameraFollow.transform.position;
             if (drag == false)
@@ -189,6 +190,41 @@ public class CameraHandler : MonoBehaviour
         {           
             transform.position = (origen - difference);
             cameraFollowPosition = transform.position;
+        }
+    }
+
+    void MoveNodeByDrag()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            if (draggingNode == null)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
+
+                try
+                {
+                    draggingNode = hit.collider.GetComponentInChildren<NodeView>();
+                }
+                catch
+                {
+                    draggingNode = null;
+                }
+            }
+
+            if (drag == false)
+            {
+                drag = true;
+            }
+        }
+        else
+        {
+            drag = false;
+            draggingNode = null;
+        }
+
+        if (drag && draggingNode != null)
+        {
+            draggingNode.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, draggingNode.transform.position.z);
         }
     }
 }
