@@ -35,9 +35,12 @@ public class Factory_Node : NodeView
     {
         foreach (var input in inputs)
         {
-            if (!input.isReadyToClaim)
+            if (input != null)
             {
-                return;
+                if (!input.isReadyToClaim)
+                {
+                    return;
+                }
             }
         }
 
