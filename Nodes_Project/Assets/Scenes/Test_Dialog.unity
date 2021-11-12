@@ -249,6 +249,9 @@ MonoBehaviour:
   btn_next: {fileID: 804894684}
   dialogs:
   - {fileID: 11400000, guid: 485a373a7d3e3ef4ea7e1732b61582da, type: 2}
+  N1: {fileID: 0}
+  N2: {fileID: 0}
+  N3: {fileID: 0}
   active: 1
 --- !u!4 &282934698
 Transform:
@@ -806,7 +809,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6462075709207241901, guid: 2d6ddc2c3f786cb4592cef7025f9e61c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -6.800003
+      value: -6.8000183
       objectReference: {fileID: 0}
     - target: {fileID: 6462075709207241901, guid: 2d6ddc2c3f786cb4592cef7025f9e61c, type: 3}
       propertyPath: m_AnchoredPosition.y

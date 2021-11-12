@@ -16,9 +16,12 @@ MonoBehaviour:
   - text: Hola, como estas, soy la alcaldesa de la ciudad, bienvenido y gracias por
       hacerte cargo de estas tareas.
     actor: {fileID: 11400000, guid: 6bfd7a3d8f4803b40b979298f6a1e8b2, type: 2}
+    a: {fileID: 0}
   - text: Tu labor es gestionar y organizar a las diferentes personas encargada de
       llevar los alimentos a la mesa de todos los habitantes.
     actor: {fileID: 11400000, guid: 6bfd7a3d8f4803b40b979298f6a1e8b2, type: 2}
-  - text: "Mira te mostrar\xE9, este es una \xE6<b>Granja de cereal</b> que se encarga
-      de producir \xE6<b>Cereal</b>."
+    a: {fileID: 0}
+  - text: "Mira te mostrar\xE9, este es una \xE6<b>Granja de cereal</b>\xC6 que se
+      encarga de producir \xE6<b>Cereal</b>\xC6."
     actor: {fileID: 11400000, guid: 6bfd7a3d8f4803b40b979298f6a1e8b2, type: 2}
+    a: {fileID: 0}
