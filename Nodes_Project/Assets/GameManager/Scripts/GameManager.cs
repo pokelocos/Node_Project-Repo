@@ -77,6 +77,16 @@ public class GameManager : MonoBehaviour
             NewDay();
         }
 
-        money_text.text = "$" + Money;
+        if(money < 0)
+        {
+            money_text.color = new Color(251f/255f, 181f / 255f, 181f / 255f);
+            money_text.text = "$" + (-Money);
+        }
+        else
+        {
+            money_text.color = Color.white;
+            money_text.text = "$" + Money;
+        }
+        
     }
 }
