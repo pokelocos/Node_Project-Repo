@@ -8,7 +8,7 @@ public class NodeManager : MonoBehaviour
     private NodeView overNode;
     private NodeView originNode;
     private NodeView destNode;
-
+    private bool drag = false;
     [Header("References")]
     [SerializeField]
     private ConectionView auxiliarConection;
@@ -69,6 +69,34 @@ public class NodeManager : MonoBehaviour
         else
         {
             auxiliarConection.gameObject.SetActive(false);
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (overNode != null)
+        {
+            MoveNodeByDrag();
+        }
+    }
+
+    void MoveNodeByDrag()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            if (drag == false)
+            {
+                drag = true;
+            }
+        }
+        else
+        {
+            drag = false;
+        }
+
+        if (drag)
+        {
+            overNode.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, overNode.transform.position.z);
         }
     }
 }

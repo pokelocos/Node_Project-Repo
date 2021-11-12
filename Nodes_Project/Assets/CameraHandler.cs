@@ -8,7 +8,7 @@ public class CameraHandler : MonoBehaviour
 
     private Vector3 cameraFollowPosition;
     private bool edgeScrolling;
-    private float cameraZoom;
+    private float cameraZoom = 8;
 
     [Header("Variables de velocidad")]
     [SerializeField]private float cameraMoveSpeed = 3f;
@@ -170,6 +170,9 @@ public class CameraHandler : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
+            if (hit) return;
+
             difference = (cameraFollow.ScreenToWorldPoint(Input.mousePosition)) - cameraFollow.transform.position;
             if (drag == false)
             {
