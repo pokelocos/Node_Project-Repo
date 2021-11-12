@@ -9,9 +9,11 @@ public class GameManager : MonoBehaviour
     private float currentDayTime;
 
     [SerializeField] private Text money_text;
+    [SerializeField] private Text days_text;
     [SerializeField] private Image day_image;
 
     private static int money;
+    private static int day = 0;
 
     private static List<int> dayTransactions = new List<int>();
 
@@ -20,6 +22,14 @@ public class GameManager : MonoBehaviour
         get
         {
             return money;
+        }
+    }
+
+    public static int Days
+    {
+        get
+        {
+            return day;
         }
     }
 
@@ -49,6 +59,9 @@ public class GameManager : MonoBehaviour
         }
 
         //SHOW BALANCE 
+
+        day++;
+        days_text.text = day.ToString();
     }
 
     private void Update()
