@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e80b25ee2ea6a1543a53bfcf923d261c, type: 3}
+  m_Name: Tutorial_diag1
+  m_EditorClassIdentifier: 
+  sentences:
+  - text: Hola, como estas, soy la alcaldesa de la ciudad, bienvenido y gracias por
+      hacerte cargo de estas tareas.
+    actor: {fileID: 11400000, guid: 6bfd7a3d8f4803b40b979298f6a1e8b2, type: 2}
+  - text: Tu labor es gestionar y organizar a las diferentes personas encargada de
+      llevar los alimentos a la mesa de todos los habitantes.
+    actor: {fileID: 11400000, guid: 6bfd7a3d8f4803b40b979298f6a1e8b2, type: 2}
+  - text: "Mira te mostrar\xE9, este es una \xE6<b>Granja de cereal</b> que se encarga
+      de producir \xE6<b>Cereal</b>."
+    actor: {fileID: 11400000, guid: 6bfd7a3d8f4803b40b979298f6a1e8b2, type: 2}

@@ -13,6 +13,7 @@ namespace RA.DialogSystem
         [TextArea]
         public string text;
         public Actor actor;
+        public Condicion a;
     }
 
     public enum Emotion //Ccambiar esto por un sistema que utilice string (!!!)

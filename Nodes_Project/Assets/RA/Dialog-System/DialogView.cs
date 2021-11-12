@@ -19,6 +19,8 @@ namespace RA.DialogSystem
         public Text displayName;
         public Image displayImage;
 
+        private Coroutine _actual;
+
         /// <summary>
         /// Starts an asynchronous routine and returns it.
         /// </summary>
@@ -27,7 +29,10 @@ namespace RA.DialogSystem
         /// <returns></returns>
         public Coroutine ShowSentence(Sentence sentence, float typingSpeed)
         {
-            return StartCoroutine(TypeTheSentence(sentence, typingSpeed));
+            if (_actual != null)
+                StopCoroutine(_actual);
+          
+            return _actual = StartCoroutine(TypeTheSentence(sentence, typingSpeed));
         }
 
         /// <summary>
@@ -38,13 +43,38 @@ namespace RA.DialogSystem
         /// <returns></returns>
         private IEnumerator TypeTheSentence(Sentence sentence, float typingSpeed)
         {
+            string s = "";
+            bool t = false;
+
             OnStartSentence?.Invoke();
-            SetView(sentence.actor.name, sentence.actor.GetSprite(-1), ""); // comentado solo para este projecto
+            SetView(sentence.actor.actorName, sentence.actor.GetSprite(-1), ""); // comentado solo para este projecto
             //SetView(sentence.actor.name, sentence.actor.GetSprite((int)sentence.emotion), "");
-            foreach (char letter in sentence.text.ToCharArray())
+            foreach (char c in sentence.text.ToCharArray())
             {
-                displayText.text += letter;
-                yield return new WaitForSeconds(typingSpeed);
+                if (c.Equals('æ'))
+                {
+                    t = true;
+                    continue;
+                }
+                if (c.Equals('Æ'))
+                {
+                    t = false;
+                    displayText.text += s;
+                    s = "";
+                    yield return new WaitForSeconds(typingSpeed);
+                    continue;
+
+                }
+
+                if(t)
+                {
+                    s += c;
+                }
+                else 
+                { 
+                    displayText.text += c;
+                    yield return new WaitForSeconds(typingSpeed);
+                }
             }
             OnEndSentence?.Invoke();
         }
@@ -54,7 +84,7 @@ namespace RA.DialogSystem
         /// </summary>
         public void SetView(Sentence sentece)
         {
-            displayName.text = sentece.actor.name;
+            displayName.text = sentece.actor.actorName;
             displayImage.sprite = sentece.actor.GetSprite(-1); // comentado solo para este projecto
             //displayImage.sprite = sentece.actor.GetSprite((int)sentece.emotion);
             displayText.text = sentece.text;

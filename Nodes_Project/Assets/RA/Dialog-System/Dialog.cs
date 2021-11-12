@@ -9,12 +9,12 @@ namespace RA.DialogSystem
 {
     [CreateAssetMenu(fileName = "New Dialog", menuName = "Dialog System/Dialog...")]
     [System.Serializable]
-    public class Dialogue : ScriptableObject
+    public class Dialog : ScriptableObject
     {
         [SerializeField]
         private List<Sentence> sentences;
 
-        public int Size { get { return sentences.Count; } }
+        public int Count { get { return sentences.Count; } }
 
         internal Sentence GetSentence(int i)
         {
