@@ -147,4 +147,29 @@ public abstract class NodeView : MonoBehaviour
     protected abstract void ConnectionMade();
 
     protected abstract void OnWorkFinish();
+
+    public Sprite GetIcon()
+    {
+        return nodeIcon.sprite;
+    }
+
+    public string GetNodeName()
+    {
+        return data.name;
+    }
+
+    public string GetNodeDescription()
+    {
+        return "";
+    }
+
+    public Color GetNodeColor()
+    {
+        return data.color;
+    }
+
+    public NodeData GetNodeData()
+    {
+        return data;
+    }
 }

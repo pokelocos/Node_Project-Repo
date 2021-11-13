@@ -227,4 +227,5 @@ public class CameraHandler : MonoBehaviour
             draggingNode.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, draggingNode.transform.position.z);
         }
     }
+
 }
