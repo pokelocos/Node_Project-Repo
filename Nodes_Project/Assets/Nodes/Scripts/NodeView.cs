@@ -44,8 +44,15 @@ public abstract class NodeView : MonoBehaviour
         return data.maintainCost;
     }
 
+    public Recipe[] GetRecipes()
+    {
+        return recipes;
+    }
+
     void Update()
     {
+        body.color = data.color;
+
         Work();
     }
 
@@ -60,6 +67,11 @@ public abstract class NodeView : MonoBehaviour
 
         var radial = (1 - (actualTime / data.productionTime)) * 360;
         fillBar.GetComponent<SpriteRenderer>().material.SetFloat("_Arc2", radial);
+    }
+
+    public void Paint(Color color)
+    {
+        body.color = color;
     }
 
     public void RemoveConnection(ConectionView connection)
