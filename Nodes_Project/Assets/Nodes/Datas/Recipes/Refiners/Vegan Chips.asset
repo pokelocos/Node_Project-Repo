@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cff68c5b4f86f7e40a9ee5c737217a4c, type: 3}
+  m_Name: Vegan Chips
+  m_EditorClassIdentifier: 
+  inputs:
+  - {fileID: 11400000, guid: 267dff32f8532a34c9174bc245b69824, type: 2}
+  outputs:
+  - {fileID: 11400000, guid: f07305eb0f7ff974d98317401457781a, type: 2}

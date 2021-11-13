@@ -50,10 +50,24 @@ public class ConectionView : MonoBehaviour
         return result;
     }
 
+    public void Disconnect()
+    {
+        origin.RemoveConnection(this);
+        destination.RemoveConnection(this);
+
+        origin.ConnectionChange();
+        destination.ConnectionChange();
+
+        Destroy(gameObject);
+    }
+
     public void SetNodes(NodeView origin, NodeView dest)
     {
         this.origin = origin;
         this.destination = dest;
+
+        this.origin.ConnectionChange();
+        this.destination.ConnectionChange();
     }
 
     public NodeView GetOrigin()

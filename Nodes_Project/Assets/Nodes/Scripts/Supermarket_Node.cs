@@ -43,7 +43,7 @@ public class Supermarket_Node : NodeView
         GameManager.AddMoney(money);
     }
 
-    protected override void ConnectionMade()
+    public override void ConnectionChange()
     {
 
     }

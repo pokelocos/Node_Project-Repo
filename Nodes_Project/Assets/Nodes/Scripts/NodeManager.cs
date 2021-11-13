@@ -13,33 +13,64 @@ public class NodeManager : MonoBehaviour
     [SerializeField]
     private ConectionView auxiliarConection;
 
+    private float lastClickTime;
+    private const float DOUBLE_CLICK_TIME = .2f;
+
     void Update()
     {
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
 
-        try
+        NodeView hitNode = null;
+        ConectionView hitConnection = null;
+
+        foreach (var hit in hits)
         {
-            overNode = hit.collider.GetComponentInChildren<NodeView>();
+            if (hit.collider != null)
+            {
+                if(hitNode == null)
+                {
+                    try
+                    {
+                        hitNode = hit.collider.GetComponentInChildren<NodeView>();
+                    }
+                    catch
+                    {
+                        hitNode = null;
+                    }
+                }
+
+                if (hitConnection == null)
+                {
+                    try
+                    {
+                        hitConnection = hit.collider.GetComponentInChildren<ConectionView>();
+                    }
+                    catch
+                    {
+                        hitConnection = null;
+                    }
+                }
+            }
         }
-        catch
-        {
-            overNode = null;
-        }
+
+        overNode = hitNode;
+
 
         if (Input.GetMouseButtonDown(1))
         {
             originNode = overNode;
 
-            if (hit.collider != null)
-            {
-                var connection = hit.collider.GetComponentInChildren<ConectionView>();
+            float timeSinceLastClick = Time.time - lastClickTime;
 
-                if (connection != null)
+            if (timeSinceLastClick <= DOUBLE_CLICK_TIME)
+            {
+                if (hitConnection!= null)
                 {
-                    Destroy(connection.gameObject);
+                    hitConnection.Disconnect();
                 }
             }
 
+            lastClickTime = Time.time;
         }
 
         if (Input.GetMouseButtonUp(1))

@@ -19,7 +19,7 @@ public class Production_Node : NodeView
         }
     }
 
-    protected override void ConnectionMade()
+    public override void ConnectionChange()
     {
        
     }

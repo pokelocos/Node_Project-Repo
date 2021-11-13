@@ -13,14 +13,16 @@ public abstract class NodeView : MonoBehaviour
     [SerializeField]
     private NodeData data;
 
+    public bool isDebugMode;
+
     private float maxTime = 4f; //seconds
     private float actualTime = 0f;
     protected float internalSpeed = 0;
 
     protected Recipe[] recipes = new Recipe[0];
 
-    protected ConectionView[] inputs;
-    protected ConectionView[] outputs;
+    protected ConectionView[] inputs = new ConectionView[0];
+    protected ConectionView[] outputs = new ConectionView[0];
 
     protected Recipe selectedRecipe;
 
@@ -60,6 +62,27 @@ public abstract class NodeView : MonoBehaviour
         fillBar.GetComponent<SpriteRenderer>().material.SetFloat("_Arc2", radial);
     }
 
+    public void RemoveConnection(ConectionView connection)
+    {
+        for (int i = 0; i < inputs.Length; i++)
+        {
+            if (inputs[i] != null && inputs[i] == connection)
+            {
+                inputs[i] = null;
+                return;
+            }
+        }
+
+        for (int i = 0; i < outputs.Length; i++)
+        {
+            if (outputs[i] != null && outputs[i] == connection)
+            {
+                outputs[i] = null;
+                return;
+            }
+        }
+    }
+
     public ConectionView[] GetInputs()
     {
         return inputs;
@@ -91,13 +114,10 @@ public abstract class NodeView : MonoBehaviour
                             {
                                 var connection = (Instantiate(Resources.Load("Nodes/Connection"), null) as GameObject).GetComponent<ConectionView>();
 
-                                connection.SetNodes(this, inputNode);
-
                                 inputNode.inputs[j] = connection;
                                 outputs[i] = connection;
 
-                                inputNode.ConnectionMade();
-                                this.ConnectionMade();
+                                connection.SetNodes(this, inputNode);
 
                                 return true;
                             }
@@ -144,7 +164,7 @@ public abstract class NodeView : MonoBehaviour
 
     public abstract void InputIngredientReady(ConectionView connection);
 
-    protected abstract void ConnectionMade();
+    public abstract void ConnectionChange();
 
     protected abstract void OnWorkFinish();
 
@@ -171,5 +191,68 @@ public abstract class NodeView : MonoBehaviour
     public NodeData GetNodeData()
     {
         return data;
+    }
+
+    private void OnGUI()
+    {
+        if (Application.isEditor && isDebugMode)
+        {
+            DebugInfo();
+        }
+    }
+
+    protected virtual void DebugInfo()
+    {
+        Vector3 offset = new Vector3(-5, -0.5f, 0);
+
+        var screenPos = Camera.main.WorldToScreenPoint(transform.position + offset);
+
+        screenPos.y = Screen.height - screenPos.y - 50;
+
+        string inputLog = "NO INPUTS";
+
+        if (inputs.Length > 0)
+        {
+            inputLog = string.Empty;
+
+            foreach (var input in inputs)
+            {
+                if (input == null)
+                {
+                    inputLog += "[EMPTY]";
+                }
+                else
+                {
+                    inputLog += "[" + input.GetIngredient().ingredientName + "]";
+                }
+
+                inputLog += "\n";
+            }
+        }
+
+        string outputLog = "NO OUTPUTS";
+
+        if (outputs.Length > 0)
+        {
+            outputLog = string.Empty;
+
+            foreach (var output in outputs)
+            {
+                if (output == null)
+                {
+                    outputLog += "[EMPTY]";
+                }
+                else
+                {
+                    outputLog += "[" + output.GetIngredient().ingredientName + "]";
+                }
+
+                outputLog += "\n";
+            }
+        }
+
+        GUI.Box(new Rect(screenPos.x, screenPos.y, 70, 70), inputLog);
+
+        GUI.Box(new Rect(screenPos.x + 180, screenPos.y, 70, 70), outputLog);
     }
 }

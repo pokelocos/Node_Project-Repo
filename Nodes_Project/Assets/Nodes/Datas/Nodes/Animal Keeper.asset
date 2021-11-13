@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0963106baaa381f49bcf0b1f7355bb30, type: 3}
-  m_Name: Bakery
+  m_Name: Animal Keeper
   m_EditorClassIdentifier: 
-  color: {r: 0.37254906, g: 0.47967383, b: 1, a: 1}
-  icon: {fileID: 21300000, guid: 1e3c19954f2d10f42a3b659aca7d1ac2, type: 3}
+  color: {r: 1, g: 0.37254903, b: 0.37254903, a: 1}
+  icon: {fileID: 21300000, guid: da7584c4c781a2f40b3b0f22cc4a6391, type: 3}
   speed: 1
-  productionTime: 5
-  maintainCost: 3
+  productionTime: 12
+  maintainCost: 5
   recipes:
-  - {fileID: 11400000, guid: 6d1632b7cf8baf3498e504c00c7aae6b, type: 2}
+  - {fileID: 11400000, guid: 70f5662d1d5e4f442b6bc995ad286a61, type: 2}

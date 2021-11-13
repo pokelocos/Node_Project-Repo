@@ -15,7 +15,7 @@ public class Factory_Node : NodeView
         }
     }
 
-    protected override void ConnectionMade()
+    public override void ConnectionChange()
     {
         selectedRecipe = null;
 
@@ -27,6 +27,15 @@ public class Factory_Node : NodeView
             {
                 selectedRecipe = recipe;
                 break;
+            }
+        }
+
+        if (selectedRecipe == null)
+        {
+            foreach (var output in outputs)
+            {
+                if (output != null)
+                    output.Disconnect();
             }
         }
     }
@@ -46,7 +55,8 @@ public class Factory_Node : NodeView
 
         foreach (var input in inputs)
         {
-            input.isReadyToClaim = false;
+           if(input != null)
+                input.isReadyToClaim = false;
         }
 
         if (selectedRecipe != null)
