@@ -33,10 +33,10 @@ RectTransform:
   m_Father: {fileID: 5513884294848539072}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 327, y: 223.62}
-  m_SizeDelta: {x: 10.7729, y: 32.3609}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -115, y: -25.380005}
+  m_SizeDelta: {x: 10.772888, y: 32.3609}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6926387587450532288
 CanvasRenderer:
@@ -153,9 +153,9 @@ RectTransform:
   m_Father: {fileID: 5513884294848539072}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 415.6, y: 223.63696}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -26.399994, y: -25.363037}
   m_SizeDelta: {x: 32.3609, y: 32.3609}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5513884293214002055
@@ -1085,9 +1085,9 @@ RectTransform:
   m_Father: {fileID: 5513884294848539072}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 366.4, y: 223.62}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -75.600006, y: -25.380005}
   m_SizeDelta: {x: 32.3609, y: 32.3609}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5513884294451290731
@@ -1541,6 +1541,8 @@ MonoBehaviour:
   money_text: {fileID: 5513884295199434651}
   days_text: {fileID: 5513884294841229176}
   day_image: {fileID: 5513884294984339818}
+  losePanel: {fileID: 0}
+  winPanel: {fileID: 0}
 --- !u!1 &5513884294984339816
 GameObject:
   m_ObjectHideFlags: 0
