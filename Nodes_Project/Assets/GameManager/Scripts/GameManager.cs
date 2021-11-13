@@ -12,6 +12,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text days_text;
     [SerializeField] private Image day_image;
 
+    [Space]
+    [SerializeField] private GameObject losePanel;
+    [SerializeField] private GameObject winPanel;
+
+
     private static int money;
     private static int day = 0;
 
@@ -77,16 +82,33 @@ public class GameManager : MonoBehaviour
             NewDay();
         }
 
-        if(money < 0)
+        // set money value
+        SetMoneyValue(Money);
+
+        //LOSE CON
+        if (money < -150)
         {
-            money_text.color = new Color(251f/255f, 181f / 255f, 181f / 255f);
-            money_text.text = "$" + (-Money);
+            losePanel.SetActive(true);
+        }
+
+        // WIN CON
+        if (day > 15)
+        {
+            winPanel.SetActive(true);
+        }
+    }
+
+    private void SetMoneyValue(int v)
+    {
+        if (v < 0)
+        {
+            money_text.color = new Color(251f / 255f, 181f / 255f, 181f / 255f);
+            money_text.text = "-$" + (-v);
         }
         else
         {
             money_text.color = Color.white;
-            money_text.text = "$" + Money;
+            money_text.text = "$" + v;
         }
-        
     }
 }
