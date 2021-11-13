@@ -24,8 +24,6 @@ public class NodeInformationDisplay : MonoBehaviour
 
     public void SetRecipes(NodeView view)
     {
-        Debug.Log(view.GetNodeData().recipes.Length);
-
         foreach(Recipe recipe in view.GetNodeData().recipes)
         {
             GameObject recipeClone = Instantiate(recipePrefab,recipeContainer);
@@ -33,13 +31,13 @@ public class NodeInformationDisplay : MonoBehaviour
             {
                 GameObject clone = Instantiate(ingredientPrefab,recipeClone.transform);
                 clone.transform.SetAsFirstSibling();
-                clone.GetComponentInChildren<Image>().sprite = ingredient.icon;
+                clone.GetComponentsInChildren<Image>()[clone.GetComponentsInChildren<Image>().Length - 1].sprite = ingredient.icon;
             }
             foreach (Ingredient ingredient in recipe.GetOutputs())
             {
                 GameObject clone = Instantiate(ingredientPrefab,recipeClone.transform);
                 clone.transform.SetAsLastSibling();
-                clone.GetComponentInChildren<Image>().sprite = ingredient.icon;
+                clone.GetComponentsInChildren<Image>()[clone.GetComponentsInChildren<Image>().Length-1].sprite = ingredient.icon;
             }
         }
     }
