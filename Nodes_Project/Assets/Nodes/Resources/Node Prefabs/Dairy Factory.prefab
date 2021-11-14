@@ -284,6 +284,7 @@ MonoBehaviour:
   body: {fileID: 5317360613255812114}
   nodeIcon: {fileID: 5317360614812577007}
   fillBar: {fileID: 5317360614209786511}
+  bright: {fileID: 8161879614241624781}
   data: {fileID: 11400000, guid: 4273acb81f0aac147b20b64de2ada06c, type: 2}
   isDebugMode: 0
 --- !u!1 &5317360614209786513

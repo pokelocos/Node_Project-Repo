@@ -11,6 +11,8 @@ public abstract class NodeView : MonoBehaviour
     [SerializeField]
     private SpriteRenderer fillBar;
     [SerializeField]
+    private SpriteRenderer bright;
+    [SerializeField]
     private NodeData data;
 
     public bool isDebugMode;
@@ -52,6 +54,7 @@ public abstract class NodeView : MonoBehaviour
     void Update()
     {
         body.color = data.color;
+        bright.gameObject.SetActive(false);
 
         Work();
     }
@@ -72,6 +75,12 @@ public abstract class NodeView : MonoBehaviour
     public void Paint(Color color)
     {
         body.color = color;
+    }
+
+    public void SetBright(Color color)
+    {
+        bright.gameObject.SetActive(true);
+        bright.color = color;
     }
 
     public void RemoveConnection(ConectionView connection)

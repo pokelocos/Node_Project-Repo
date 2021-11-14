@@ -161,7 +161,8 @@ public class NodeManager : MonoBehaviour
                     continue;
                 }
 
-                node.Paint(new Color(1, 0.6f, 0, 1));
+                node.SetBright(new Color(1, 0.6f, 0, 1));
+                //node.Paint(new Color(1, 0.6f, 0, 1));
             }
 
             if (originNode.GetCurrentRecipe() != null)
@@ -197,7 +198,8 @@ public class NodeManager : MonoBehaviour
                     {
                         if (node.GetNodeName() == "Supermarket")
                         {
-                            node.Paint(Color.green);
+                            node.SetBright(Color.green);
+                            //node.Paint(Color.green);
                             continue;
                         }
 
@@ -226,7 +228,8 @@ public class NodeManager : MonoBehaviour
 
                         if (validNode)
                         {
-                            node.Paint(Color.green);
+                            node.SetBright(Color.green);
+                            //node.Paint(Color.green);
                         }
                     }
                 }
