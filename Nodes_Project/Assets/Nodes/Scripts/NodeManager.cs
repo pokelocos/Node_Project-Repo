@@ -108,7 +108,7 @@ public class NodeManager : MonoBehaviour
             {
                 foreach (var node in nodes)
                 {
-                    if (node.GetNodeName() == "Supermarket")
+                    if (node.GetNodeName() == "Supermarket" || node.GetNodeName() == "Packaging")
                     {
                         validNodes.Add(node);
 
@@ -196,7 +196,7 @@ public class NodeManager : MonoBehaviour
                 {
                     foreach (var node in validNodes)
                     {
-                        if (node.GetNodeName() == "Supermarket")
+                        if (node.GetNodeName() == "Supermarket" || node.GetNodeName() == "Packaging")
                         {
                             node.SetBright(Color.green);
                             //node.Paint(Color.green);

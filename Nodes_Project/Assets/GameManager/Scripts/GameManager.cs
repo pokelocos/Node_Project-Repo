@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public float dayTime = 60;
     private float currentDayTime;
-
+    
     [SerializeField] private Text money_text;
     [SerializeField] private Text days_text;
     [SerializeField] private Image day_image;
@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     [Space]
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
-
 
     private static int money;
     private static int day = 0;
@@ -51,6 +50,8 @@ public class GameManager : MonoBehaviour
 
     public void NewDay()
     {
+        FindObjectOfType<RogueLikeManager>().Spawn();
+
         foreach (var node in FindObjectsOfType<NodeView>())
         {
             AddMoney(-node.GetMantainCost());
