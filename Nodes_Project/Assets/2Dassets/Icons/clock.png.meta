@@ -1,13 +1,7 @@
 fileFormatVersion: 2
-guid: b578be2de1570d44492da33adacaa23b
+guid: a1cda214c528a7b49a65f3a301554a98
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 321433370969008321
-    second: Recurso 8_3_0
-  - first:
-      213: 2384647743327156466
-    second: Recurso 8_3_1
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -43,13 +37,13 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -131,49 +125,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Recurso 8_3_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 95
-        height: 95
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
-      border: {x: 22, y: 22, z: 22, w: 22}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1c86097a2f5f57400800000000000000
-      internalID: 321433370969008321
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Recurso 8_3_1
-      rect:
-        serializedVersion: 2
-        x: 104
-        y: 0
-        width: 86
-        height: 95
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
-      border: {x: 22, y: 22, z: 22, w: 22}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2f8b377fc78f71120800000000000000
-      internalID: 2384647743327156466
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []

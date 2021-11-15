@@ -55,14 +55,14 @@ public class NodeInformationView : MonoBehaviour
             if (spawnedDisplay == null)
             {
                 spawnedDisplay = Instantiate(DisplayPrefab,canvas);
-                spawnedDisplay.GetComponent<NodeInformationDisplay>().SetData(node);
+                spawnedDisplay.GetComponent<NodeInformationDisplay>().SetData(node.GetNodeData());
                 spawnedDisplay.GetComponent<NodeInformationDisplay>().SetRecipes(node);
             }
             else
             {
                 spawnedDisplay.SetActive(true);
                 spawnedDisplay.transform.SetParent(canvas);
-                spawnedDisplay.GetComponent<NodeInformationDisplay>().SetData(node);
+                spawnedDisplay.GetComponent<NodeInformationDisplay>().SetData(node.GetNodeData());
                 spawnedDisplay.GetComponent<NodeInformationDisplay>().SetRecipes(node);
 
             }

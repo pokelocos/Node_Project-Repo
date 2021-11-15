@@ -7,24 +7,26 @@ public class NodeInformationDisplay : MonoBehaviour
 {
     [SerializeField] private Image icon;
     [SerializeField] private Image color;
-    [SerializeField] private Text nodeName;
-    [SerializeField] private Text description;
+    [SerializeField] private Text nameText;
+    [SerializeField] private Text descriptionText;
+    [SerializeField] private Text speedText;
 
     [SerializeField] private RectTransform recipeContainer;
     [SerializeField] private GameObject ingredientPrefab;
     [SerializeField] private GameObject recipePrefab;
 
-    public void SetData(NodeView view)
+    public void SetData(NodeData node)
     {
-        color.color = view.GetNodeColor();
-        icon.sprite = view.GetIcon();
-        nodeName.text = view.GetNodeName();
-        description.text = view.GetNodeDescription();
+        color.color = node.color;
+        icon.sprite = node.icon;
+        nameText.text = node.name;
+        //descriptionText.text = node.description;
+        speedText.text = node.speed + " s.";
     }
 
-    public void SetRecipes(NodeView view)
+    public void SetRecipes(NodeView node) // NodeData
     {
-        foreach(Recipe recipe in view.GetNodeData().recipes)
+        foreach(Recipe recipe in node.GetNodeData().recipes)
         {
             GameObject recipeClone = Instantiate(recipePrefab,recipeContainer);
             foreach(Ingredient ingredient in recipe.GetInputs())

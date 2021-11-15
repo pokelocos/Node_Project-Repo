@@ -204,7 +204,7 @@ public abstract class NodeView : MonoBehaviour
         return "";
     }
 
-    public Color GetNodeColor()
+    public Color GetColor()
     {
         return data.color;
     }
