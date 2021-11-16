@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     public void NewDay()
     {
-        FindObjectOfType<RogueLikeManager>().Spawn();
+        FindObjectOfType<RogueLikeManager>().TrySetRewards();
 
         foreach (var node in FindObjectsOfType<NodeView>())
         {
