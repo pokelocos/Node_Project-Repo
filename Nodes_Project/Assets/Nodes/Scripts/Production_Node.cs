@@ -88,6 +88,8 @@ public class Production_Node : NodeView
 
                     return 1;
                 }
+
+                return 0;
             }
         }
 

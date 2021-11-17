@@ -123,7 +123,6 @@ public class NodeManager : MonoBehaviour
                         break;
 
                     case 2:
-                        print(node.name);
                         node.SetBright(Color.green);
                         break;
                 }
