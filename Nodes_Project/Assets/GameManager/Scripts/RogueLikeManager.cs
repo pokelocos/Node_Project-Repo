@@ -65,7 +65,7 @@ public class RogueLikeManager : MonoBehaviour
 
             for (int i = 0; i < nodes.Length; i++)
             {
-                nodes[i] = allNodes[Random.Range(0, allNodes.Length - 1)];
+                nodes[i] = allNodes[Random.Range(0, allNodes.Length)];
 
                 price += nodes[i].GetMantainCost();
             }

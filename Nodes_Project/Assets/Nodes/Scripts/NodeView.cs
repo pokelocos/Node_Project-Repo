@@ -53,9 +53,6 @@ public abstract class NodeView : MonoBehaviour
 
     void Update()
     {
-       // body.color = data.color;
-        bright.gameObject.SetActive(false);
-
         Work();
     }
 
@@ -79,6 +76,12 @@ public abstract class NodeView : MonoBehaviour
 
     public void SetBright(Color color)
     {
+        if (color == Color.clear)
+        {
+            bright.gameObject.SetActive(false);
+            return;
+        }
+
         bright.gameObject.SetActive(true);
         bright.color = color;
     }

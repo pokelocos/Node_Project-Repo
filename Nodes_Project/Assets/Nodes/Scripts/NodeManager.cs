@@ -88,6 +88,7 @@ public class NodeManager : MonoBehaviour
             foreach (var node in FindObjectsOfType<NodeView>().Where(x => x != originNode).ToArray())
             {
                 node.Paint(node.GetColor());
+                node.SetBright(Color.clear);
             }
 
             originNode = null;
@@ -107,11 +108,6 @@ public class NodeManager : MonoBehaviour
 
             var nodes = FindObjectsOfType<NodeView>().Where(x => x != originNode).ToArray();
 
-            //List<NodeView> validNodes = new List<NodeView>();
-            //List<NodeView> possibleNodes = new List<NodeView>();
-
-            //Show nodes afinnity with selected Recipe
-
             foreach (var node in nodes)
             {
                 int affinity = originNode.CanConnectWith(node);
@@ -123,12 +119,11 @@ public class NodeManager : MonoBehaviour
                         break;
 
                     case 1:
-                        //node.Paint(Color.yellow);
                         node.SetBright(new Color(1, 0.6f, 0, 1));
                         break;
 
                     case 2:
-                        //node.Paint(Color.green);
+                        print(node.name);
                         node.SetBright(Color.green);
                         break;
                 }
