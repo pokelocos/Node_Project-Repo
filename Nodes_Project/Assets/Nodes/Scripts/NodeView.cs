@@ -53,7 +53,7 @@ public abstract class NodeView : MonoBehaviour
 
     void Update()
     {
-        body.color = data.color;
+       // body.color = data.color;
         bright.gameObject.SetActive(false);
 
         Work();
@@ -119,7 +119,40 @@ public abstract class NodeView : MonoBehaviour
         return selectedRecipe;
     }
 
-    public bool TryConnectWith(NodeView inputNode)
+    /// <summary>
+    /// Returns:
+    ///  0 - Cant connect
+    ///  1 - Posible connection
+    ///  2 - Satisfactory connection
+    /// </summary>
+    /// <param name="nodeView"></param>
+    /// <returns></returns>
+    public virtual int CanConnectWith(NodeView inputNode)
+    {
+        if (outputs.Length > 0)
+        {
+            for (int i = 0; i < outputs.Length; i++)
+            {
+                if (outputs[i] == null)
+                {
+                    if (inputNode.inputs.Length > 0)
+                    {
+                        for (int j = 0; j < inputNode.inputs.Length; j++)
+                        {
+                            if (inputNode.inputs[j] == null)
+                            {
+                                return 2;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    public void ConnectWith(NodeView inputNode)
     {
         if (outputs.Length > 0)
         {
@@ -139,16 +172,13 @@ public abstract class NodeView : MonoBehaviour
                                 outputs[i] = connection;
 
                                 connection.SetNodes(this, inputNode);
-
-                                return true;
+                                return;
                             }
                         }
                     }
                 }
             }
         }
-
-        return false;
     }
     public static Ingredient[] GetInputIngredients(ConectionView[] inputs)
     {
@@ -181,7 +211,6 @@ public abstract class NodeView : MonoBehaviour
 
         return ingredients.ToArray();
     }
-
 
     public abstract void InputIngredientReady(ConectionView connection);
 

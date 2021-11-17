@@ -43,6 +43,11 @@ public class Supermarket_Node : NodeView
         GameManager.AddMoney(money);
     }
 
+    public override int CanConnectWith(NodeView inputNode)
+    {
+        return 0;
+    }
+
     public override void ConnectionChange()
     {
 

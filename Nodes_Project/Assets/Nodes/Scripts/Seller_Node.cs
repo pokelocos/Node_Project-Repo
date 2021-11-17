@@ -35,6 +35,11 @@ public class Seller_Node : NodeView
         }
     }
 
+    public override int CanConnectWith(NodeView inputNode)
+    {
+        return 0;
+    }
+
     public override void InputIngredientReady(ConectionView connection)
     {
         foreach (var input in inputs)

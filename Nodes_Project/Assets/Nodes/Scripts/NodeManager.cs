@@ -79,7 +79,15 @@ public class NodeManager : MonoBehaviour
             {
                 destNode = overNode;
 
-                originNode.TryConnectWith(destNode);
+                if (originNode.CanConnectWith(destNode) == 2)
+                {
+                    originNode.ConnectWith(destNode);
+                }
+            }
+
+            foreach (var node in FindObjectsOfType<NodeView>().Where(x => x != originNode).ToArray())
+            {
+                node.Paint(node.GetColor());
             }
 
             originNode = null;
@@ -99,143 +107,33 @@ public class NodeManager : MonoBehaviour
 
             var nodes = FindObjectsOfType<NodeView>().Where(x => x != originNode).ToArray();
 
-            List<NodeView> validNodes = new List<NodeView>();
-            List<NodeView> possibleNodes = new List<NodeView>();
+            //List<NodeView> validNodes = new List<NodeView>();
+            //List<NodeView> possibleNodes = new List<NodeView>();
 
             //Show nodes afinnity with selected Recipe
 
-            if (originNode.GetCurrentRecipe() != null)
-            {
-                foreach (var node in nodes)
-                {
-                    if (node.GetNodeName() == "Supermarket" || node.GetNodeName() == "Packaging")
-                    {
-                        validNodes.Add(node);
-
-                        continue;
-                    }
-
-                    if (!validNodes.Contains(node))
-                    {
-                        foreach (var nodeRecipe in node.GetRecipes())
-                        {
-                            if (nodeRecipe.InputIngredientsMatchCount(originNode.GetCurrentRecipe().GetOutputs()) > 0)
-                            {
-                                bool filledInputs = true;
-
-                                foreach (var input in node.GetInputs())
-                                {
-                                    if (input == null)
-                                    {
-                                        filledInputs = false;
-                                        break;
-                                    }
-                                }
-
-                                if (filledInputs)
-                                {
-                                    if (!possibleNodes.Contains(node))
-                                    {
-                                        possibleNodes.Add(node);
-                                    }
-
-                                    continue;
-                                }
-                                else
-                                {
-                                    validNodes.Add(node);
-                                }
-
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-
             foreach (var node in nodes)
             {
-                if (!validNodes.Contains(node) && !possibleNodes.Contains(node))
+                int affinity = originNode.CanConnectWith(node);
+
+                switch (affinity)
                 {
-                    node.Paint(Color.gray);
-                    continue;
-                }
-
-                node.SetBright(new Color(1, 0.6f, 0, 1));
-                //node.Paint(new Color(1, 0.6f, 0, 1));
-            }
-
-            if (originNode.GetCurrentRecipe() != null)
-            {
-                var currentIngredientIndex = 0;
-                var occupiedOutputs = 0;
-
-                for (int i = 0; i < originNode.GetOutputs().Length; i++)
-                {
-                    if (originNode.GetOutputs()[i] == null)
-                    {
-                        currentIngredientIndex = i;
-                        break;
-                    }
-                    else
-                    {
-                        occupiedOutputs++;
-                    }
-                }
-
-                var currentIngredient = originNode.GetCurrentRecipe().GetOutputs()[currentIngredientIndex];
-
-                if (occupiedOutputs == originNode.GetOutputs().Length)
-                {
-                    foreach (var node in nodes)
-                    {
+                    case 0:
                         node.Paint(Color.gray);
-                    }
+                        break;
+
+                    case 1:
+                        //node.Paint(Color.yellow);
+                        node.SetBright(new Color(1, 0.6f, 0, 1));
+                        break;
+
+                    case 2:
+                        //node.Paint(Color.green);
+                        node.SetBright(Color.green);
+                        break;
                 }
-                else
-                {
-                    foreach (var node in validNodes)
-                    {
-                        if (node.GetNodeName() == "Supermarket" || node.GetNodeName() == "Packaging")
-                        {
-                            node.SetBright(Color.green);
-                            //node.Paint(Color.green);
-                            continue;
-                        }
-
-                        bool validNode = false;
-
-                        foreach (var recipe in node.GetRecipes())
-                        {
-                            if (recipe.InputIngredientsMatchCount(new Ingredient[1] { currentIngredient }) > 0)
-                            {
-                                validNode = true;
-                                break;
-                            }
-                        }
-
-                        if (validNode)
-                        {
-                            foreach (var input in node.GetInputs())
-                            {
-                                if (input != null && currentIngredient == input)
-                                {
-                                    validNode = false;
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (validNode)
-                        {
-                            node.SetBright(Color.green);
-                            //node.Paint(Color.green);
-                        }
-                    }
-                }
-
-                
             }
+            
         }
         else
         {
