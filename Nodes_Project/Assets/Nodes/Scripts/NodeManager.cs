@@ -60,7 +60,7 @@ public class NodeManager : MonoBehaviour
         {
             originNode = overNode;
 
-            float timeSinceLastClick = Time.time - lastClickTime;
+            float timeSinceLastClick = Time.unscaledTime - lastClickTime;
 
             if (timeSinceLastClick <= DOUBLE_CLICK_TIME)
             {
@@ -70,7 +70,7 @@ public class NodeManager : MonoBehaviour
                 }
             }
 
-            lastClickTime = Time.time;
+            lastClickTime = Time.unscaledTime;
         }
 
         if (Input.GetMouseButtonUp(1))

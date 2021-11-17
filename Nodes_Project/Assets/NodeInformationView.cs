@@ -24,7 +24,7 @@ public class NodeInformationView : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            float timeSinceLastClick = Time.time - lastClickTime;
+            float timeSinceLastClick = Time.unscaledTime - lastClickTime;
 
             if(timeSinceLastClick <= DOUBLE_CLICK_TIME)
             {
@@ -32,7 +32,7 @@ public class NodeInformationView : MonoBehaviour
                 Spawn();
             }
 
-            lastClickTime = Time.time;
+            lastClickTime = Time.unscaledTime;
         }
     }
 
