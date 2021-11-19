@@ -505,6 +505,7 @@ GameObject:
   - component: {fileID: 8030924417729149786}
   - component: {fileID: 1059687025246139922}
   - component: {fileID: 1059687025246139924}
+  - component: {fileID: -5869829202147423449}
   m_Layer: 0
   m_Name: Horticulture Farm
   m_TagString: Untagged
@@ -616,3 +617,22 @@ MonoBehaviour:
   bright: {fileID: 326592415367588337}
   data: {fileID: 11400000, guid: 68b81ecb7b5bac14984997395972f782, type: 2}
   isDebugMode: 0
+--- !u!95 &-5869829202147423449
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8030924417729149787}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b783a9720b9ed4d44bb4947678676824, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

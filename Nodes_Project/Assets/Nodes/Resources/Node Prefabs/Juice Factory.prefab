@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 4971253667559197385}
   - component: {fileID: 2682492083253151617}
   - component: {fileID: 3927055901117009512}
+  - component: {fileID: -7647098697731731257}
   m_Layer: 0
   m_Name: Juice Factory
   m_TagString: Untagged
@@ -370,6 +371,25 @@ MonoBehaviour:
   bright: {fileID: 6239567527595109148}
   data: {fileID: 11400000, guid: 2d2d180806101e84da3c9498edd20c00, type: 2}
   isDebugMode: 0
+--- !u!95 &-7647098697731731257
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971253667559197384}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b783a9720b9ed4d44bb4947678676824, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4971253668049531434
 GameObject:
   m_ObjectHideFlags: 0

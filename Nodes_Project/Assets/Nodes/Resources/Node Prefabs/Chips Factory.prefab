@@ -423,6 +423,7 @@ GameObject:
   - component: {fileID: 4947600273723454448}
   - component: {fileID: 2697155577918406328}
   - component: {fileID: 3903403075292788561}
+  - component: {fileID: -2425630787533173595}
   m_Layer: 0
   m_Name: Chips Factory
   m_TagString: Untagged
@@ -534,6 +535,25 @@ MonoBehaviour:
   bright: {fileID: 1843364881327057516}
   data: {fileID: 11400000, guid: 63cc7b2c29eb57843b0698ac2eaaad5c, type: 2}
   isDebugMode: 0
+--- !u!95 &-2425630787533173595
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4947600273723454449}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b783a9720b9ed4d44bb4947678676824, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5016846475580677675
 GameObject:
   m_ObjectHideFlags: 0

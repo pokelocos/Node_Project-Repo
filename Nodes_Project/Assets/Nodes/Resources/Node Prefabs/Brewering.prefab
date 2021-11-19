@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 1518876071796798949}
   - component: {fileID: 8418196596997142701}
   - component: {fileID: 7464406231459754308}
+  - component: {fileID: -6475506299357503654}
   m_Layer: 0
   m_Name: Brewering
   m_TagString: Untagged
@@ -369,6 +370,25 @@ MonoBehaviour:
   bright: {fileID: 7506889840874307559}
   data: {fileID: 11400000, guid: c56a1519451adeb42b3d22148d0cd155, type: 2}
   isDebugMode: 0
+--- !u!95 &-6475506299357503654
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518876071796798948}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b783a9720b9ed4d44bb4947678676824, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2938312474876578024
 GameObject:
   m_ObjectHideFlags: 0

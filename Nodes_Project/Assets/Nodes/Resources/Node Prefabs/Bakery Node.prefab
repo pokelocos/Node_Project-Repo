@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 1964388104992689633}
   - component: {fileID: 8828665073438605481}
   - component: {fileID: 7620139793845881152}
+  - component: {fileID: 3877011634333358931}
   m_Layer: 0
   m_Name: Bakery Node
   m_TagString: Untagged
@@ -369,6 +370,25 @@ MonoBehaviour:
   bright: {fileID: 6770555528943789330}
   data: {fileID: 11400000, guid: 1d4b907dc1d90a0409554c45ec2698f3, type: 2}
   isDebugMode: 0
+--- !u!95 &3877011634333358931
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964388104992689632}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b783a9720b9ed4d44bb4947678676824, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5104784372833235271
 GameObject:
   m_ObjectHideFlags: 0

@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 606992679866144279}
   - component: {fileID: 7614223752104794975}
   - component: {fileID: 7614223752104794969}
+  - component: {fileID: -2968162372407739519}
   m_Layer: 0
   m_Name: Cereal Farm
   m_TagString: Untagged
@@ -369,6 +370,25 @@ MonoBehaviour:
   bright: {fileID: 8657393247705239117}
   data: {fileID: 11400000, guid: adc39ba06ec56b24b9da3efad59ebd27, type: 2}
   isDebugMode: 0
+--- !u!95 &-2968162372407739519
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606992679866144278}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b783a9720b9ed4d44bb4947678676824, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3243514718196432142
 GameObject:
   m_ObjectHideFlags: 0
