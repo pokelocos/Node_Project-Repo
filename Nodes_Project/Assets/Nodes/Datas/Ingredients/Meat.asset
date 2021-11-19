@@ -15,3 +15,4 @@ MonoBehaviour:
   ingredientName: Meat
   price: 5
   icon: {fileID: 21300000, guid: d4f89c609c6067547977ab4c72cc02ea, type: 3}
+  color: {r: 0.9056604, g: 0.029049424, b: 0.55148005, a: 1}

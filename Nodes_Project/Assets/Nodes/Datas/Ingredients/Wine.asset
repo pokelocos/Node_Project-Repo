@@ -15,3 +15,4 @@ MonoBehaviour:
   ingredientName: Wine
   price: 17
   icon: {fileID: 21300000, guid: e92ab6a87dced6e4485285e463b1b0dd, type: 3}
+  color: {r: 0.4056604, g: 0.020665685, b: 0.14168827, a: 1}

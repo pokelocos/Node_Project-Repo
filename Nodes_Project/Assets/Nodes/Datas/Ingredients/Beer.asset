@@ -15,3 +15,4 @@ MonoBehaviour:
   ingredientName: Beer
   price: 8
   icon: {fileID: 21300000, guid: 698cf03b12a6a6441bc19b093536456f, type: 3}
+  color: {r: 0.8113208, g: 0.66609645, b: 0.056639347, a: 1}

@@ -15,3 +15,4 @@ MonoBehaviour:
   ingredientName: Chips
   price: 6
   icon: {fileID: 21300000, guid: 44fd4cb371ab36b43a374102869a26f0, type: 3}
+  color: {r: 1, g: 0.46574655, b: 0, a: 1}

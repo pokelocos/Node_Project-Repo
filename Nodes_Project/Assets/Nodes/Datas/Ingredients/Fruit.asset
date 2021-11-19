@@ -15,3 +15,4 @@ MonoBehaviour:
   ingredientName: Fruit
   price: 4
   icon: {fileID: 21300000, guid: 920e2df8d81907a45a9d7e7d77b88fb7, type: 3}
+  color: {r: 0.9811321, g: 0.19807759, b: 0.19807759, a: 1}

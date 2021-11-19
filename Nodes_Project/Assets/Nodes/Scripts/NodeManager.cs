@@ -85,6 +85,18 @@ public class NodeManager : MonoBehaviour
                 }
             }
 
+            var connections = FindObjectsOfType<ConectionView>().Where(x => x != auxiliarConection).ToArray(); ;
+
+            foreach (var connection in connections)
+            {
+                if (connection.GetIngredient() != null)
+                {
+                    connection.SetDotColor(connection.GetIngredient().color);
+                }
+
+                connection.SetLineColor(connection.body_color, connection.border_color);
+            }
+
             foreach (var node in FindObjectsOfType<NodeView>().Where(x => x != originNode).ToArray())
             {
                 node.Paint(node.GetColor());
@@ -106,7 +118,49 @@ public class NodeManager : MonoBehaviour
 
             auxiliarConection.FollowPositions(originPos, destPos);
 
+            var connections = FindObjectsOfType<ConectionView>().Where(x => x != auxiliarConection).ToArray();
+
+            foreach (var connection in connections)
+            {
+                connection.SetDotColor(Color.grey);
+
+                Color lightGray = Color.Lerp(Color.gray, Color.white, 0.5f);
+
+                connection.SetLineColor(lightGray, Color.gray);
+            }
+
             var nodes = FindObjectsOfType<NodeView>().Where(x => x != originNode).ToArray();
+
+            if (hitNode)
+            {
+                if (hitNode != originNode)
+                {
+                    int affinity = originNode.CanConnectWith(hitNode);
+
+                    switch (affinity)
+                    {
+                        case 0:
+                            Color lightGray = Color.Lerp(Color.gray, Color.white, 0.5f);
+                            auxiliarConection.SetLineColor(lightGray, Color.gray);
+                            break;
+
+                        case 1:
+                            Color lightOrange = Color.Lerp(new Color(1, 0.6f, 0, 1), Color.white, 0.5f);
+                            auxiliarConection.SetLineColor(lightOrange, new Color(1, 0.6f, 0, 1));
+                            break;
+
+                        case 2:
+                            Color lightGreen = Color.Lerp(Color.green, Color.white, 0.5f);
+                            auxiliarConection.SetLineColor(lightGreen, Color.green);
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Color lightGray = Color.Lerp(Color.gray, Color.white, 0.5f);
+                auxiliarConection.SetLineColor(lightGray, Color.gray);
+            }
 
             foreach (var node in nodes)
             {

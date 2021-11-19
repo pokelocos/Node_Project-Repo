@@ -10,7 +10,10 @@ public class ConectionView : MonoBehaviour
     [SerializeField]
     private SpriteRenderer border, color;
     [SerializeField]
-    private Transform element;
+    private SpriteRenderer element;
+
+    public Color border_color;
+    public Color body_color;
 
     private int hasIngredient;
     public bool isReadyToClaim;
@@ -18,6 +21,11 @@ public class ConectionView : MonoBehaviour
     private float speed = 1f;
     private float maxTime = 4f; //seconds
     private float actualTime = 0f;
+
+    private void Start()
+    {
+        SetLineColor(body_color, border_color);
+    }
 
     void Update()
     {
@@ -61,6 +69,17 @@ public class ConectionView : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void SetLineColor(Color body, Color border)
+    {
+        this.border.color = border;
+        this.color.color = body;
+    }
+
+    public void SetDotColor(Color color)
+    {
+        element.color = color;
+    }
+
     public void SetNodes(NodeView origin, NodeView dest)
     {
         this.origin = origin;
@@ -68,6 +87,11 @@ public class ConectionView : MonoBehaviour
 
         this.origin.ConnectionChange();
         this.destination.ConnectionChange();
+
+        if (GetIngredient() != null)
+        {
+            SetDotColor(GetIngredient().color);
+        }
     }
 
     public NodeView GetOrigin()
@@ -105,7 +129,7 @@ public class ConectionView : MonoBehaviour
             destination.InputIngredientReady(this);
         }
 
-        element.position = Vector3.Lerp(from, to, actualTime / maxTime);
+        element.transform.position = Vector3.Lerp(from, to, actualTime / maxTime);
     }
 
     public void FollowPositions(Vector3 from, Vector3 to)

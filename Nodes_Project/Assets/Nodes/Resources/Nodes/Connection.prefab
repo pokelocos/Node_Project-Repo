@@ -347,7 +347,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   border: {fileID: 1221497276563865285}
   color: {fileID: 1221497277416751626}
-  element: {fileID: 1221497276100682683}
+  element: {fileID: 1221497276100682680}
+  border_color: {r: 1, g: 0.7176471, b: 0.34509805, a: 1}
+  body_color: {r: 1, g: 0.972549, b: 0.34509805, a: 1}
+  isReadyToClaim: 0
 --- !u!61 &5265651867594608218
 BoxCollider2D:
   m_ObjectHideFlags: 0

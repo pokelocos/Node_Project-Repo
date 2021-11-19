@@ -15,3 +15,4 @@ MonoBehaviour:
   ingredientName: Cereal
   price: 2
   icon: {fileID: 21300000, guid: 63157190c40690543963df77fa042588, type: 3}
+  color: {r: 0.2148451, g: 0.5374161, b: 0.8018868, a: 1}

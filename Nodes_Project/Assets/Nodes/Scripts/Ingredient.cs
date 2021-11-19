@@ -8,6 +8,7 @@ public class Ingredient : ScriptableObject
     public string ingredientName;
     public int price;
     public Sprite icon;
+    public Color color = Color.white;
 
     public override bool Equals(object obj)
     {

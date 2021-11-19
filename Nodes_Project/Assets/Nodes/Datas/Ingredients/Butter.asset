@@ -15,3 +15,4 @@ MonoBehaviour:
   ingredientName: Butter
   price: 7
   icon: {fileID: 21300000, guid: 2e877d9542afb62499613aaf00058b1a, type: 3}
+  color: {r: 0.93962115, g: 0.9433962, b: 0.21715912, a: 1}
