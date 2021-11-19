@@ -44,7 +44,20 @@ public class Production_Node : NodeView
                     if (occupiedInputs == inputNode.GetInputs().Length)
                         return 1;
                     else
+                    {
+                        foreach (var input in inputNode.GetInputs())
+                        {
+                            if (input != null)
+                            {
+                                if (input.GetOrigin() == this)
+                                {
+                                    return 1;
+                                }
+                            }
+                        }
+
                         return 2;
+                    }
                 }
 
                 int ingredientMatches = 0;
@@ -82,7 +95,20 @@ public class Production_Node : NodeView
                             ingredientMatches = recipe.InputIngredientsMatchCount(currentIngredients.ToArray());
 
                             if (ingredientMatches == currentIngredients.Count)
+                            {
+                                foreach (var input in inputNode.GetInputs())
+                                {
+                                    if (input != null)
+                                    {
+                                        if (input.GetOrigin() == this)
+                                        {
+                                            return 1;
+                                        }
+                                    }
+                                }
+
                                 return 2;
+                            }
                         }
                     }
 
