@@ -18,7 +18,14 @@ public class RewardView : MonoBehaviour
             nodes_icon[i].sprite = reward.nodes[i].GetNodeData().icon;
         }
 
-        price.text = "$" + reward.price;
+        if (reward.price > 0)
+        {
+            price.text = "$" + reward.price;
+        }
+        else
+        {
+            price.text = "FREE";
+        }
 
         effects.text = string.Empty;
 
