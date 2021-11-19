@@ -21,8 +21,6 @@ public abstract class NodeView : MonoBehaviour
     private float actualTime = 0f;
     protected float internalSpeed = 0;
 
-    protected Recipe[] recipes = new Recipe[0];
-
     protected ConectionView[] inputs = new ConectionView[0];
     protected ConectionView[] outputs = new ConectionView[0];
 
@@ -30,15 +28,14 @@ public abstract class NodeView : MonoBehaviour
 
     private void Awake()
     {
-        recipes = data.recipes;
         nodeIcon.sprite = data.icon;
         body.color = data.color;
 
-        if(recipes[0].GetInputs().Length > 0)
-            inputs = new ConectionView[recipes[0].GetInputs().Length];
+        if(data.recipes[0].GetInputs().Length > 0)
+            inputs = new ConectionView[data.recipes[0].GetInputs().Length];
 
-        if (recipes[0].GetOutputs().Length > 0)
-            outputs = new ConectionView[recipes[0].GetOutputs().Length];
+        if (data.recipes[0].GetOutputs().Length > 0)
+            outputs = new ConectionView[data.recipes[0].GetOutputs().Length];
     }
 
     public int GetMantainCost()
@@ -48,7 +45,7 @@ public abstract class NodeView : MonoBehaviour
 
     public Recipe[] GetRecipes()
     {
-        return recipes;
+        return data.recipes;
     }
 
     void Update()

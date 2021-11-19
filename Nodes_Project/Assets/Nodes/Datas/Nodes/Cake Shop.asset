@@ -17,4 +17,8 @@ MonoBehaviour:
   speed: 1
   productionTime: 3
   maintainCost: 6
-  recipes: []
+  recipes:
+  - {fileID: 11400000, guid: b6dcc527166cb8e49a7378dec623ba22, type: 2}
+  - {fileID: 11400000, guid: 1c5609ba9598d9342ad8037ce224ce0c, type: 2}
+  - {fileID: 11400000, guid: 5a5fff5c8656cf049b8028e69fdfaea3, type: 2}
+  - {fileID: 11400000, guid: 3aeadba77afc9384291e79fc840727c1, type: 2}

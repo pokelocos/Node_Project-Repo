@@ -9,7 +9,7 @@ public class Packaging_Node : Factory_Node
     {
         inputs = new ConectionView[3];
 
-        selectedRecipe = recipes[0];
+        selectedRecipe = GetRecipes()[0];
     }
     public override void ConnectionChange()
     {

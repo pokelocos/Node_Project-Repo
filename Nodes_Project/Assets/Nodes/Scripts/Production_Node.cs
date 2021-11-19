@@ -10,7 +10,7 @@ public class Production_Node : NodeView
         internalSpeed = 1;
 
         //The production Nodes should have only one recipe with only outputs.
-        selectedRecipe = recipes[0];
+        selectedRecipe = GetRecipes()[0];
     }
     protected override void OnWorkFinish()
     {

@@ -21,7 +21,7 @@ public class Factory_Node : NodeView
 
         var ingredients = GetInputIngredients(inputs);
 
-        foreach (var recipe in recipes)
+        foreach (var recipe in GetRecipes())
         {
             if (recipe.HasInputIngredients(ingredients))
             {

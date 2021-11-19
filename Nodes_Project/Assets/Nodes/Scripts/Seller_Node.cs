@@ -25,7 +25,7 @@ public class Seller_Node : NodeView
 
         ingredients = GetInputIngredients(inputs);
 
-        foreach (var recipe in recipes)
+        foreach (var recipe in GetRecipes())
         {
             if (recipe.HasInputIngredients(ingredients))
             {
