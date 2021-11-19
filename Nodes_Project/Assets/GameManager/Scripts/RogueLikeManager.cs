@@ -6,6 +6,7 @@ using System.Linq;
 public class RogueLikeManager : MonoBehaviour
 {
     private GameManager gameManager;
+    [SerializeField] private GameObject rewards_panel;
     [SerializeField] private GameObject rewards_menu;
 
     private Reward[] rewards = new Reward[3];
@@ -14,7 +15,7 @@ public class RogueLikeManager : MonoBehaviour
 
     private void Start()
     {
-        rewards_menu.SetActive(false);
+        rewards_panel.SetActive(false);
         gameManager = FindObjectOfType<GameManager>();
 
         new Reward();
@@ -22,7 +23,7 @@ public class RogueLikeManager : MonoBehaviour
 
     private void Update()
     {
-        if (rewards_menu.activeSelf)
+        if (rewards_panel.activeSelf)
             gameManager.SetTimeScale(0);
     }
 
@@ -30,7 +31,7 @@ public class RogueLikeManager : MonoBehaviour
     {
         if (GameManager.Days % 3 == 0)
         {
-            rewards_menu.SetActive(true);
+            rewards_panel.SetActive(true);
 
             for (int i = 0; i < rewards.Length; i++)
             {
@@ -50,7 +51,7 @@ public class RogueLikeManager : MonoBehaviour
         GameManager.AddMoney(-rewards[index].price);
 
         gameManager.SetTimeScale(1);
-        rewards_menu.SetActive(false);
+        rewards_panel.SetActive(false);
     }
 
     public class Reward
@@ -96,5 +97,10 @@ public class RogueLikeManager : MonoBehaviour
     public class GameEffect
     {
         public string description = "Effect";
+    }
+
+    public void ChangeRewardsVisibility()
+    {
+        rewards_menu.SetActive(!rewards_menu.activeSelf);
     }
 }
