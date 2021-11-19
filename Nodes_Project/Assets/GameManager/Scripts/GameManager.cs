@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private Text money_text;
     [SerializeField] private Text days_text;
+    [SerializeField] private Text balance_text;
     [SerializeField] private Image day_image;
 
     [Space]
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     private static int money;
     private static int day = 0;
+    private float balance_alpha = 0;
+    private Color balance_color = Color.green;
 
     private static List<int> dayTransactions = new List<int>();
 
@@ -65,6 +68,18 @@ public class GameManager : MonoBehaviour
         }
 
         //SHOW BALANCE 
+        if (balance > 0)
+        {
+            balance_text.text = "$" + balance;
+            balance_color = Color.green;
+        }
+        else
+        {
+            balance_text.text = "-$" + balance;
+            balance_color = Color.red;
+        }
+
+        balance_alpha = 5;
 
         day++;
         days_text.text = day.ToString();
@@ -75,6 +90,13 @@ public class GameManager : MonoBehaviour
         currentDayTime += Time.deltaTime;
 
         day_image.fillAmount = currentDayTime / dayTime;
+
+        balance_color.a = balance_alpha;
+
+        if (balance_alpha > 0)
+            balance_alpha -= Time.deltaTime;
+
+        balance_text.color = balance_color;
 
         if (currentDayTime > dayTime)
         {
