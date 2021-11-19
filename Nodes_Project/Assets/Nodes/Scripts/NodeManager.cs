@@ -150,8 +150,8 @@ public class NodeManager : MonoBehaviour
                             break;
 
                         case 2:
-                            Color lightGreen = Color.Lerp(Color.green, Color.white, 0.5f);
-                            auxiliarConection.SetLineColor(lightGreen, Color.green);
+                            Color lightGreen = Color.Lerp(new Color(0.7f, 0.9f, 0.3f), Color.white, 0.5f);
+                            auxiliarConection.SetLineColor(lightGreen, new Color(0.7f, 0.9f, 0.3f));
                             break;
                     }
                 }
@@ -177,7 +177,7 @@ public class NodeManager : MonoBehaviour
                         break;
 
                     case 2:
-                        node.SetBright(Color.green);
+                        node.SetBright(new Color(0.7f, 0.9f, 0.3f));
                         break;
                 }
             }
