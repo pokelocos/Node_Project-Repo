@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientName: Bread
   price: 4
-  icon: {fileID: 21300000, guid: 63157190c40690543963df77fa042588, type: 3}
+  icon: {fileID: 21300000, guid: 1a08accb4c6287d4a8c85ef8ad8e9eb9, type: 3}
   color: {r: 0.9150943, g: 0.7626246, b: 0.3833036, a: 1}

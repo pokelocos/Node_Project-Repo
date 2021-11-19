@@ -44,15 +44,21 @@ public class Seller_Node : NodeView
     {
         foreach (var input in inputs)
         {
-            if (!input.isReadyToClaim)
+            if (input != null)
             {
-                return;
+                if (!input.isReadyToClaim)
+                {
+                    return;
+                }
             }
         }
 
         foreach (var input in inputs)
         {
-            input.isReadyToClaim = false;
+            if (input)
+            {
+                input.isReadyToClaim = false;
+            }
         }
 
         if (selectedRecipe != null)

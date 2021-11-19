@@ -13,6 +13,15 @@ public class NodeManager : MonoBehaviour
     [SerializeField]
     private ConectionView auxiliarConection;
 
+    [SerializeField]
+    private SpriteRenderer mouseIcon;
+    [SerializeField]
+    private SpriteRenderer mouseIcon_background;
+    [SerializeField]
+    private SpriteRenderer mouseIcon_ring;
+    [SerializeField]
+    private Sprite invalidIngredient;
+
     private float lastClickTime;
     private const float DOUBLE_CLICK_TIME = .2f;
 
@@ -22,6 +31,16 @@ public class NodeManager : MonoBehaviour
 
         NodeView hitNode = null;
         ConectionView hitConnection = null;
+
+        mouseIcon.color = Color.clear;
+        mouseIcon_background.color = Color.clear;
+        mouseIcon_ring.color = Color.clear;
+
+        Vector3 destPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0.7f, 0.7f, 0); 
+
+        destPos.z = 0;
+
+        mouseIcon.transform.position = destPos;
 
         foreach (var hit in hits)
         {
@@ -54,6 +73,20 @@ public class NodeManager : MonoBehaviour
         }
 
         overNode = hitNode;
+
+        if (hitConnection)
+        {
+            if (hitConnection.GetIngredient() != null)
+            {
+                mouseIcon.sprite = hitConnection.GetIngredient().icon;
+                mouseIcon.color = hitConnection.GetIngredient().color;
+
+                Color darker = Color.Lerp(hitConnection.GetIngredient().color, Color.black, 0.5f);
+
+                mouseIcon_background.color = darker;
+                mouseIcon_ring.color = new Color(0,0,0, 0.15f);
+            }
+        }
 
 
         if (Input.GetMouseButtonDown(1))
@@ -110,7 +143,38 @@ public class NodeManager : MonoBehaviour
         if (originNode != null && destNode == null)
         {
             Vector3 originPos = originNode.transform.position;
-            Vector3 destPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            destPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            if (originNode.GetCurrentRecipe() != null)
+            {
+                for (int i = 0; i < originNode.GetOutputs().Length; i++)
+                {
+                    if (originNode.GetOutputs()[i] == null)
+                    {
+                        var ingredient = originNode.GetCurrentRecipe().GetOutputs()[i];
+
+                        mouseIcon.sprite = ingredient.icon;
+                        mouseIcon.color = ingredient.color;
+
+                        Color darker = Color.Lerp(ingredient.color, Color.black, 0.5f);
+
+                        mouseIcon_background.color = darker;
+                        mouseIcon_ring.color = new Color(0, 0, 0, 0.15f);
+
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                mouseIcon.sprite = invalidIngredient;
+                mouseIcon.color = Color.red;
+
+                Color darker = Color.Lerp(Color.red, Color.black, 0.5f);
+
+                mouseIcon_background.color = darker;
+                mouseIcon_ring.color = new Color(0, 0, 0, 0.15f);
+            }
 
             destPos.z = originPos.z;
 
