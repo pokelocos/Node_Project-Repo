@@ -22,6 +22,8 @@ public class ConectionView : MonoBehaviour
     private float maxTime = 4f; //seconds
     private float actualTime = 0f;
 
+    Ingredient currentIngredient;
+
     private void Start()
     {
         SetLineColor(body_color, border_color);
@@ -38,6 +40,11 @@ public class ConectionView : MonoBehaviour
         {
             element.gameObject.SetActive(false);
         }
+    }
+
+    public Ingredient GetOutputIngredient()
+    {
+        return currentIngredient;
     }
 
     public Ingredient GetIngredient()
@@ -104,8 +111,9 @@ public class ConectionView : MonoBehaviour
         return destination;
     }
 
-    public void SendIngredient()
+    public void SendIngredient(Ingredient ingredient)
     {
+        currentIngredient = ingredient;
         hasIngredient = 1;
     }
 

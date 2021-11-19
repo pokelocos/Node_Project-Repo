@@ -11,9 +11,9 @@ public class Seller_Node : NodeView
         internalSpeed = 0;
 
         var money = 0;
-        foreach (var ingredient in ingredients)
+        foreach (var input in inputs)
         {
-            money += ingredient.price;
+            money += input.GetOutputIngredient().price;
         }
 
         GameManager.AddMoney(money);

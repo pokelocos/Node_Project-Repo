@@ -9,9 +9,28 @@ public class Factory_Node : NodeView
     {
         internalSpeed = 0;
 
+        int price = 0;
+
+        foreach (var input in inputs)
+        {
+            if (input != null)
+            {
+                price += input.GetOutputIngredient().price;
+            }
+        }
+
+        price *= 2;
+
         foreach (var output in outputs)
         {
-            output?.SendIngredient();
+            if (output != null)
+            {
+                Ingredient ingredient = Instantiate(output.GetIngredient());
+
+                ingredient.price += price;
+
+                output.SendIngredient(ingredient);
+            }
         }
     }
 

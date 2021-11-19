@@ -16,7 +16,7 @@ public class Production_Node : NodeView
     {
         foreach (var output in outputs)
         {
-            output?.SendIngredient();
+            output?.SendIngredient(output?.GetIngredient());
         }
     }
 

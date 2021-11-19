@@ -22,7 +22,7 @@ public class Supermarket_Node : NodeView
         {
             if (input != null)
             {
-                var ingredient = input.GetIngredient();
+                var ingredient = input.GetOutputIngredient();
 
                 if (ingredient != null)
                 {
