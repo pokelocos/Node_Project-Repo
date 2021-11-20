@@ -84,9 +84,15 @@ public class NodeManager : MonoBehaviour
                 Color darker = Color.Lerp(hitConnection.GetIngredient().color, Color.black, 0.5f);
 
                 mouseIcon_background.color = darker;
-                mouseIcon_ring.color = new Color(0,0,0, 0.15f);
+                mouseIcon_ring.color = new Color(0, 0, 0, 0.15f);
+
+                if (!Input.GetMouseButton(1))
+                {
+                    mouseIcon.transform.position = hitConnection.GetMiddlePoint();
+                }
             }
         }
+
 
 
         if (Input.GetMouseButtonDown(1))

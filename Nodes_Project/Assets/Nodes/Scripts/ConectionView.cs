@@ -42,6 +42,11 @@ public class ConectionView : MonoBehaviour
         }
     }
 
+    public Vector3 GetMiddlePoint()
+    {
+        return (origin.transform.position + destination.transform.position) / 2;
+    }
+
     public Ingredient GetOutputIngredient()
     {
         return currentIngredient;

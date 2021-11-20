@@ -124,8 +124,8 @@ public class RogueLikeManager : MonoBehaviour
     {
         public Drought_GE()
         {
-            title = "Drought";
-            description = "Your farms are 30% slower";
+            title = "Sequia";
+            description = "Tus granjas son 30% mas lenas.";
         }
 
         public override void RemoveEffect()
@@ -145,6 +145,35 @@ public class RogueLikeManager : MonoBehaviour
             foreach (var farm in cerealFarms)
             {
                 farm.GetNodeData().speed *= 0.7f;
+            }
+        }
+    }
+
+    public class Plague_GE : GameEffect
+    {
+        public Plague_GE()
+        {
+            title = "Plaga";
+            description = "Tus granjas tienen 35% de probabilidad de perder la cosecha.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Farm").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().successProbability = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Farm").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().successProbability = 0.65f;
             }
         }
     }
