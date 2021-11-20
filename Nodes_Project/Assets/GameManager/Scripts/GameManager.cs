@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text days_text;
     [SerializeField] private Text balance_text;
     [SerializeField] private Image day_image;
+    [SerializeField] private EffectView effectView_template;
 
     [Space]
     [SerializeField] private GameObject losePanel;
@@ -23,6 +25,10 @@ public class GameManager : MonoBehaviour
     private Color balance_color = Color.green;
 
     private static List<int> dayTransactions = new List<int>();
+
+
+
+    private static Dictionary<RogueLikeManager.GameEffect, EffectView> gameEffects = new Dictionary<RogueLikeManager.GameEffect, EffectView>();
 
     public static int Money
     {
@@ -46,6 +52,19 @@ public class GameManager : MonoBehaviour
         money += amount;
     }
 
+    public static void AddEffect(RogueLikeManager.GameEffect gameEffect)
+    {
+        gameEffect.SetEffect();
+
+        var template = FindObjectOfType<GameManager>().effectView_template;
+        var effectView = Instantiate(template, template.transform.parent);
+        effectView.gameObject.SetActive(true);
+
+        effectView.SetData(gameEffect.title, gameEffect.description);
+
+        gameEffects.Add(gameEffect, effectView);
+    }
+
     public void SetTimeScale(float value)
     {
         Time.timeScale = value;
@@ -54,6 +73,20 @@ public class GameManager : MonoBehaviour
     public void NewDay()
     {
         FindObjectOfType<RogueLikeManager>().TrySetRewards();
+
+        for (int i = gameEffects.Keys.Count - 1; i >= 0; i--)
+        {
+            gameEffects.Keys.ToArray()[i].daysDuration--;
+
+            if (gameEffects.Keys.ToArray()[i].daysDuration <= 0)
+            {
+                gameEffects.Keys.ToArray()[i].RemoveEffect();
+
+                Destroy(gameEffects.Values.ToArray()[i].gameObject);
+
+                gameEffects.Remove(gameEffects.Keys.ToArray()[i]);
+            }
+        }
 
         foreach (var node in FindObjectsOfType<NodeView>())
         {

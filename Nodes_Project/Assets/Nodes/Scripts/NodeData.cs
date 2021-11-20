@@ -8,6 +8,7 @@ public class NodeData : ScriptableObject
     public Color color = Color.gray;
     public Sprite icon;
     public float speed = 1f;
+    public float successProbability = 1;
     public float productionTime = 5f;
     public int maintainCost = 3;
 

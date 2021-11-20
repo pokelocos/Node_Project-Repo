@@ -31,7 +31,7 @@ public class RewardView : MonoBehaviour
 
         for (int i = 0; i < reward.effects.Length; i++)
         {
-            effects.text += reward.effects[i].description + "\n";
+            effects.text += "*" + reward.effects[i].title + "\n";
         }
     }
 }

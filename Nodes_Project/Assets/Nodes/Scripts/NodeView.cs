@@ -20,6 +20,7 @@ public abstract class NodeView : MonoBehaviour
     private float maxTime = 4f; //seconds
     private float actualTime = 0f;
     protected float internalSpeed = 0;
+    private bool isFailure;
 
     protected ConectionView[] inputs = new ConectionView[0];
     protected ConectionView[] outputs = new ConectionView[0];
@@ -55,11 +56,37 @@ public abstract class NodeView : MonoBehaviour
 
     private void Work()
     {
-        actualTime += Time.deltaTime * data.speed * internalSpeed;
+        if (!isFailure)
+        {
+            actualTime += Time.deltaTime * data.speed * internalSpeed;
+
+            fillBar.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+        else
+        {
+            actualTime -= Time.deltaTime * data.speed * internalSpeed;
+
+            fillBar.GetComponent<SpriteRenderer>().color = Color.red;
+
+            if (actualTime <= 0)
+            {
+                isFailure = false;
+
+                actualTime = 0;
+            }
+        }
+
         if (actualTime > data.productionTime)
         {
-            actualTime = 0;
-            OnWorkFinish();
+            if (Random.Range(0,1f) <= data.successProbability)
+            {
+                actualTime = 0;
+                OnWorkFinish();
+            }
+            else
+            {
+                isFailure = true;
+            }
         }
 
         var radial = (1 - (actualTime / data.productionTime)) * 360;

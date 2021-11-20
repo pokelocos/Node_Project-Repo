@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Reflection;
 
 public class RogueLikeManager : MonoBehaviour
 {
@@ -17,8 +18,6 @@ public class RogueLikeManager : MonoBehaviour
     {
         rewards_panel.SetActive(false);
         gameManager = FindObjectOfType<GameManager>();
-
-        new Reward();
     }
 
     private void Update()
@@ -48,10 +47,17 @@ public class RogueLikeManager : MonoBehaviour
             Instantiate(rewards[index].nodes[i], null);
         }
 
+        for (int i = 0; i < rewards[index].effects.Length; i++)
+        {
+            GameManager.AddEffect(rewards[index].effects[i]);
+        }
+
         GameManager.AddMoney(-rewards[index].price);
 
         gameManager.SetTimeScale(1);
         rewards_panel.SetActive(false);
+
+
     }
 
     public class Reward
@@ -89,14 +95,63 @@ public class RogueLikeManager : MonoBehaviour
 
             for (int i = 0; i < effectsCount; i++)
             {
-                effects[i] = new GameEffect();
+                var effectsClasses = FindDerivedTypes(Assembly.GetExecutingAssembly(), typeof(GameEffect)).ToArray();
+
+                effects[i] = System.Activator.CreateInstance(effectsClasses[Random.Range(0, effectsClasses.Length)]) as GameEffect;
+
+                effects[i].daysDuration = Random.Range(1, 3);
             }
         }
     }
 
-    public class GameEffect
+    public abstract class GameEffect
     {
+        public string title = "Effect";
         public string description = "Effect";
+        public int daysDuration = 1;
+
+        protected GameEffect()
+        {
+            
+        }
+
+        public abstract void SetEffect();
+
+        public abstract void RemoveEffect();
+    }
+
+    public class Drought_GE : GameEffect
+    {
+        public Drought_GE()
+        {
+            title = "Drought";
+            description = "Your farms are 30% slower";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Farm").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed +=  1 * 0.3f;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Farm").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed *= 0.7f;
+            }
+        }
+    }
+
+    public static IEnumerable<System.Type> FindDerivedTypes(Assembly assembly, System.Type baseType)
+    {
+        return assembly.GetTypes().Where(t => t != baseType && baseType.IsAssignableFrom(t));
     }
 
     public void ChangeRewardsVisibility()

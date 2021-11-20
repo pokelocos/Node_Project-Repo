@@ -15,6 +15,12 @@ public class EffectView : MonoBehaviour
 
     private bool isPointerOver;
 
+    public void SetData(string title, string desc)
+    {
+        this.title = title;
+        this.description = desc;
+    }
+
     void Update()
     {
         var rectTrans = GetComponent<RectTransform>();
