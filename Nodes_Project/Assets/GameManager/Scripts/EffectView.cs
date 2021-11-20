@@ -30,7 +30,7 @@ public class EffectView : MonoBehaviour
 
         if (isPointerOver)
         {
-            rectTrans.sizeDelta = new Vector2(Mathf.Lerp(rectTrans.sizeDelta.x, 200, Time.unscaledDeltaTime * 7), 80);
+            rectTrans.sizeDelta = new Vector2(Mathf.Lerp(rectTrans.sizeDelta.x, 300, Time.unscaledDeltaTime * 7), 80);
 
             Color color = title_text.color;
 

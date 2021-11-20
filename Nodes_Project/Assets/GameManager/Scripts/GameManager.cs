@@ -78,6 +78,8 @@ public class GameManager : MonoBehaviour
         {
             gameEffects.Keys.ToArray()[i].daysDuration--;
 
+            gameEffects.Keys.ToArray()[i].SetEffect();
+
             if (gameEffects.Keys.ToArray()[i].daysDuration <= 0)
             {
                 gameEffects.Keys.ToArray()[i].RemoveEffect();

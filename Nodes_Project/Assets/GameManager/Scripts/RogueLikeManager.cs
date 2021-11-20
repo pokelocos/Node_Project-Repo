@@ -134,7 +134,7 @@ public class RogueLikeManager : MonoBehaviour
 
             foreach (var farm in cerealFarms)
             {
-                farm.GetNodeData().speed +=  1 * 0.3f;
+                farm.GetNodeData().speed =  1;
             }
         }
 
@@ -144,7 +144,7 @@ public class RogueLikeManager : MonoBehaviour
 
             foreach (var farm in cerealFarms)
             {
-                farm.GetNodeData().speed *= 0.7f;
+                farm.GetNodeData().speed = 0.7f;
             }
         }
     }
@@ -174,6 +174,64 @@ public class RogueLikeManager : MonoBehaviour
             foreach (var farm in cerealFarms)
             {
                 farm.GetNodeData().successProbability = 0.65f;
+            }
+        }
+    }
+
+    public class CrazyCows_GE : GameEffect
+    {
+        public CrazyCows_GE()
+        {
+            title = "Vacas locas";
+            description = "Tu ganado tienen 16% de probabilidad de morir.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var farms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Animal Keeper").ToArray();
+
+            foreach (var farm in farms)
+            {
+                farm.GetNodeData().successProbability = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var farms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Animal Keeper").ToArray();
+
+            foreach (var farm in farms)
+            {
+                farm.GetNodeData().successProbability = 0.84f;
+            }
+        }
+    }
+
+    public class SkinnyCows_GE : GameEffect
+    {
+        public SkinnyCows_GE()
+        {
+            title = "Vacas flacas";
+            description = "Tu ganado produce 72% mas lento.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var farms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Animal Keeper").ToArray();
+
+            foreach (var farm in farms)
+            {
+                farm.GetNodeData().speed = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var farms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Animal Keeper").ToArray();
+
+            foreach (var farm in farms)
+            {
+                farm.GetNodeData().speed = 0.28f;
             }
         }
     }
