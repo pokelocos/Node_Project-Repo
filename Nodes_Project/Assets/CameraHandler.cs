@@ -56,7 +56,7 @@ public class CameraHandler : MonoBehaviour
 
         if (distance > 0)
         {
-            Vector3 newCameraPosition = transform.position + (cameraMoveDir * distance * cameraMoveSpeed * Time.deltaTime);
+            Vector3 newCameraPosition = transform.position + (cameraMoveDir * distance * cameraMoveSpeed * Time.unscaledDeltaTime);
 
             float x = Mathf.Clamp(newCameraPosition.x, movementBoundries.x - movementBoundries.width, movementBoundries.x + movementBoundries.width);
             float y = Mathf.Clamp(newCameraPosition.y, movementBoundries.y - movementBoundries.height, movementBoundries.y + movementBoundries.height);
@@ -79,7 +79,7 @@ public class CameraHandler : MonoBehaviour
     {
         float cameraZoomDifference = cameraZoom - cameraFollow.orthographicSize;       
 
-        cameraFollow.orthographicSize += cameraZoomDifference * cameraZoomSpeed * Time.deltaTime;
+        cameraFollow.orthographicSize += cameraZoomDifference * cameraZoomSpeed * Time.unscaledDeltaTime;
 
         if (cameraZoomDifference > 0)
         {
@@ -101,19 +101,19 @@ public class CameraHandler : MonoBehaviour
     {       
         if (Input.GetKey(KeyCode.W))
         {
-            cameraFollowPosition.y += moveAmount * Time.deltaTime;
+            cameraFollowPosition.y += moveAmount * Time.unscaledDeltaTime;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            cameraFollowPosition.y -= moveAmount * Time.deltaTime;
+            cameraFollowPosition.y -= moveAmount * Time.unscaledDeltaTime;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            cameraFollowPosition.x -= moveAmount * Time.deltaTime;
+            cameraFollowPosition.x -= moveAmount * Time.unscaledDeltaTime;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            cameraFollowPosition.x += moveAmount * Time.deltaTime;
+            cameraFollowPosition.x += moveAmount * Time.unscaledDeltaTime;
         }        
     }
 
@@ -128,19 +128,19 @@ public class CameraHandler : MonoBehaviour
         {           
             if(Input.mousePosition.x > Screen.width - edgeSize)
             {
-                cameraFollowPosition.x += moveAmount * Time.deltaTime;
+                cameraFollowPosition.x += moveAmount * Time.unscaledDeltaTime;
             }
             if (Input.mousePosition.x < edgeSize)
             {
-                cameraFollowPosition.x -= moveAmount * Time.deltaTime;
+                cameraFollowPosition.x -= moveAmount * Time.unscaledDeltaTime;
             }
             if (Input.mousePosition.y > Screen.height - edgeSize)
             {
-                cameraFollowPosition.y += moveAmount * Time.deltaTime;
+                cameraFollowPosition.y += moveAmount * Time.unscaledDeltaTime;
             }
             if (Input.mousePosition.y < edgeSize)
             {
-                cameraFollowPosition.y -= moveAmount * Time.deltaTime;
+                cameraFollowPosition.y -= moveAmount * Time.unscaledDeltaTime;
             }
         }
     }
@@ -149,21 +149,21 @@ public class CameraHandler : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.KeypadPlus))
         {
-            cameraZoom -= zoomChangeAmount * Time.deltaTime;
+            cameraZoom -= zoomChangeAmount * Time.unscaledDeltaTime;
         }
 
         if(Input.GetKey(KeyCode.KeypadMinus))
         {
-            cameraZoom += zoomChangeAmount * Time.deltaTime;
+            cameraZoom += zoomChangeAmount * Time.unscaledDeltaTime;
         }
 
         if(Input.mouseScrollDelta.y > 0)
         {
-            cameraZoom -= zoomChangeAmount * Time.deltaTime;
+            cameraZoom -= zoomChangeAmount * Time.unscaledDeltaTime;
         }
         if(Input.mouseScrollDelta.y < 0)
         {
-            cameraZoom += zoomChangeAmount * Time.deltaTime;
+            cameraZoom += zoomChangeAmount * Time.unscaledDeltaTime;
         }
         cameraZoom = Mathf.Clamp(cameraZoom, zoomBoundries.x, zoomBoundries.y);
     }
