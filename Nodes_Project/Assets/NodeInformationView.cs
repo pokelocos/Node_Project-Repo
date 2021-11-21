@@ -38,17 +38,27 @@ public class NodeInformationView : MonoBehaviour
 
     private void Spawn()
     {
-        NodeView node;
+        NodeView node = null;
 
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
-        try
+        RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
+        foreach (var hit in hits)
         {
-            node = hit.collider.GetComponentInChildren<NodeView>();
+            if (hit.collider != null)
+            {
+                try
+                {
+                    node = hit.collider.GetComponentInChildren<NodeView>();
+                }
+                catch
+                {
+                    node = null;
+                }
+                
+            }
+            if (node != null)
+                break;
         }
-        catch
-        {
-            node = null;
-        }
+
 
         if (node != null)
         {
