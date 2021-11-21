@@ -1071,6 +1071,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171550326}
   m_CullTransparentMesh: 1
+--- !u!114 &186084581 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5513884293661975556, guid: db5670f1e74264646adcc4251450c174, type: 3}
+  m_PrefabInstance: {fileID: 298067309}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &298067309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1118,6 +1129,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2102873144}
+    - target: {fileID: 5513884294060605329, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: m_IsOn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513884294060605329, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5513884294848539072, guid: db5670f1e74264646adcc4251450c174, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1210,9 +1229,25 @@ PrefabInstance:
       propertyPath: losePanel
       value: 
       objectReference: {fileID: 1518826406}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: playToggle
+      value: 
+      objectReference: {fileID: 531555174}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: pauseToggle
+      value: 
+      objectReference: {fileID: 508093588}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: speedPlayToggle
+      value: 
+      objectReference: {fileID: 186084581}
     - target: {fileID: 5513884294848539076, guid: db5670f1e74264646adcc4251450c174, type: 3}
       propertyPath: m_Name
       value: Game_Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513884295099487875, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: m_Interactable
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5670f1e74264646adcc4251450c174, type: 3}
@@ -1429,6 +1464,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &508093588 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5513884294060605329, guid: db5670f1e74264646adcc4251450c174, type: 3}
+  m_PrefabInstance: {fileID: 298067309}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &531555174 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5513884295099487875, guid: db5670f1e74264646adcc4251450c174, type: 3}
+  m_PrefabInstance: {fileID: 298067309}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &553847039
 GameObject:
   m_ObjectHideFlags: 0

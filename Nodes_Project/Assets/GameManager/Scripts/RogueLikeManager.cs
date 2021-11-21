@@ -26,7 +26,7 @@ public class RogueLikeManager : MonoBehaviour
             gameManager.SetTimeScale(0);
     }
 
-    public void TrySetRewards()
+    public bool TrySetRewards()
     {
         if (GameManager.Days % 3 == 0)
         {
@@ -37,7 +37,9 @@ public class RogueLikeManager : MonoBehaviour
                 rewards[i] = new Reward();
                 rewardsViews[i].ShowReward(rewards[i]);
             }
+            return true;
         }
+        return false;
     }
 
     public void SelectReward(int index)
@@ -56,8 +58,6 @@ public class RogueLikeManager : MonoBehaviour
 
         gameManager.SetTimeScale(1);
         rewards_panel.SetActive(false);
-
-
     }
 
     public class Reward
@@ -244,5 +244,10 @@ public class RogueLikeManager : MonoBehaviour
     public void ChangeRewardsVisibility()
     {
         rewards_menu.SetActive(!rewards_menu.activeSelf);
+    }
+
+    public bool RewardPanelActive()
+    {
+        return rewards_panel.activeSelf;
     }
 }

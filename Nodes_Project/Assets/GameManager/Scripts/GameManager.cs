@@ -19,11 +19,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
 
+    [Space, Header("HUD Buttons")]
+    [SerializeField] private Toggle pauseToggle;
+    [SerializeField] private Toggle playToggle;
+    [SerializeField] private Toggle speedPlayToggle;
+
     private static int money;
     private static int day = 0;
     private float balance_alpha = 0;
     private Color balance_color = Color.green;
-
     private static List<int> dayTransactions = new List<int>();
 
 
@@ -72,7 +76,10 @@ public class GameManager : MonoBehaviour
 
     public void NewDay()
     {
-        FindObjectOfType<RogueLikeManager>().TrySetRewards();
+        if(FindObjectOfType<RogueLikeManager>().TrySetRewards())
+        {
+            SetHudToggles(true);
+        }
 
         for (int i = gameEffects.Keys.Count - 1; i >= 0; i--)
         {
@@ -119,9 +126,20 @@ public class GameManager : MonoBehaviour
         day++;
         days_text.text = day.ToString();
     }
+    
+    public void SetHudToggles(bool active)
+    {
+        pauseToggle.GetComponentInChildren<Image>().color = active ? Color.red : Color.white;
+        pauseToggle.interactable = !active;
+        playToggle.interactable = !active;
+        speedPlayToggle.interactable = !active;
+    }
 
     private void Update()
     {
+        if (pauseToggle.interactable == false && Time.timeScale == 1)
+            SetHudToggles(false);
+
         currentDayTime += Time.deltaTime;
 
         day_image.fillAmount = currentDayTime / dayTime;
