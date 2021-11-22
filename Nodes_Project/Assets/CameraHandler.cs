@@ -199,16 +199,23 @@ public class CameraHandler : MonoBehaviour
         {
             if (draggingNode == null)
             {
-                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
-
-                try
+                RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
+                foreach(var hit in hits)
                 {
-                    draggingNode = hit.collider.GetComponentInChildren<NodeView>();
-                }
-                catch
-                {
-                    draggingNode = null;
-                }
+                    if(hit.collider != null)
+                    {
+                        try
+                        {
+                            draggingNode = hit.collider.GetComponentInChildren<NodeView>();
+                        }
+                        catch
+                        {
+                            draggingNode = null;
+                        }
+                    }
+                    if (draggingNode != null)
+                        break;
+                }               
             }
 
             if (drag == false)

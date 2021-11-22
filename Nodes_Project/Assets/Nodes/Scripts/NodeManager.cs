@@ -74,7 +74,7 @@ public class NodeManager : MonoBehaviour
 
         overNode = hitNode;
 
-        if (hitConnection)
+        if (hitConnection && overNode == null)
         {
             if (hitConnection.GetIngredient() != null)
             {
@@ -92,8 +92,6 @@ public class NodeManager : MonoBehaviour
                 }
             }
         }
-
-
 
         if (Input.GetMouseButtonDown(1))
         {
