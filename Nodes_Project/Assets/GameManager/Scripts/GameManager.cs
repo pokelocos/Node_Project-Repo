@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     private static int money;
     private static int day = 0;
+    private int lastBalance = 0;
     private float balance_alpha = 0;
     private Color balance_color = Color.green;
     private static List<int> dayTransactions = new List<int>();
@@ -108,6 +109,9 @@ public class GameManager : MonoBehaviour
         {
             balance += transaction;
         }
+
+        balance = money - lastBalance;
+        lastBalance = money;
 
         //SHOW BALANCE 
         if (balance > 0)
