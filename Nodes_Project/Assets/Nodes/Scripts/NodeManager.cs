@@ -16,6 +16,10 @@ public class NodeManager : MonoBehaviour
     [SerializeField]
     private SpriteRenderer mouseIcon;
     [SerializeField]
+    private TextMesh price_handler;
+    [SerializeField]
+    private TextMesh price_handler_shadow;
+    [SerializeField]
     private SpriteRenderer mouseIcon_background;
     [SerializeField]
     private SpriteRenderer mouseIcon_ring;
@@ -41,6 +45,14 @@ public class NodeManager : MonoBehaviour
         destPos.z = 0;
 
         mouseIcon.transform.position = destPos;
+
+        price_handler.text = string.Empty;
+        price_handler.GetComponent<MeshRenderer>().sortingLayerName = "Node";
+        price_handler.GetComponent<MeshRenderer>().sortingOrder = 200;
+
+        price_handler_shadow.text = string.Empty;
+        price_handler_shadow.GetComponent<MeshRenderer>().sortingLayerName = "Node";
+        price_handler_shadow.GetComponent<MeshRenderer>().sortingOrder = 200;
 
         foreach (var hit in hits)
         {
@@ -89,6 +101,12 @@ public class NodeManager : MonoBehaviour
                 if (!Input.GetMouseButton(1))
                 {
                     mouseIcon.transform.position = hitConnection.GetMiddlePoint();
+
+                    if (hitConnection.GetIngredient() != null)
+                    {
+                        price_handler.text = "$" + hitConnection.GetIngredient().price;
+                        price_handler_shadow.text = "$" + hitConnection.GetIngredient().price;
+                    }
                 }
             }
         }
@@ -164,6 +182,9 @@ public class NodeManager : MonoBehaviour
 
                         mouseIcon_background.color = darker;
                         mouseIcon_ring.color = new Color(0, 0, 0, 0.15f);
+
+                        price_handler.text = "$" + ingredient.price;
+                        price_handler_shadow.text = "$" + ingredient.price;
 
                         break;
                     }
