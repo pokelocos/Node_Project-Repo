@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            balance_text.text = "-$" + balance;
+            balance_text.text = "$" + balance;
             balance_color = Color.red;
         }
 
