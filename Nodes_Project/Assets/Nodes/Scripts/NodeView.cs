@@ -179,6 +179,8 @@ public abstract class NodeView : MonoBehaviour
         return 0;
     }
 
+    public abstract Recipe[] ValidRecipes();
+
     public void ConnectWith(NodeView inputNode)
     {
         if (outputs.Length > 0)

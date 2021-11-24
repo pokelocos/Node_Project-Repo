@@ -40,6 +40,23 @@ public class Supermarket_Node : NodeView
             }
         }
 
+        bool success = false;
+
+        for (int i = 0; i < inputs.Length; i++)
+        {
+            if (inputs[i] != null)
+            {
+                success = true;
+                break;
+            }
+
+        }
+
+        if (success)
+            GetComponent<Animator>().SetTrigger("Success");
+        else
+            GetComponent<Animator>().SetTrigger("Fail");
+
         GameManager.AddMoney(money);
     }
 
@@ -59,5 +76,28 @@ public class Supermarket_Node : NodeView
 
         if (readyforSell > 0)
             internalSpeed = 1;
+    }
+
+    public override Recipe[] ValidRecipes()
+    {
+        List<Recipe> recipes = new List<Recipe>();
+
+        foreach (var input in inputs)
+        {
+            if (input != null && input.GetIngredient() != null)
+            {
+                if (input.GetIngredient().ingredientName != "Canned Food" && !recipes.Contains(GetRecipes()[1]))
+                {
+                    recipes.Add(GetRecipes()[1]);
+                }
+
+                if (input.GetIngredient().ingredientName == "Canned Food" && !recipes.Contains(GetRecipes()[0]))
+                {
+                    recipes.Add(GetRecipes()[0]);
+                }
+            }
+        }
+
+        return recipes.ToArray();
     }
 }

@@ -15,7 +15,10 @@ public class Factory_Node : NodeView
         {
             if (input != null)
             {
-                price += input.GetOutputIngredient().price;
+                if (input.GetOutputIngredient() != null)
+                {
+                    price += input.GetOutputIngredient().price;
+                }
             }
         }
 
@@ -32,6 +35,23 @@ public class Factory_Node : NodeView
                 output.SendIngredient(ingredient);
             }
         }
+
+        bool success = false;
+
+        for (int i = 0; i < outputs.Length; i++)
+        {
+            if (outputs[i] != null)
+            {
+                success = true;
+                break;
+            }
+
+        }
+
+        if (success)
+            GetComponent<Animator>().SetTrigger("Success");
+        else
+            GetComponent<Animator>().SetTrigger("Fail");
     }
 
     public override void ConnectionChange()
@@ -185,5 +205,9 @@ public class Factory_Node : NodeView
 
         if (selectedRecipe != null)
             internalSpeed = 1;
+    }
+    public override Recipe[] ValidRecipes()
+    {
+        return new Recipe[1] { GetCurrentRecipe() };
     }
 }

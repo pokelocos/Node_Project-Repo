@@ -132,7 +132,7 @@ public class ConectionView : MonoBehaviour
         {
             if (isReadyToClaim)
             {
-                //Mostrar advertencia de perdida de ingrediente
+                destination.GetComponent<Animator>().SetTrigger("Fail");
             }
 
             actualTime = 0;

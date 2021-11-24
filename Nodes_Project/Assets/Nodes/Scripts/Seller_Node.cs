@@ -16,6 +16,23 @@ public class Seller_Node : NodeView
             money += input.GetOutputIngredient().price;
         }
 
+        bool success = false;
+
+        for (int i = 0; i < inputs.Length; i++)
+        {
+            if (inputs[i] != null)
+            {
+                success = true;
+                break;
+            }
+
+        }
+
+        if (success)
+            GetComponent<Animator>().SetTrigger("Success");
+        else
+            GetComponent<Animator>().SetTrigger("Fail");
+
         GameManager.AddMoney(money);
     }
 
@@ -63,5 +80,10 @@ public class Seller_Node : NodeView
 
         if (selectedRecipe != null)
             internalSpeed = 1;
+    }
+
+    public override Recipe[] ValidRecipes()
+    {
+        return new Recipe[1] { selectedRecipe };
     }
 }

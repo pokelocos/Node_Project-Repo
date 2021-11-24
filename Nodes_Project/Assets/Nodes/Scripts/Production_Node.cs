@@ -14,10 +14,27 @@ public class Production_Node : NodeView
     }
     protected override void OnWorkFinish()
     {
+        bool success = false;
+
+        for (int i = 0; i < outputs.Length; i++)
+        {
+            if(outputs[i] != null)
+            {
+                success = true;
+                break;
+            }
+
+        }
+
         foreach (var output in outputs)
         {
             output?.SendIngredient(output?.GetIngredient());
         }
+
+        if (success)
+            GetComponent<Animator>().SetTrigger("Success");
+        else
+            GetComponent<Animator>().SetTrigger("Fail");
     }
 
     public override int CanConnectWith(NodeView inputNode)
@@ -130,5 +147,10 @@ public class Production_Node : NodeView
     public override void InputIngredientReady(ConectionView connection)
     {
        
+    }
+
+    public override Recipe[] ValidRecipes()
+    {
+        return new Recipe[1] { GetCurrentRecipe() };
     }
 }

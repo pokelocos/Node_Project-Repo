@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cff68c5b4f86f7e40a9ee5c737217a4c, type: 3}
   m_Name: Horticulture Farm 1
   m_EditorClassIdentifier: 
-  inputs: []
+  inputs:
+  - {fileID: 11400000, guid: 0659f4fee475d69469840fc044e9ffe2, type: 2}
   outputs:
   - {fileID: 11400000, guid: 83a440d3bdd4cb54e9de4b13263c2322, type: 2}
   - {fileID: 11400000, guid: 267dff32f8532a34c9174bc245b69824, type: 2}
