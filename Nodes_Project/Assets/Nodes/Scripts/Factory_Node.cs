@@ -206,4 +206,8 @@ public class Factory_Node : NodeView
         if (selectedRecipe != null)
             internalSpeed = 1;
     }
+    public override Recipe[] ValidRecipes()
+    {
+        return new Recipe[1] { GetCurrentRecipe() };
+    }
 }

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cff68c5b4f86f7e40a9ee5c737217a4c, type: 3}
   m_Name: Cereal Farm
   m_EditorClassIdentifier: 
-  inputs: []
+  inputs:
+  - {fileID: 11400000, guid: 0659f4fee475d69469840fc044e9ffe2, type: 2}
   outputs:
   - {fileID: 11400000, guid: 1ab73061d92f75c499b5fed9dc3ac43b, type: 2}
   - {fileID: 11400000, guid: 1ab73061d92f75c499b5fed9dc3ac43b, type: 2}

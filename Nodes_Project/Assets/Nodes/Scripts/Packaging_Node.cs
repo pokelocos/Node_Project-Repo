@@ -16,6 +16,14 @@ public class Packaging_Node : Factory_Node
 
     }
 
+    public override int CanConnectWith(NodeView inputNode)
+    {
+        if (inputNode.GetNodeName() == "Packaging")
+            return 0;
+
+        return base.CanConnectWith(inputNode);
+    }
+
     public override void InputIngredientReady(ConectionView connection)
     {
         foreach (var input in inputs)
@@ -41,5 +49,30 @@ public class Packaging_Node : Factory_Node
 
         if (selectedRecipe != null)
             internalSpeed = 1;
+    }
+
+    public override Recipe[] ValidRecipes()
+    {
+        List<Ingredient> ingredients = new List<Ingredient>();
+
+        foreach (var input in inputs)
+        {
+            if (input != null && input.GetIngredient() != null)
+            {
+                var ing = Instantiate(input.GetIngredient());
+                ing.ingredientName = "Any";
+                ingredients.Add(ing);
+            }
+        }
+
+        if (ingredients.Count == 3)
+        {
+            var recipe = Instantiate(selectedRecipe);
+            recipe.SetInputs(ingredients.ToArray());
+
+            return new Recipe[1] { recipe };
+        }
+
+        return new Recipe[0];
     }
 }

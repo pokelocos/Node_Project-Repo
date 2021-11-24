@@ -33,10 +33,12 @@ public class NodeInformationDisplay : MonoBehaviour
         foreach(Recipe recipe in node.GetNodeData().recipes)
         {
             GameObject recipeClone = Instantiate(recipePrefab,recipeContainer);
+
             foreach(Ingredient ingredient in recipe.GetInputs())
             {
                 GameObject clone = Instantiate(ingredientPrefab,recipeClone.transform);
                 clone.transform.SetAsFirstSibling();
+                clone.name = ingredient.ingredientName;
                 clone.GetComponentsInChildren<Image>()[clone.GetComponentsInChildren<Image>().Length - 1].sprite = ingredient.icon;
             }
 
@@ -52,10 +54,58 @@ public class NodeInformationDisplay : MonoBehaviour
             {
                 GameObject clone = Instantiate(ingredientPrefab,recipeClone.transform);
                 clone.transform.SetAsLastSibling();
+                clone.name = ingredient.ingredientName;
                 clone.GetComponentsInChildren<Image>()[clone.GetComponentsInChildren<Image>().Length-1].sprite = ingredient.icon;
             }
+
             recipes.Add(recipeClone);
         }
+
+        var validRecipes = node.ValidRecipes();
+
+        foreach (var recipe in validRecipes)
+        {
+            if (recipe != null)
+            {
+                foreach (var ingredientInput in recipe.GetInputs())
+                {
+                    foreach (Transform recipeTransform in recipeContainer)
+                    {
+                        foreach (Transform ingredientTransform in recipeTransform)
+                        {
+                            if (ingredientTransform.name == ingredientInput.ingredientName)
+                            {
+                                Color darker = Color.Lerp(ingredientInput.color, Color.black, 0.5f);
+                                Color bright = Color.Lerp(ingredientInput.color, Color.white, 0.5f);
+
+                                ingredientTransform.GetComponent<Image>().color = darker;
+                                ingredientTransform.GetChild(0).GetComponent<Image>().color = bright;
+                            }
+                        }
+                    }
+                }
+
+                foreach (var ingredientOutput in recipe.GetOutputs())
+                {
+                    foreach (Transform recipeTransform in recipeContainer)
+                    {
+                        foreach (Transform ingredientTransform in recipeTransform)
+                        {
+                            if (ingredientTransform.name == ingredientOutput.ingredientName)
+                            {
+                                Color darker = Color.Lerp(ingredientOutput.color, Color.black, 0.5f);
+                                Color bright = Color.Lerp(ingredientOutput.color, Color.white, 0.5f);
+
+                                ingredientTransform.GetComponent<Image>().color = darker;
+                                ingredientTransform.GetChild(0).GetComponent<Image>().color = bright;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        
     }
 
     private void ClearRecipeList()

@@ -148,4 +148,9 @@ public class Production_Node : NodeView
     {
        
     }
+
+    public override Recipe[] ValidRecipes()
+    {
+        return new Recipe[1] { GetCurrentRecipe() };
+    }
 }

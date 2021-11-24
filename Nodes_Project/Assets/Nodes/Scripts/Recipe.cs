@@ -9,6 +9,11 @@ public class Recipe : ScriptableObject
     [SerializeField] Ingredient[] inputs;
     [SerializeField] Ingredient[] outputs;
 
+    public void SetInputs(Ingredient[] ingredients)
+    {
+        inputs = ingredients;
+    }
+
     public Ingredient[] GetOutputs()
     {
         return outputs;
