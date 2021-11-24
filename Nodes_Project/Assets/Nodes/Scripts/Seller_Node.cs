@@ -16,6 +16,23 @@ public class Seller_Node : NodeView
             money += input.GetOutputIngredient().price;
         }
 
+        bool success = false;
+
+        for (int i = 0; i < inputs.Length; i++)
+        {
+            if (inputs[i] != null)
+            {
+                success = true;
+                break;
+            }
+
+        }
+
+        if (success)
+            GetComponent<Animator>().SetTrigger("Success");
+        else
+            GetComponent<Animator>().SetTrigger("Fail");
+
         GameManager.AddMoney(money);
     }
 

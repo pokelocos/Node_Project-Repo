@@ -32,6 +32,23 @@ public class Factory_Node : NodeView
                 output.SendIngredient(ingredient);
             }
         }
+
+        bool success = false;
+
+        for (int i = 0; i < outputs.Length; i++)
+        {
+            if (outputs[i] != null)
+            {
+                success = true;
+                break;
+            }
+
+        }
+
+        if (success)
+            GetComponent<Animator>().SetTrigger("Success");
+        else
+            GetComponent<Animator>().SetTrigger("Fail");
     }
 
     public override void ConnectionChange()
