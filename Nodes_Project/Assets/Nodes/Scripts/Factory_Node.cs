@@ -15,7 +15,10 @@ public class Factory_Node : NodeView
         {
             if (input != null)
             {
-                price += input.GetOutputIngredient().price;
+                if (input.GetOutputIngredient() != null)
+                {
+                    price += input.GetOutputIngredient().price;
+                }
             }
         }
 
