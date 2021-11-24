@@ -31,7 +31,7 @@ public class NodeManager : MonoBehaviour
     private const float DOUBLE_CLICK_TIME = .2f;
 
     [SerializeField]
-    private GameObject conectionCounterView;
+    private NodeConnectionDisplay connectionDisplay;
 
     void Update()
     {
@@ -93,15 +93,15 @@ public class NodeManager : MonoBehaviour
         if(overNode != null)
         {
             Vector3 screenPos = Camera.main.WorldToScreenPoint(overNode.transform.position);
-            conectionCounterView.SetActive(true);
-            conectionCounterView.transform.position = screenPos + new Vector3(0,-85,0);
+            connectionDisplay.gameObject.SetActive(true);
+            connectionDisplay.gameObject.transform.position = screenPos + new Vector3(0,-85,0);
 
-            /*Inputs*/conectionCounterView.GetComponentInChildren<Text>().text = "Inputs: " + overNode.GetConnectedInputs() + " / " + overNode.GetInputs().Length + "\n";
-            /*Outputs*/conectionCounterView.GetComponentInChildren<Text>().text += "Outputs: " + overNode.GetConnectedOutputs() + " / " + overNode.GetOutputs().Length;
+            /*Inputs*/connectionDisplay.SetInputsText(overNode.GetConnectedInputs() + "/" + overNode.GetInputs().Length);
+            /*Outputs*/connectionDisplay.SetOutputsText(overNode.GetConnectedOutputs() + "/" + overNode.GetOutputs().Length);
         }
         else
         {
-            conectionCounterView.SetActive(false);
+            connectionDisplay.gameObject.SetActive(false);
         }
 
         if (hitConnection && overNode == null)
