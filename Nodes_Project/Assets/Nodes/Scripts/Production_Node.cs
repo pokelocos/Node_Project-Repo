@@ -32,13 +32,9 @@ public class Production_Node : NodeView
         }
 
         if (success)
-        {
             GetComponent<Animator>().SetTrigger("Success");
-        }
         else
-        {
             GetComponent<Animator>().SetTrigger("Fail");
-        }
     }
 
     public override int CanConnectWith(NodeView inputNode)
