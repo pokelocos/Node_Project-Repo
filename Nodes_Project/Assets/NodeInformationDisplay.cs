@@ -38,6 +38,21 @@ public class NodeInformationDisplay : MonoBehaviour
             {
                 GameObject clone = Instantiate(ingredientPrefab,recipeClone.transform);
                 clone.transform.SetAsFirstSibling();
+
+                foreach (var input in node.GetInputs())
+                {
+                    if (input != null && input.GetIngredient() != null)
+                        if (input.GetIngredient() == ingredient)
+                        {
+                            Color darker = Color.Lerp(input.GetIngredient().color, Color.black, 0.5f);
+                            Color bright = Color.Lerp(input.GetIngredient().color, Color.white, 0.5f);
+
+                            clone.GetComponent<Image>().color = darker;
+                            clone.transform.GetChild(0).GetComponent<Image>().color = bright;
+                        }
+                    }
+                }
+
                 clone.name = ingredient.ingredientName;
                 clone.GetComponentsInChildren<Image>()[clone.GetComponentsInChildren<Image>().Length - 1].sprite = ingredient.icon;
             }
