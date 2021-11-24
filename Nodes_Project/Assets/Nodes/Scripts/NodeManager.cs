@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class NodeManager : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class NodeManager : MonoBehaviour
 
     [SerializeField]
     private NodeConnectionDisplay connectionDisplay;
+    [SerializeField]
+    private Vector3 ConnectionsDisplayOffset = new Vector3(0, -50, 0);
 
     void Update()
     {
@@ -90,11 +93,11 @@ public class NodeManager : MonoBehaviour
 
         overNode = hitNode;
 
-        if(overNode != null)
-        {
+        if(overNode != null && !EventSystem.current.IsPointerOverGameObject())
+        {      
             Vector3 screenPos = Camera.main.WorldToScreenPoint(overNode.transform.position);
             connectionDisplay.gameObject.SetActive(true);
-            connectionDisplay.gameObject.transform.position = screenPos + new Vector3(0,-85,0);
+            connectionDisplay.gameObject.transform.position = screenPos + ConnectionsDisplayOffset;
 
             /*Inputs*/connectionDisplay.SetInputsText(overNode.GetConnectedInputs() + "/" + overNode.GetInputs().Length);
             /*Outputs*/connectionDisplay.SetOutputsText(overNode.GetConnectedOutputs() + "/" + overNode.GetOutputs().Length);
