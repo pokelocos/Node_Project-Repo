@@ -11,12 +11,13 @@ public class CameraHandler : MonoBehaviour
     private float cameraZoom = 8;
     private NodeView draggingNode = null;
 
+    [SerializeField] private Vector3 cameraStartPosition = new Vector3(0,0,-10);
     [Header("Variables de velocidad")]
-    [SerializeField]private float cameraMoveSpeed = 3f;
+    [SerializeField] private float cameraMoveSpeed = 3f;
     [SerializeField] private float cameraZoomSpeed = 10f;
-    [SerializeField]private float moveAmount = 10f;
-    [SerializeField]private float edgeSize = 30f;
-    [SerializeField]private float zoomChangeAmount = 80f;
+    [SerializeField] private float moveAmount = 10f;
+    [SerializeField] private float edgeSize = 30f;
+    [SerializeField] private float zoomChangeAmount = 80f;
 
     [Header("Boundries")]
     [SerializeField] private Vector2 zoomBoundries = new Vector2(5, 20);
@@ -28,7 +29,7 @@ public class CameraHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        cameraFollow.transform.position = cameraStartPosition;
     }
 
     // Update is called once per frame

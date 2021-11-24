@@ -272,6 +272,28 @@ public abstract class NodeView : MonoBehaviour
         return data;
     }
 
+    public int GetConnectedInputs()
+    {
+        int a = 0;
+        foreach(ConectionView c in inputs)
+        {
+            if (c != null)
+                a++;
+        }
+        return a;
+    }
+
+    public int GetConnectedOutputs()
+    {
+        int a = 0;
+        foreach (ConectionView c in outputs)
+        {
+            if (c != null)
+                a++;
+        }
+        return a;
+    }
+
     private void OnGUI()
     {
         if (Application.isEditor && isDebugMode)

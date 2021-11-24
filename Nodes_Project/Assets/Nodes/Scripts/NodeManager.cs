@@ -2,6 +2,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NodeManager : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class NodeManager : MonoBehaviour
 
     private float lastClickTime;
     private const float DOUBLE_CLICK_TIME = .2f;
+
+    [SerializeField]
+    private GameObject conectionCounterView;
 
     void Update()
     {
@@ -85,6 +89,20 @@ public class NodeManager : MonoBehaviour
         }
 
         overNode = hitNode;
+
+        if(overNode != null)
+        {
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(overNode.transform.position);
+            conectionCounterView.SetActive(true);
+            conectionCounterView.transform.position = screenPos + new Vector3(0,-85,0);
+
+            /*Inputs*/conectionCounterView.GetComponentInChildren<Text>().text = "Inputs: " + overNode.GetConnectedInputs() + " / " + overNode.GetInputs().Length + "\n";
+            /*Outputs*/conectionCounterView.GetComponentInChildren<Text>().text += "Outputs: " + overNode.GetConnectedOutputs() + " / " + overNode.GetOutputs().Length;
+        }
+        else
+        {
+            conectionCounterView.SetActive(false);
+        }
 
         if (hitConnection && overNode == null)
         {
