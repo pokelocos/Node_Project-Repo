@@ -42,6 +42,7 @@ public class NodeInformationDisplay : MonoBehaviour
                 foreach (var input in node.GetInputs())
                 {
                     if (input != null && input.GetIngredient() != null)
+                    {
                         if (input.GetIngredient() == ingredient)
                         {
                             Color darker = Color.Lerp(input.GetIngredient().color, Color.black, 0.5f);
