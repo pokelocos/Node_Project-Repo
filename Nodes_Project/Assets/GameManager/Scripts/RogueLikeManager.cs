@@ -99,7 +99,7 @@ public class RogueLikeManager : MonoBehaviour
 
                 effects[i] = System.Activator.CreateInstance(effectsClasses[Random.Range(0, effectsClasses.Length)]) as GameEffect;
 
-                effects[i].daysDuration = Random.Range(1, 3);
+                effects[i].daysDuration = Random.Range(3, 6);
             }
         }
     }
