@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientName: Juice
   price: 12
-  icon: {fileID: 21300000, guid: 8436c5a9cdd7f8548890e5bc838d4bb8, type: 3}
+  icon: {fileID: 21300000, guid: f8b4362543fd9264591e58a9686ea233, type: 3}
   color: {r: 1, g: 0.42316097, b: 0, a: 1}

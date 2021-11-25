@@ -388,6 +388,7 @@ MonoBehaviour:
   bright: {fileID: 6239567527595109148}
   data: {fileID: 11400000, guid: 2d2d180806101e84da3c9498edd20c00, type: 2}
   isDebugMode: 0
+  isActive: 1
 --- !u!95 &-7647098697731731257
 Animator:
   serializedVersion: 3
@@ -478,7 +479,7 @@ SpriteRenderer:
   m_SortingLayerID: 236961823
   m_SortingLayer: 2
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 4d05a675f2925a144b829e8d95b78ea3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e104fb417ad96474fb9934367310cee7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
