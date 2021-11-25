@@ -125,7 +125,7 @@ public class RogueLikeManager : MonoBehaviour
         public Drought_GE()
         {
             title = "Sequia";
-            description = "Tus granjas son 30% mas lenas.";
+            description = "Tus granjas son 30% mas lentas.";
         }
 
         public override void RemoveEffect()
@@ -145,6 +145,296 @@ public class RogueLikeManager : MonoBehaviour
             foreach (var farm in cerealFarms)
             {
                 farm.GetNodeData().speed = 0.7f;
+            }
+        }
+    }
+
+    public class Frost_GE : GameEffect
+    {
+        public Frost_GE()
+        {
+            title = "Helada";
+            description = "Tus granjas de hortalizas son 60% mas lentas.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Horticulture").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Horticulture").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 0.4f;
+            }
+        }
+    }
+
+    public class LazyBees_GE : GameEffect
+    {
+        public LazyBees_GE()
+        {
+            title = "Abjeas flojas";
+            description = "Tus granjas de miel son 40% mas lentas.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Apiculture").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Apiculture").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 0.6f;
+            }
+        }
+    }
+
+    public class LazyBirds_GE : GameEffect
+    {
+        public LazyBirds_GE()
+        {
+            title = "Aves flojas";
+            description = "Tus granjas aves son 40% mas lentas.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Aviar Farm").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Aviar Farm").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 0.6f;
+            }
+        }
+    }
+
+    public class BakeryBroken_GE : GameEffect
+    {
+        public BakeryBroken_GE()
+        {
+            title = "Fabrica de pan averiada";
+            description = "Tus fabricas de pan son 50% mas lentas.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Bakery").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Bakery").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 0.5f;
+            }
+        }
+    }
+
+    public class ChipsBroken_GE : GameEffect
+    {
+        public ChipsBroken_GE()
+        {
+            title = "Fabrica de frituras averiada";
+            description = "Tus fabricas de fritura son 80% mas lentas.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Chips Factory").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Chips Factory").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 0.2f;
+            }
+        }
+    }
+
+    public class JuiceBroken_GE : GameEffect
+    {
+        public JuiceBroken_GE()
+        {
+            title = "Fabrica de jugos averiada";
+            description = "Tus fabricas de jugos son 20% mas lentas.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Juice Factory").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Juice Factory").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 0.8f;
+            }
+        }
+    }
+
+    public class DairyBroken_GE : GameEffect
+    {
+        public DairyBroken_GE()
+        {
+            title = "Fabrica de lacteos averiada";
+            description = "Tus fabricas de lacteos son 40% mas lentas.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Dairy Factory").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Dairy Factory").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 0.6f;
+            }
+        }
+    }
+
+    public class ButcherRegulations_GE : GameEffect
+    {
+        public ButcherRegulations_GE()
+        {
+            title = "Regulaciones sanitarias: Carnicero";
+            description = "Tus carnicerias son 70% mas lentas.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Butcher").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Butcher").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 0.3f;
+            }
+        }
+    }
+
+    public class CakesRegulations_GE : GameEffect
+    {
+        public CakesRegulations_GE()
+        {
+            title = "Regulaciones sanitarias: Pasteleria";
+            description = "Tus pastelerias son 20% mas lentas.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Cake Shop").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Cake Shop").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 0.8f;
+            }
+        }
+    }
+
+    public class RestaurantRegulations_GE : GameEffect
+    {
+        public RestaurantRegulations_GE()
+        {
+            title = "Nueva carta";
+            description = "Tus restaurantes son 50% mas lentos.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Restaurant").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Restaurant").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().speed = 0.5f;
             }
         }
     }
@@ -174,6 +464,64 @@ public class RogueLikeManager : MonoBehaviour
             foreach (var farm in cerealFarms)
             {
                 farm.GetNodeData().successProbability = 0.65f;
+            }
+        }
+    }
+
+    public class InventoryError_GE : GameEffect
+    {
+        public InventoryError_GE()
+        {
+            title = "Errores de inventario";
+            description = "Tus supermercados tienen 25% de probabilidad de perder su inventario.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Supermarket").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().successProbability = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Supermarket").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().successProbability = 0.75f;
+            }
+        }
+    }
+
+    public class BurnedOil_GE : GameEffect
+    {
+        public BurnedOil_GE()
+        {
+            title = "Aceite quemado";
+            description = "Tus fabricas de frituras tienen 50% de probabilidad de quemar su aceite.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Chips Factory").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().successProbability = 1;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Chips Factory").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.GetNodeData().successProbability = 0.5f;
             }
         }
     }
@@ -232,6 +580,180 @@ public class RogueLikeManager : MonoBehaviour
             foreach (var farm in farms)
             {
                 farm.GetNodeData().speed = 0.28f;
+            }
+        }
+    }
+
+    public class BreweringStrike_GE : GameEffect
+    {
+        public BreweringStrike_GE()
+        {
+            title = "Huelga Cervecera";
+            description = "Tus fabricas de bebidas alcoholicas se encuentran cerradas.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Brewering").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.isActive = true;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Brewering").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.isActive = false;
+            }
+        }
+    }
+
+    public class ApicultureStrike_GE : GameEffect
+    {
+        public ApicultureStrike_GE()
+        {
+            title = "Huelga Apicultora";
+            description = "Tus granjas de miel se encuentran cerradas.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Apiculture").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.isActive = true;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Apiculture").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.isActive = false;
+            }
+        }
+    }
+
+    public class PackagingStrike_GE : GameEffect
+    {
+        public PackagingStrike_GE()
+        {
+            title = "Huelga de enlatados";
+            description = "Tus fabricas de enlatados se encuentran cerradas.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Packaging").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.isActive = true;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Packaging").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.isActive = false;
+            }
+        }
+    }
+
+    public class DairyStrike_GE : GameEffect
+    {
+        public DairyStrike_GE()
+        {
+            title = "Huelga de lacteos";
+            description = "Tus fabricas de lacteos se encuentran cerradas.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Dairy Factory").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.isActive = true;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Dairy Factory").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.isActive = false;
+            }
+        }
+    }
+
+    public class SupermarketStrike_GE : GameEffect
+    {
+        public SupermarketStrike_GE()
+        {
+            title = "Huelga de supermercados";
+            description = "Tus supermercados se encuentran cerrados.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Supermarket").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.isActive = true;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Supermarket").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.isActive = false;
+            }
+        }
+    }
+
+    public class BistroStrike_GE : GameEffect
+    {
+        public BistroStrike_GE()
+        {
+            title = "Huelga de meseros";
+            description = "Tus restaurantes elegantes se encuentran cerrados.";
+        }
+
+        public override void RemoveEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Expensive Restaurant").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.isActive = true;
+            }
+        }
+
+        public override void SetEffect()
+        {
+            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Expensive Restaurant").ToArray();
+
+            foreach (var farm in cerealFarms)
+            {
+                farm.isActive = false;
             }
         }
     }

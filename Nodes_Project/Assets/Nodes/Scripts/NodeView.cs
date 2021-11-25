@@ -17,6 +17,8 @@ public abstract class NodeView : MonoBehaviour
 
     public bool isDebugMode;
 
+    public bool isActive = true;
+
     private float maxTime = 4f; //seconds
     private float actualTime = 0f;
     protected float internalSpeed = 0;
@@ -51,6 +53,15 @@ public abstract class NodeView : MonoBehaviour
 
     void Update()
     {
+        if (isActive)
+        {
+            Paint(GetColor());
+        }
+        else
+        {
+            Paint(Color.gray);
+        }
+
         Work();
     }
 
@@ -58,7 +69,7 @@ public abstract class NodeView : MonoBehaviour
     {
         if (!isFailure)
         {
-            actualTime += Time.deltaTime * data.speed * internalSpeed;
+            actualTime += Time.deltaTime * data.speed * internalSpeed * System.Convert.ToInt32(isActive);
 
             fillBar.GetComponent<SpriteRenderer>().color = Color.white;
         }
