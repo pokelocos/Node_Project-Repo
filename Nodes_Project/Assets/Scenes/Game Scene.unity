@@ -1960,8 +1960,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: no lograste mantener el sistema a flote, tus reservas bajaron de -$150,
-    intentalo denuevo y lo lograras.
+  m_Text: "\rEst\xE1s en bancarrota, No has gestionado de la mejor manera, prueba
+    suerte la pr\xF3xima vez.\r"
 --- !u!222 &877761703
 CanvasRenderer:
   m_ObjectHideFlags: 0
