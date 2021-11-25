@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     public Color debDay;
     public Color AlertDay;
 
+    public GameObject warningPanel;
+
     [Space]
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
@@ -46,6 +48,7 @@ public class GameManager : MonoBehaviour
     public AudioClip winSound;
 
     private int negativeDays = 0;
+    private bool warningonce = true;
 
     public static int Money
     {
@@ -144,6 +147,12 @@ public class GameManager : MonoBehaviour
 
         if(money < 0)
         {
+            if(warningonce)
+            {
+                warningPanel.gameObject.SetActive(true);
+                warningonce = false;
+            }
+
             negativeDays++; // variable ql mala
         }
         else
