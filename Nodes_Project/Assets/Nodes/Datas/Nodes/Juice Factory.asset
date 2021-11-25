@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Juice Factory
   m_EditorClassIdentifier: 
   color: {r: 0.37254903, g: 0.47843137, b: 1, a: 1}
-  icon: {fileID: 21300000, guid: 4d05a675f2925a144b829e8d95b78ea3, type: 3}
+  icon: {fileID: 21300000, guid: e104fb417ad96474fb9934367310cee7, type: 3}
   speed: 1
   successProbability: 1
   productionTime: 4
