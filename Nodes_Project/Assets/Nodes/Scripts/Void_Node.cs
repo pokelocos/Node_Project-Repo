@@ -14,8 +14,6 @@ public class Void_Node : Supermarket_Node
 
         inputs = new ConectionView[4];
 
-        star.GetComponent<SpriteRenderer>().color = GetColor();
-
         star.SetActive(false);
 
         amount_text.GetComponent<MeshRenderer>().sortingLayerName = "Node";
