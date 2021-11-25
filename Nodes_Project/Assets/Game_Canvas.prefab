@@ -8273,7 +8273,7 @@ MonoBehaviour:
   commonDay: {r: 0.36078432, g: 0.76862746, b: 1, a: 1}
   debDay: {r: 1, g: 0.6672949, b: 0.3254717, a: 1}
   AlertDay: {r: 1, g: 0, b: 0, a: 1}
-  warningPanel: {fileID: 0}
+  warningPanel: {fileID: 7364404065426212604}
   losePanel: {fileID: 0}
   winPanel: {fileID: 0}
   pauseToggle: {fileID: 5513884294060605329}
