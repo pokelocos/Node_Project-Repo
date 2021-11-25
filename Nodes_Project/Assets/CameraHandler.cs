@@ -24,9 +24,16 @@ public class CameraHandler : MonoBehaviour
     [SerializeField] private Rect movementBoundries;
 
     bool drag = false;
+    bool lastDrag = false;
     Vector3 difference;
     Vector3 origen;
     // Start is called before the first frame update
+
+    public AudioSource source;
+    public AudioClip startGrabSound;
+    public AudioClip endGrabSound;
+
+
     void Start()
     {
         cameraFollow.transform.position = cameraStartPosition;
@@ -208,6 +215,11 @@ public class CameraHandler : MonoBehaviour
                         try
                         {
                             draggingNode = hit.collider.GetComponentInChildren<NodeView>();
+
+                            if(draggingNode != null)
+                            {
+                                source.PlayOneShot(startGrabSound);
+                            }
                         }
                         catch
                         {
@@ -219,7 +231,7 @@ public class CameraHandler : MonoBehaviour
                 }               
             }
 
-            if (drag == false)
+            if (drag == false) // ??
             {
                 drag = true;
             }
@@ -228,12 +240,20 @@ public class CameraHandler : MonoBehaviour
         {
             drag = false;
             draggingNode = null;
+
+            
         }
 
         if (drag && draggingNode != null)
         {
             draggingNode.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, draggingNode.transform.position.z);
         }
+
+        if (drag != lastDrag)
+        {
+            source.PlayOneShot(endGrabSound);
+        }
+        lastDrag = drag;
     }
 
 }

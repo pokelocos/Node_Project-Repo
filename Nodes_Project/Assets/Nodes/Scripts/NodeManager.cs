@@ -36,6 +36,11 @@ public class NodeManager : MonoBehaviour
     [SerializeField]
     private Vector3 ConnectionsDisplayOffset = new Vector3(0, -50, 0);
 
+    public AudioSource source;
+    public AudioClip cannotConect;
+    public AudioClip canConect;
+    public AudioClip nothingConect;
+
     void Update()
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
@@ -105,6 +110,7 @@ public class NodeManager : MonoBehaviour
         else
         {
             connectionDisplay.gameObject.SetActive(false);
+            
         }
 
         if (hitConnection && overNode == null)
@@ -158,7 +164,16 @@ public class NodeManager : MonoBehaviour
                 if (originNode.CanConnectWith(destNode) == 2)
                 {
                     originNode.ConnectWith(destNode);
+                    source.PlayOneShot(canConect);
                 }
+                else
+                {
+                    source.PlayOneShot(cannotConect);
+                }
+            }
+            else
+            {
+                source.PlayOneShot(nothingConect);
             }
 
             var connections = FindObjectsOfType<ConectionView>().Where(x => x != auxiliarConection).ToArray(); ;
