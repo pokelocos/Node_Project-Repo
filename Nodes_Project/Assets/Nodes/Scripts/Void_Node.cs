@@ -4,13 +4,19 @@ using UnityEngine;
 public class Void_Node : Supermarket_Node
 {
     [SerializeField] private TextMesh amount_text;
+    [SerializeField] private GameObject star;
     public int amount = 50;
+    public bool isCompleted;
 
     private void Start()
     {
         selectedRecipe = GetRecipes()[0];
 
         inputs = new ConectionView[4];
+
+        star.GetComponent<SpriteRenderer>().color = GetColor();
+
+        star.SetActive(false);
 
         amount_text.GetComponent<MeshRenderer>().sortingLayerName = "Node";
         amount_text.GetComponent<MeshRenderer>().sortingOrder = 200;
@@ -34,6 +40,9 @@ public class Void_Node : Supermarket_Node
 
     public override int CanConnectWith(NodeView inputNode)
     {
+        if (isCompleted)
+            return 0;
+
         if (inputNode.GetCurrentRecipe() == null)
             return 0;
 
@@ -105,6 +114,32 @@ public class Void_Node : Supermarket_Node
 
         amount -= substractAmount;
         amount_text.text = amount.ToString();
+
+        if (amount <= 0)
+        {
+            isCompleted = true;
+
+            GameManager.points++;
+
+            foreach (var input in inputs)
+            {
+                if (input != null)
+                {
+                    input.Disconnect();
+                }
+            }
+
+            inputs = new ConectionView[0];
+
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+
+            star.SetActive(true);
+
+            GetComponent<SpriteRenderer>().color = Color.clear;
+        }
 
         if (success)
             GetComponent<Animator>().SetTrigger("Success");

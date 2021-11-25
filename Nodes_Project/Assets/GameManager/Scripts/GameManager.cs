@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text money_text;
     [SerializeField] private Text days_text;
     [SerializeField] private Text balance_text;
+    [SerializeField] private Text starAmount_text;
     [SerializeField] private Image day_image;
     [SerializeField] private EffectView effectView_template;
 
@@ -143,6 +144,8 @@ public class GameManager : MonoBehaviour
     {
         if (pauseToggle.interactable == false && Time.timeScale == 1)
             SetHudToggles(false);
+
+        starAmount_text.text = points + "/" + winPoints;
 
         currentDayTime += Time.deltaTime;
 
