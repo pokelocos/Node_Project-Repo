@@ -126,6 +126,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 6907e7916c56cb5439b3b6c7c35531cc, type: 2}
   isDebugMode: 0
   amount_text: {fileID: 4936818494770694766}
+  amount: 50
 --- !u!95 &7094058399494560907
 Animator:
   serializedVersion: 3
@@ -578,6 +579,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6841953147400823471}
   - component: {fileID: 6841953147400823470}
+  - component: {fileID: 1789573822619539793}
   m_Layer: 0
   m_Name: Bright
   m_TagString: Untagged
@@ -599,7 +601,7 @@ Transform:
   - {fileID: 6841953147834467564}
   m_Father: {fileID: 2295734670578796275}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 351}
 --- !u!212 &6841953147400823470
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -651,6 +653,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!111 &1789573822619539793
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841953147400823469}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: f9ce2255cbed51c40a91149d45581ede, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: f9ce2255cbed51c40a91149d45581ede, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &6841953147834467563
 GameObject:
   m_ObjectHideFlags: 0

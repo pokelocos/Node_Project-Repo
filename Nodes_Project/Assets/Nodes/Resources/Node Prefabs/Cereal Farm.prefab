@@ -399,6 +399,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8999893162372285203}
   - component: {fileID: 8657393247705239117}
+  - component: {fileID: 1368467081332710135}
   m_Layer: 0
   m_Name: Bright
   m_TagString: Untagged
@@ -472,6 +473,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!111 &1368467081332710135
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3243514718196432142}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: f9ce2255cbed51c40a91149d45581ede, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: f9ce2255cbed51c40a91149d45581ede, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &6195060165151566513
 GameObject:
   m_ObjectHideFlags: 0
