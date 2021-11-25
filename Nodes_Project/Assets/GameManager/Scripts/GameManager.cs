@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public float dayTime = 60;
     private float currentDayTime;
     public static int points = 0;
+    public int lastpoint = 0;
     public int winPoints = 5;
     
     [SerializeField] private Text money_text;
@@ -35,6 +36,9 @@ public class GameManager : MonoBehaviour
     private static List<int> dayTransactions = new List<int>();
 
     private static Dictionary<RogueLikeManager.GameEffect, EffectView> gameEffects = new Dictionary<RogueLikeManager.GameEffect, EffectView>();
+
+    public AudioSource source;
+    public AudioClip winSound;
 
     public static int Money
     {
@@ -179,6 +183,12 @@ public class GameManager : MonoBehaviour
         {
             winPanel.SetActive(true);
         }
+
+        if (lastpoint != points)
+        {
+            source.PlayOneShot(winSound);
+        }
+        lastpoint = points;
     }
 
     private void SetMoneyValue(int v)
