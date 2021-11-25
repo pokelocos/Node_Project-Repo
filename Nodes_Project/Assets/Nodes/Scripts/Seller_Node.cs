@@ -13,7 +13,10 @@ public class Seller_Node : NodeView
         var money = 0;
         foreach (var input in inputs)
         {
-            money += input.GetOutputIngredient().price;
+            if (input != null)
+            {
+                money += input.GetOutputIngredient().price;
+            }
         }
 
         bool success = false;
