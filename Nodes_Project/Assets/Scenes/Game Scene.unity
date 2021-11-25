@@ -1364,6 +1364,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2094021978}
     - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: debDay.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: debDay.b
+      value: 0.3254717
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: debDay.g
+      value: 0.6672949
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: debDay.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
       propertyPath: winPanel
       value: 
       objectReference: {fileID: 1363881876}
@@ -1375,6 +1391,38 @@ PrefabInstance:
       propertyPath: losePanel
       value: 
       objectReference: {fileID: 1518826406}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: AlertDay.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: AlertDay.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: AlertDay.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: AlertDay.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: commonDay.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: commonDay.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: commonDay.g
+      value: 0.76862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513884294848539074, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: commonDay.r
+      value: 0.36078432
+      objectReference: {fileID: 0}
     - target: {fileID: 5513884294848539076, guid: db5670f1e74264646adcc4251450c174, type: 3}
       propertyPath: m_Name
       value: Game_Canvas
