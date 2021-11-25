@@ -63,6 +63,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        lastBalance = money;
+    }
+
     public static void AddMoney(int amount)
     {
         dayTransactions.Add(amount);
