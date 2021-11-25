@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private EffectView effectView_template;
 
     [Space]
+    public Color commonDay;
+    public Color debDay;
+    public Color AlertDay;
+
+    [Space]
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
 
@@ -28,7 +33,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Toggle playToggle;
     [SerializeField] private Toggle speedPlayToggle;
 
-    private static int money;
+    [SerializeField] private static int money = 1000;
     private static int day = 0;
     private int lastBalance = 0;
     private float balance_alpha = 0;
@@ -39,6 +44,8 @@ public class GameManager : MonoBehaviour
 
     public AudioSource source;
     public AudioClip winSound;
+
+    private int negativeDays = 0;
 
     public static int Money
     {
@@ -134,6 +141,15 @@ public class GameManager : MonoBehaviour
 
         day++;
         days_text.text = day.ToString();
+
+        if(money < 0)
+        {
+            negativeDays++; // variable ql mala
+        }
+        else
+        {
+            negativeDays = 0;
+        }
     }
     
     public void SetHudToggles(bool active)
@@ -169,13 +185,26 @@ public class GameManager : MonoBehaviour
             NewDay();
         }
 
+        if(negativeDays <= 0)
+        {
+            day_image.color = commonDay;
+        }
+        else if(negativeDays >= 3)
+        {
+            day_image.color = AlertDay;
+        }
+        else
+        {
+            day_image.color = debDay;
+        }
+
         // set money value
         SetMoneyValue(Money);
 
         //LOSE CON
-        if (money < -150)
+        if (negativeDays >= 3)
         {
-            losePanel.SetActive(true);
+            losePanel.SetActive(true); 
         }
 
         // WIN CON
