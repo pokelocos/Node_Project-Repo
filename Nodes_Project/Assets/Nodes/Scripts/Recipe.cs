@@ -14,6 +14,11 @@ public class Recipe : ScriptableObject
         inputs = ingredients;
     }
 
+    public void SetOutputs(Ingredient[] ingredients)
+    {
+        outputs = ingredients;
+    }
+
     public Ingredient[] GetOutputs()
     {
         return outputs;

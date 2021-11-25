@@ -55,24 +55,34 @@ public class Packaging_Node : Factory_Node
     {
         List<Ingredient> ingredients = new List<Ingredient>();
 
+        int i = 0;
+
         foreach (var input in inputs)
         {
             if (input != null && input.GetIngredient() != null)
             {
                 var ing = Instantiate(input.GetIngredient());
-                ing.ingredientName = "Any";
+
+                if (i > 0)
+                    ing.ingredientName = "Any " + i;
+                else
+                    ing.ingredientName = "Any";
+
                 ingredients.Add(ing);
+                i++;
             }
         }
 
-        if (ingredients.Count == 3)
-        {
-            var recipe = Instantiate(selectedRecipe);
-            recipe.SetInputs(ingredients.ToArray());
+        var recipe = Instantiate(selectedRecipe);
+        recipe.SetInputs(ingredients.ToArray());
 
+
+        if (ingredients.Count != 3)
+        {
+            recipe.SetOutputs(new Ingredient[0]);
             return new Recipe[1] { recipe };
         }
 
-        return new Recipe[0];
+        return new Recipe[1] { recipe };
     }
 }

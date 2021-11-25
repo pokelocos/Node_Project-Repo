@@ -75,6 +75,21 @@ public class NodeInformationDisplay : MonoBehaviour
             }
 
             recipes.Add(recipeClone);
+
+            int anyMatches = 0;
+
+            for (int i = 0; i < recipeClone.transform.childCount; i++)
+            {
+                if(recipeClone.transform.GetChild(i).name == "Any")
+                {
+                    if (anyMatches > 0)
+                    {
+                        recipeClone.transform.GetChild(i).name = "Any " + anyMatches;
+                    }
+
+                    anyMatches++;
+                }
+            }
         }
 
         var validRecipes = node.ValidRecipes();
