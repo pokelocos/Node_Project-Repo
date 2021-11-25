@@ -89,7 +89,7 @@ public class RogueLikeManager : MonoBehaviour
 
             price /= effectsCount + 1;
 
-            price *= Random.Range(1, 3) * GameManager.Days;
+            price += Random.Range(1, 3) * GameManager.Days * 5;
 
             effects = new GameEffect[effectsCount];
 
