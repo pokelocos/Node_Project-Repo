@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
     public float dayTime = 60;
     private float currentDayTime;
+    public static int points = 0;
+    public int winPoints = 5;
     
     [SerializeField] private Text money_text;
     [SerializeField] private Text days_text;
@@ -30,8 +32,6 @@ public class GameManager : MonoBehaviour
     private float balance_alpha = 0;
     private Color balance_color = Color.green;
     private static List<int> dayTransactions = new List<int>();
-
-
 
     private static Dictionary<RogueLikeManager.GameEffect, EffectView> gameEffects = new Dictionary<RogueLikeManager.GameEffect, EffectView>();
 

@@ -83,6 +83,9 @@ public class Factory_Node : NodeView
     {
         if (GetCurrentRecipe() != null)
         {
+            if (inputNode is Void_Node)
+               return  inputNode.CanConnectWith(this);
+
             if (inputNode.GetInputs().Length == 0)
             {
                 return 0;

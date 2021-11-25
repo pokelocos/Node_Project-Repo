@@ -7,7 +7,7 @@ public abstract class NodeView : MonoBehaviour
     [SerializeField]
     private SpriteRenderer body;
     [SerializeField]
-    private SpriteRenderer nodeIcon;
+    protected SpriteRenderer nodeIcon;
     [SerializeField]
     private SpriteRenderer fillBar;
     [SerializeField]

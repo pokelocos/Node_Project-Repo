@@ -74,6 +74,13 @@ public class Supermarket_Node : NodeView
     {
         var readyforSell = inputs.Count(x => x != null && x.isReadyToClaim);
 
+        foreach (var input in inputs)
+        {
+            if (input != null)
+                input.isReadyToClaim = false;
+        }
+
+
         if (readyforSell > 0)
             internalSpeed = 1;
     }
