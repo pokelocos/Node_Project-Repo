@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Cereal
   m_EditorClassIdentifier: 
   ingredientName: Cereal
-  price: 2
+  price: 3
   icon: {fileID: 21300000, guid: 63157190c40690543963df77fa042588, type: 3}
   color: {r: 1, g: 0.9727186, b: 0, a: 1}

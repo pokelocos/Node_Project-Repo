@@ -17,6 +17,6 @@ MonoBehaviour:
   speed: 1
   successProbability: 1
   productionTime: 5
-  maintainCost: 3
+  maintainCost: 30
   recipes:
   - {fileID: 11400000, guid: 6d1632b7cf8baf3498e504c00c7aae6b, type: 2}

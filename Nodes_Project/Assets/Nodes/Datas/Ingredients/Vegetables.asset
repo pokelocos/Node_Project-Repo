@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Vegetables
   m_EditorClassIdentifier: 
   ingredientName: Vegetables
-  price: 2
+  price: 3
   icon: {fileID: 21300000, guid: 0d4aa86a993be47408f3703492c14670, type: 3}
   color: {r: 0.041865394, g: 0.5283019, b: 0.077676654, a: 1}

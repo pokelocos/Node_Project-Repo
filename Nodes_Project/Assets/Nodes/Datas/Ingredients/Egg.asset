@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Egg
   m_EditorClassIdentifier: 
   ingredientName: Egg
-  price: 1
+  price: 2
   icon: {fileID: 21300000, guid: 13a345fb0c166f14ca531e2bc65b12b7, type: 3}
   color: {r: 0.8773585, g: 0.77889, b: 0.4999288, a: 1}

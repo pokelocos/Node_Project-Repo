@@ -15,8 +15,9 @@ MonoBehaviour:
   color: {r: 0.43465507, g: 0, b: 0.745283, a: 1}
   icon: {fileID: 21300000, guid: 521309d51b60669448cbd7273e67314c, type: 3}
   speed: 1
+  successProbability: 1
   productionTime: 3
-  maintainCost: 6
+  maintainCost: 90
   recipes:
   - {fileID: 11400000, guid: b6dcc527166cb8e49a7378dec623ba22, type: 2}
   - {fileID: 11400000, guid: 1c5609ba9598d9342ad8037ce224ce0c, type: 2}
