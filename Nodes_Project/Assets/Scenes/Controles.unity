@@ -2862,7 +2862,7 @@ GameObject:
   - component: {fileID: 599955547}
   - component: {fileID: 599955546}
   m_Layer: 5
-  m_Name: Button_controles
+  m_Name: Button_Tutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2937,6 +2937,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 724590134}
+        m_TargetAssemblyTypeName: CallAudioSource, Assembly-CSharp
+        m_MethodName: CallSound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 87184bce3f810ed4daf384ddd1090cd7, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 724590133}
         m_TargetAssemblyTypeName: SceneManage, Assembly-CSharp
         m_MethodName: ChangeScene
@@ -3194,6 +3206,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 724590134}
+        m_TargetAssemblyTypeName: CallAudioSource, Assembly-CSharp
+        m_MethodName: CallSound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 87184bce3f810ed4daf384ddd1090cd7, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 724590133}
         m_TargetAssemblyTypeName: SceneManage, Assembly-CSharp
         m_MethodName: ChangeScene
@@ -3374,14 +3398,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 724590134}
+        m_TargetAssemblyTypeName: CallAudioSource, Assembly-CSharp
+        m_MethodName: CallSound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 87184bce3f810ed4daf384ddd1090cd7, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 387923341}
-        m_TargetAssemblyTypeName: PageController, Assembly-CSharp
+        m_TargetAssemblyTypeName: RA.Generic.PageController, Assembly-CSharp
         m_MethodName: PrevPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3407,6 +3443,7 @@ GameObject:
   - component: {fileID: 724590130}
   - component: {fileID: 724590129}
   - component: {fileID: 724590133}
+  - component: {fileID: 724590134}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3508,6 +3545,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df1c7bd675c2046438512d0cc50f4a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &724590134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724590128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df330fb9a833225488968cb8a47a7219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &749627604
@@ -4974,6 +5023,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 724590134}
+        m_TargetAssemblyTypeName: CallAudioSource, Assembly-CSharp
+        m_MethodName: CallSound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 87184bce3f810ed4daf384ddd1090cd7, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 724590133}
         m_TargetAssemblyTypeName: SceneManage, Assembly-CSharp
         m_MethodName: ChangeScene
@@ -5274,14 +5335,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 724590134}
+        m_TargetAssemblyTypeName: CallAudioSource, Assembly-CSharp
+        m_MethodName: CallSound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 87184bce3f810ed4daf384ddd1090cd7, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 387923341}
-        m_TargetAssemblyTypeName: PageController, Assembly-CSharp
+        m_TargetAssemblyTypeName: RA.Generic.PageController, Assembly-CSharp
         m_MethodName: NextPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -8966,3 +9039,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2143173855}
   m_CullTransparentMesh: 1
+--- !u!1001 &3843307689767031592
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3254481733752820871, guid: 4e41b3d20eb443841b21b12341139708, type: 3}
+      propertyPath: m_Name
+      value: SecondaryRadio
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866235090862576531, guid: 4e41b3d20eb443841b21b12341139708, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866235090862576531, guid: 4e41b3d20eb443841b21b12341139708, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866235090862576531, guid: 4e41b3d20eb443841b21b12341139708, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866235090862576531, guid: 4e41b3d20eb443841b21b12341139708, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866235090862576531, guid: 4e41b3d20eb443841b21b12341139708, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866235090862576531, guid: 4e41b3d20eb443841b21b12341139708, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866235090862576531, guid: 4e41b3d20eb443841b21b12341139708, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866235090862576531, guid: 4e41b3d20eb443841b21b12341139708, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866235090862576531, guid: 4e41b3d20eb443841b21b12341139708, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866235090862576531, guid: 4e41b3d20eb443841b21b12341139708, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866235090862576531, guid: 4e41b3d20eb443841b21b12341139708, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4e41b3d20eb443841b21b12341139708, type: 3}
