@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
         }
 
         // WIN CON
-        if (day > 15)
+        if (points >= winPoints)
         {
             winPanel.SetActive(true);
         }
