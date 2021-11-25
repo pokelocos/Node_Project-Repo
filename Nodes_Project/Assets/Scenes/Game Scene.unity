@@ -2834,8 +2834,8 @@ MonoBehaviour:
     width: 50
     height: 50
   source: {fileID: 1182501663}
-  startGrabSound: {fileID: 8300000, guid: 0be8a3c8774c79341b0ddde877e41a8a, type: 3}
-  endGrabSound: {fileID: 8300000, guid: 0be8a3c8774c79341b0ddde877e41a8a, type: 3}
+  startGrabSound: {fileID: 8300000, guid: 3d528b12f6468dc499fc1cdfe14039a0, type: 3}
+  endGrabSound: {fileID: 8300000, guid: 7243fa445a8df6241ae14a1a0bc219ac, type: 3}
 --- !u!114 &1182501659
 MonoBehaviour:
   m_ObjectHideFlags: 0
