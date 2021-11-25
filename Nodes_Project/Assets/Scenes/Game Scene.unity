@@ -240,7 +240,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 124.65621, y: -37.08635}
+  m_AnchoredPosition: {x: 124.656204, y: -37.08635}
   m_SizeDelta: {x: 48.1981, y: 39.7547}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &32020849
@@ -1179,6 +1179,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game_Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5913737630633975104, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913737630633975104, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913737630633975104, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 199.45398
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913737630633975104, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 72.51999
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913737630633975104, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 99.72699
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913737630633975104, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 36.259995
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5670f1e74264646adcc4251450c174, type: 3}
 --- !u!224 &298067311 stripped
@@ -1960,8 +1984,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: no lograste mantener el sistema a flote, tus reservas bajaron de -$150,
-    intentalo denuevo y lo lograras.
+  m_Text: "\rEst\xE1s en bancarrota, No has gestionado de la mejor manera, prueba
+    suerte la pr\xF3xima vez.\r"
 --- !u!222 &877761703
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2160,6 +2184,7 @@ GameObject:
   - component: {fileID: 1047792710}
   - component: {fileID: 1047792712}
   - component: {fileID: 1047792711}
+  - component: {fileID: 1047792713}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -2226,6 +2251,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1047792709}
   m_CullTransparentMesh: 1
+--- !u!114 &1047792713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047792709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: -20
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1001 &1097636490
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2602,6 +2653,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
@@ -3044,8 +3096,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb2bbd9a8674acb46ae05b432b550e10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputText: {fileID: 148471403}
-  outputText: {fileID: 1266053288}
+  inputObject: {fileID: 456501665}
+  outputObject: {fileID: 32020847}
 --- !u!1001 &1308442346
 PrefabInstance:
   m_ObjectHideFlags: 0

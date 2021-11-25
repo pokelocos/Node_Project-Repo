@@ -25,10 +25,11 @@ public class CameraHandler : MonoBehaviour
 
     bool drag = false;
     bool lastDrag = false;
+    bool hitNode = false;
     Vector3 difference;
     Vector3 origen;
     // Start is called before the first frame update
-
+    [Space,Header("Sounds")]
     public AudioSource source;
     public AudioClip startGrabSound;
     public AudioClip endGrabSound;
@@ -227,8 +228,11 @@ public class CameraHandler : MonoBehaviour
                         }
                     }
                     if (draggingNode != null)
+                    {
+                        hitNode = true;
                         break;
-                }               
+                    }
+                }
             }
 
             if (drag == false) // ??
@@ -240,8 +244,6 @@ public class CameraHandler : MonoBehaviour
         {
             drag = false;
             draggingNode = null;
-
-            
         }
 
         if (drag && draggingNode != null)
@@ -249,9 +251,14 @@ public class CameraHandler : MonoBehaviour
             draggingNode.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, draggingNode.transform.position.z);
         }
 
-        if (drag != lastDrag)
+        if(Input.GetMouseButtonUp(0) && hitNode)
         {
             source.PlayOneShot(endGrabSound);
+            hitNode = false;
+        }
+        if (drag != lastDrag)
+        {
+            //source.PlayOneShot(endGrabSound);
         }
         lastDrag = drag;
     }

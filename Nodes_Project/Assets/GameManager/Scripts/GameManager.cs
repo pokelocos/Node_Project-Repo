@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviour
         {
             day_image.color = commonDay;
         }
-        else if(negativeDays >= 3)
+        else if(negativeDays > 3)
         {
             day_image.color = AlertDay;
         }

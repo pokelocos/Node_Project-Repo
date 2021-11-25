@@ -104,6 +104,7 @@ public class NodeManager : MonoBehaviour
             connectionDisplay.gameObject.SetActive(true);
             connectionDisplay.gameObject.transform.position = screenPos + ConnectionsDisplayOffset;
 
+            connectionDisplay.EnableIOObjetcs(overNode.GetRecipes());
             /*Inputs*/connectionDisplay.SetInputsText(overNode.GetConnectedInputs() + "/" + overNode.GetInputs().Length);
             /*Outputs*/connectionDisplay.SetOutputsText(overNode.GetConnectedOutputs() + "/" + overNode.GetOutputs().Length);
         }

@@ -5,16 +5,40 @@ using UnityEngine.UI;
 
 public class NodeConnectionDisplay : MonoBehaviour
 {
-    [SerializeField] private Text inputText;
-    [SerializeField] private Text outputText;
+    [SerializeField] private GameObject inputObject;
+    [SerializeField] private GameObject outputObject;
 
     public void SetInputsText(string input)
     {
-        inputText.text = input;
+        inputObject.GetComponentInChildren<Text>().text = input;
     }
 
     public void SetOutputsText(string output)
     {
-        outputText.text = output;
+        outputObject.GetComponentInChildren<Text>().text = output;
+    }
+
+    public void EnableIOObjetcs(Recipe[] recipes)
+    {
+        int inputs = 0, outputs = 0;
+        foreach(Recipe r in recipes)
+        {
+            foreach(Ingredient i in r.GetInputs())
+            {
+                if(!(i.name == "$" || i.name == "$$" || i.name == "Time"))
+                {
+                    inputs++;
+                }
+            }
+            foreach (Ingredient i in r.GetOutputs())
+            {
+                if (!(i.name == "$" || i.name == "$$" || i.name == "Time"))
+                {
+                    outputs++;
+                }
+            }
+        }
+        inputObject.SetActive(inputs > 0);
+        outputObject.SetActive(outputs > 0);
     }
 }
