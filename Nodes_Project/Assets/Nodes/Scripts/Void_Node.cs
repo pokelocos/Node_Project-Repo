@@ -143,9 +143,6 @@ public class Void_Node : Supermarket_Node
 
         if (success)
             GetComponent<Animator>().SetTrigger("Success");
-        else
-            GetComponent<Animator>().SetTrigger("Fail");
-    }
 
     public override Recipe[] ValidRecipes()
     {
