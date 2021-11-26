@@ -39,9 +39,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip play_audio;
     [SerializeField] private AudioClip speed_audio;
 
+    [Header("Balance Settings")]
+    [SerializeField] private Text mantainance_text;
+    [SerializeField] private Text lastEarnings_text;
+
     private static int money = 1000;
     private static int day = 0;
     private int lastBalance = 0;
+    private int lastEarnings;
     private float balance_alpha = 0;
     private Color balance_color = Color.green;
     private static List<int> dayTransactions = new List<int>();
@@ -80,6 +85,22 @@ public class GameManager : MonoBehaviour
         lastBalance = money;
 
         SetTimeScale(0);
+    }
+
+    public void ToggleMoneyBalance()
+    {
+        GetComponent<Animator>().SetBool("Show Balance", !GetComponent<Animator>().GetBool("Show Balance"));
+
+        int price = 0;
+
+        foreach (var node in FindObjectsOfType<NodeView>())
+        {
+            price += node.GetMantainCost();
+        }
+
+        mantainance_text.text = "$" + price;
+
+        lastEarnings_text.text = "$" + lastEarnings;
     }
 
     public static void AddMoney(int amount)
@@ -152,11 +173,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        foreach (var node in FindObjectsOfType<NodeView>())
-        {
-            AddMoney(-node.GetMantainCost());
-        }
-
         var balance = 0;
 
         foreach (var transaction in dayTransactions)
@@ -164,8 +180,16 @@ public class GameManager : MonoBehaviour
             balance += transaction;
         }
 
+        lastEarnings = balance;
         balance = money - lastBalance;
         lastBalance = money;
+
+        foreach (var node in FindObjectsOfType<NodeView>())
+        {
+            AddMoney(-node.GetMantainCost());
+        }
+
+        dayTransactions.Clear();
 
         //SHOW BALANCE 
         if (balance > 0)
