@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Supermarket_Node : Seller_Node
 {
-    Ingredient[] ingredients;
-
     private void Start()
     {
         inputs = new ConectionView[4];
@@ -109,5 +107,61 @@ public class Supermarket_Node : Seller_Node
         }
 
         return recipes.ToArray();
+    }
+
+    public override RecipeInformationData[] GetRecipeInformationStatus()
+    {
+        var recipesStatusData = new List<RecipeInformationData>();
+
+        for (int i = 0; i < GetRecipes().Length; i++)
+        {
+            var data = new RecipeInformationData(GetRecipes()[i]);
+
+            foreach (var input in GetInputs())
+            {
+                if (input != null && input.GetIngredient() != null)
+                {
+                    if (i == 0 && input.GetIngredient().ingredientName == "Canned Food")
+                    {
+                        for (int j = 0; j < data.inputsStatus.Count; j++)
+                        {
+                            if (data.inputsStatus[j].status == false)
+                            {
+                                data.inputsStatus[j] = new RecipeInformationData.IngredientStatus(input.GetIngredient(), true);
+                                break;
+                            }
+                        }
+                    }
+                    else if (i != 0 && input.GetIngredient().ingredientName != "Canned Food")
+                    {
+                        for (int j = 0; j < data.inputsStatus.Count; j++)
+                        {
+                            if (data.inputsStatus[j].status == false)
+                            {
+                                data.inputsStatus[j] = new RecipeInformationData.IngredientStatus(input.GetIngredient(), true);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            bool canCraft = false;
+
+            foreach (var ingredient in data.inputsStatus)
+            {
+                if (ingredient.status == true)
+                {
+                    canCraft = true;
+                    break;
+                }
+            }
+
+            data.canCraft = canCraft;
+
+            recipesStatusData.Add(data);
+        }
+
+        return recipesStatusData.ToArray();
     }
 }

@@ -384,32 +384,12 @@ public abstract class NodeView : MonoBehaviour
             {
                 if(input != null && input.GetIngredient() != null)
                 {
-                    for (int i = 0; i < data.inputsStatus.Count; i++)
+                    if (data.inputsStatus.ContainsKey(input.GetIngredient()))
                     {
-                        if (input.GetIngredient().ingredientName == data.inputsStatus[i].ingredient.ingredientName)
-                        {
-                            if (data.inputsStatus[i].status == false)
-                            {
-                                data.inputsStatus[i] = new RecipeInformationData.IngredientStatus(input.GetIngredient(), true);
-                                break;
-                            }
-                        }
+                        data.inputsStatus[input.GetIngredient()] = true;
                     }
                 }
             }
-
-            bool canCraft = true;
-
-            foreach (var ingredient in data.inputsStatus)
-            {
-                if (ingredient.status == false)
-                {
-                    canCraft = false;
-                    break;
-                }
-            }
-
-            data.canCraft = canCraft;
 
             recipesStatusData.Add(data);
         }
@@ -422,21 +402,7 @@ public class RecipeInformationData
 {
     public Recipe originalRecipe;
 
-    public struct IngredientStatus
-    {
-        public Ingredient ingredient;
-        public bool status;
-
-        public IngredientStatus(Ingredient ingredient, bool status)
-        {
-            this.ingredient = ingredient;
-            this.status = status;
-        }
-    }
-
-    public List<IngredientStatus> inputsStatus = new List<IngredientStatus>();
-
-    public bool canCraft;
+    public Dictionary<Ingredient, bool> inputsStatus = new Dictionary<Ingredient, bool>();
 
     public RecipeInformationData(Recipe originalRecipe)
     {
@@ -444,7 +410,7 @@ public class RecipeInformationData
 
         foreach (var input in originalRecipe.GetInputs())
         {
-            inputsStatus.Add(new IngredientStatus(input, false));
+           // inputsStatus.Add(input, false);
         }
     }
 }

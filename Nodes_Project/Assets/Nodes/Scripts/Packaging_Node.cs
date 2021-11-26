@@ -85,4 +85,49 @@ public class Packaging_Node : Factory_Node
 
         return new Recipe[1] { recipe };
     }
+
+    public override RecipeInformationData[] GetRecipeInformationStatus()
+    {
+        var recipesStatusData = new List<RecipeInformationData>();
+
+        foreach (var recipe in GetRecipes())
+        {
+            var data = new RecipeInformationData(recipe);
+
+            foreach (var input in GetInputs())
+            {
+                if (input != null && input.GetIngredient() != null)
+                {
+                    if (input.GetIngredient().ingredientName != "Canned Food")
+                    {
+                        for (int i = 0; i < data.inputsStatus.Count; i++)
+                        {
+                            if (data.inputsStatus[i].status == false)
+                            {
+                                data.inputsStatus[i] = new RecipeInformationData.IngredientStatus(input.GetIngredient(), true);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            bool canCraft = true;
+
+            foreach (var ingredient in data.inputsStatus)
+            {
+                if (ingredient.status == false)
+                {
+                    canCraft = false;
+                    break;
+                }
+            }
+
+            data.canCraft = canCraft;
+
+            recipesStatusData.Add(data);
+        }
+
+        return recipesStatusData.ToArray();
+    }
 }
