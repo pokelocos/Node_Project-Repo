@@ -1087,6 +1087,10 @@ PrefabInstance:
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3849243818374915192, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5167977180370863912, guid: c93d2f273a8cb4f4ea7dcd4ff2ff3c74, type: 3}
     - target: {fileID: 5513884293214002053, guid: db5670f1e74264646adcc4251450c174, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -1186,6 +1190,10 @@ PrefabInstance:
     - target: {fileID: 5513884294848539076, guid: db5670f1e74264646adcc4251450c174, type: 3}
       propertyPath: m_Name
       value: Game_Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071925529671754810, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5670f1e74264646adcc4251450c174, type: 3}
