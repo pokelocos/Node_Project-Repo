@@ -35,6 +35,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Toggle pauseToggle;
     [SerializeField] private Toggle playToggle;
     [SerializeField] private Toggle speedPlayToggle;
+    [SerializeField] private AudioClip pause_audio;
+    [SerializeField] private AudioClip play_audio;
+    [SerializeField] private AudioClip speed_audio;
 
     private static int money = 1000;
     private static int day = 0;
@@ -100,7 +103,23 @@ public class GameManager : MonoBehaviour
 
     public void SetTimeScale(float value)
     {
+        if (value == Time.timeScale)
+            return;
+
         Time.timeScale = value;
+
+        if (Time.timeScale == 0)
+        {
+            GetComponent<AudioSource>().PlayOneShot(pause_audio, 0.5f);
+        }
+        else if (Time.timeScale == 1)
+        {
+            GetComponent<AudioSource>().PlayOneShot(play_audio, 0.5f);
+        }
+        else
+        {
+            GetComponent<AudioSource>().PlayOneShot(speed_audio, 0.5f);
+        }
     }
 
     public void NewDay()
