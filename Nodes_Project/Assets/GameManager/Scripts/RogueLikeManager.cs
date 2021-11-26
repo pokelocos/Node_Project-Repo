@@ -75,6 +75,8 @@ public class RogueLikeManager : MonoBehaviour
         {
             var allNodes = Resources.LoadAll<NodeView>("Node Prefabs");
 
+            allNodes = BalanceNodeByDays(allNodes);
+
             for (int i = 0; i < nodes.Length; i++)
             {
                 nodes[i] = allNodes[Random.Range(0, allNodes.Length)];
@@ -110,6 +112,58 @@ public class RogueLikeManager : MonoBehaviour
                 effects[i].daysDuration = Random.Range(3, 6);
                 effects[i].duration = effects[i].daysDuration;
             }
+        }
+
+        public NodeView[] BalanceNodeByDays(NodeView[] nodesPool)
+        {
+            List<NodeView> allNodes = new List<NodeView>(nodesPool);
+
+            if (GameManager.Days <= 12)
+            {
+                if (GameManager.Days <= 3)
+                {
+                    for (int i = allNodes.Count - 1; i >= 0; i--)
+                    {
+                        if (!(allNodes[i] is Production_Node))
+                        {
+                            if (Random.Range(0, 1f) > 0.5f)
+                            {
+                                allNodes.RemoveAt(i);
+                            }
+                        }
+                    }
+                }
+
+                if (GameManager.Days > 3 && GameManager.Days <= 9)
+                {
+                    for (int i = allNodes.Count - 1; i >= 0; i--)
+                    {
+                        if (!(allNodes[i] is Production_Node))
+                        {
+                            if (Random.Range(0, 1f) > 0.5f)
+                            {
+                                allNodes.RemoveAt(i);
+                            }
+                        }
+                    }
+                }
+
+                if (GameManager.Days > 9 && GameManager.Days <= 12)
+                {
+                    for (int i = allNodes.Count - 1; i >= 0; i--)
+                    {
+                        if (!(allNodes[i] is Seller_Node))
+                        {
+                            if (Random.Range(0, 1f) > 0.5f)
+                            {
+                                allNodes.RemoveAt(i);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return allNodes.ToArray();
         }
     }
 

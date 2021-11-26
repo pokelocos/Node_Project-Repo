@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
         points = 0;
         money = 1000;
         day = 0;
+        negativeDays = 0;
 
         lastBalance = money;
 
