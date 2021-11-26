@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0963106baaa381f49bcf0b1f7355bb30, type: 3}
+  m_Name: Prohibition
+  m_EditorClassIdentifier: 
+  color: {r: 0.7924528, g: 0, b: 0.6881604, a: 1}
+  description: 
+  icon: {fileID: 21300000, guid: e92ab6a87dced6e4485285e463b1b0dd, type: 3}
+  speed: 1
+  successProbability: 1
+  productionTime: 8
+  maintainCost: 20
+  recipes:
+  - {fileID: 11400000, guid: fca3ecc7eda9a1843ad898e9449d9b9f, type: 2}
