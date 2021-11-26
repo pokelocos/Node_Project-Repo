@@ -13,6 +13,7 @@ public class RogueLikeManager : MonoBehaviour
     private Reward[] rewards = new Reward[3];
 
     [SerializeField] private RewardView[] rewardsViews;
+    float lastTimeScale = 1;
 
     private void Start()
     {
@@ -37,6 +38,7 @@ public class RogueLikeManager : MonoBehaviour
                 rewards[i] = new Reward();
                 rewardsViews[i].ShowReward(rewards[i]);
             }
+            lastTimeScale = Time.timeScale;
             return true;
         }
         return false;
@@ -56,7 +58,7 @@ public class RogueLikeManager : MonoBehaviour
 
         GameManager.AddMoney(-rewards[index].price);
 
-        gameManager.SetTimeScale(1);
+        gameManager.SetTimeScale(lastTimeScale);
         rewards_panel.SetActive(false);
     }
 
