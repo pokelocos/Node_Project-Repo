@@ -72,6 +72,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        points = 0;
+        money = 1000;
+        day = 0;
+
         lastBalance = money;
 
         SetTimeScale(0);
