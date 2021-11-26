@@ -13,6 +13,9 @@ public class EffectView : MonoBehaviour
     [SerializeField]
     private Text desc_text;
 
+    [SerializeField]
+    private Image timerBar;
+
     private bool isPointerOver;
 
     public void SetData(string title, string desc)
@@ -50,6 +53,11 @@ public class EffectView : MonoBehaviour
             title_text.color = color;
             desc_text.color = color;
         }
+    }
+
+    public void SetFillAmount(float amount)
+    {
+        timerBar.fillAmount = amount;
     }
 
     public void OnPointerEnter()

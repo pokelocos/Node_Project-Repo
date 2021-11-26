@@ -217,6 +217,14 @@ public class GameManager : MonoBehaviour
 
         day_image.fillAmount = currentDayTime / dayTime;
 
+        foreach(var effect in gameEffects)
+        {
+            float dayCurrentTime = 1 - (currentDayTime/dayTime);
+            float effectRemainTime = (((float)effect.Key.daysDuration - 1) / effect.Key.duration) + (dayCurrentTime / effect.Key.duration);
+
+            effect.Value.SetFillAmount(effectRemainTime);
+        }
+
         balance_color.a = balance_alpha;
 
         if (balance_alpha > 0)
