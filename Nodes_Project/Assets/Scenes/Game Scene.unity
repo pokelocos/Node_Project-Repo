@@ -1072,17 +1072,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171550326}
   m_CullTransparentMesh: 1
---- !u!114 &192121101 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5697503257129541980, guid: db5670f1e74264646adcc4251450c174, type: 3}
-  m_PrefabInstance: {fileID: 298067309}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &298067309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1090,49 +1079,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1934229278, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 1205219956, guid: db5670f1e74264646adcc4251450c174, type: 3}
+      propertyPath: m_RaycastTarget
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1934229279, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1934229279, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1934229279, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1934229282, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: timerBar
-      value: 
-      objectReference: {fileID: 192121101}
-    - target: {fileID: 2318088863853931202, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2318088863853931202, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2318088863853931202, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2318088863853931202, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2318088863853931202, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2318088863853931202, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5513884293214002053, guid: db5670f1e74264646adcc4251450c174, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -1233,50 +1182,6 @@ PrefabInstance:
     - target: {fileID: 5513884294848539076, guid: db5670f1e74264646adcc4251450c174, type: 3}
       propertyPath: m_Name
       value: Game_Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 5697503257129541980, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_Type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5697503257129541980, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 8429272495195912100, guid: c93d2f273a8cb4f4ea7dcd4ff2ff3c74, type: 3}
-    - target: {fileID: 5697503257129541980, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5697503257129541980, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_FillMethod
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5913737630633975104, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5913737630633975104, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5913737630633975104, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 199.45398
-      objectReference: {fileID: 0}
-    - target: {fileID: 5913737630633975104, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 72.51999
-      objectReference: {fileID: 0}
-    - target: {fileID: 5913737630633975104, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 99.72699
-      objectReference: {fileID: 0}
-    - target: {fileID: 5913737630633975104, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 36.259995
-      objectReference: {fileID: 0}
-    - target: {fileID: 7364404065426212604, guid: db5670f1e74264646adcc4251450c174, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5670f1e74264646adcc4251450c174, type: 3}
@@ -2728,7 +2633,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
@@ -3025,24 +2929,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266053286}
   m_CullTransparentMesh: 1
---- !u!1 &1269097939 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1934229278, guid: db5670f1e74264646adcc4251450c174, type: 3}
-  m_PrefabInstance: {fileID: 298067309}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1269097945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269097939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 1
 --- !u!1001 &1281378209
 PrefabInstance:
   m_ObjectHideFlags: 0

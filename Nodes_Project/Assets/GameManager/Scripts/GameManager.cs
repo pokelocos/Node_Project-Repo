@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text days_text;
     [SerializeField] private Text balance_text;
     [SerializeField] private Text starAmount_text;
+    [SerializeField] private GameObject pause_frame;
     [SerializeField] private Image day_image;
     [SerializeField] private EffectView effectView_template;
 
@@ -30,12 +31,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
 
-    [Space, Header("HUD Buttons")]
+    [Space, Header("Time Controls")]
     [SerializeField] private Toggle pauseToggle;
     [SerializeField] private Toggle playToggle;
     [SerializeField] private Toggle speedPlayToggle;
 
-    [SerializeField] private static int money = 1000;
+    private static int money = 1000;
     private static int day = 0;
     private int lastBalance = 0;
     private float balance_alpha = 0;
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
     public AudioSource source;
     public AudioClip winSound;
 
-    private int negativeDays = 0;
+    private static int negativeDays = 0;
     private bool warningonce = true;
 
     public static int Money
@@ -69,12 +70,19 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         lastBalance = money;
+
+        SetTimeScale(0);
     }
 
     public static void AddMoney(int amount)
     {
         dayTransactions.Add(amount);
         money += amount;
+
+        if (money > 0)
+        {
+            negativeDays = 0;
+        }
     }
 
     public static void AddEffect(RogueLikeManager.GameEffect gameEffect)
@@ -97,10 +105,12 @@ public class GameManager : MonoBehaviour
 
     public void NewDay()
     {
-        if(FindObjectOfType<RogueLikeManager>().TrySetRewards())
-        {
-            SetHudToggles(true);
-        }
+        //if(FindObjectOfType<RogueLikeManager>().TrySetRewards())
+        //{
+        //    SetHudToggles(true);
+        //}
+
+        FindObjectOfType<RogueLikeManager>().TrySetRewards();
 
         for (int i = gameEffects.Keys.Count - 1; i >= 0; i--)
         {
@@ -160,24 +170,46 @@ public class GameManager : MonoBehaviour
 
             negativeDays++; // variable ql mala
         }
-        else
-        {
-            negativeDays = 0;
-        }
     }
     
-    public void SetHudToggles(bool active)
+    //public void SetHudToggles(bool active)
+    //{
+    //    pauseToggle.GetComponentInChildren<Image>().color = active ? Color.red : Color.white;
+    //    pauseToggle.interactable = !active;
+    //    playToggle.interactable = !active;
+    //    speedPlayToggle.interactable = !active;
+    //}
+
+    private void TimeControlsUpdate()
     {
-        pauseToggle.GetComponentInChildren<Image>().color = active ? Color.red : Color.white;
-        pauseToggle.interactable = !active;
-        playToggle.interactable = !active;
-        speedPlayToggle.interactable = !active;
+        if (Time.timeScale == 0)
+        {
+            pauseToggle.isOn = true;
+            playToggle.isOn = false;
+            speedPlayToggle.isOn = false;
+        }
+        else if (Time.timeScale == 1)
+        {
+            playToggle.isOn = true;
+            pauseToggle.isOn = false;
+            speedPlayToggle.isOn = false;
+        }
+        else
+        {
+            speedPlayToggle.isOn = true;
+            pauseToggle.isOn = false;
+            playToggle.isOn = false;
+        }       
     }
 
     private void Update()
     {
-        if (pauseToggle.interactable == false && Time.timeScale == 1)
-            SetHudToggles(false);
+        pause_frame.gameObject.SetActive(Time.timeScale == 0);
+
+        //if (pauseToggle.interactable == false && Time.timeScale == 1)
+        //    SetHudToggles(false);
+
+        TimeControlsUpdate();
 
         starAmount_text.text = points + "/" + winPoints;
 

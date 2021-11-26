@@ -31,6 +31,8 @@ public class RogueLikeManager : MonoBehaviour
     {
         if (GameManager.Days % 3 == 0)
         {
+            lastTimeScale = Time.timeScale;
+
             rewards_panel.SetActive(true);
 
             for (int i = 0; i < rewards.Length; i++)
@@ -38,7 +40,7 @@ public class RogueLikeManager : MonoBehaviour
                 rewards[i] = new Reward();
                 rewardsViews[i].ShowReward(rewards[i]);
             }
-            lastTimeScale = Time.timeScale;
+
             return true;
         }
         return false;
@@ -58,8 +60,9 @@ public class RogueLikeManager : MonoBehaviour
 
         GameManager.AddMoney(-rewards[index].price);
 
-        gameManager.SetTimeScale(lastTimeScale);
         rewards_panel.SetActive(false);
+
+        gameManager.SetTimeScale(lastTimeScale);
     }
 
     public class Reward
@@ -94,6 +97,9 @@ public class RogueLikeManager : MonoBehaviour
             price += Random.Range(1, 3) * GameManager.Days * 5;
 
             effects = new GameEffect[effectsCount];
+
+            if (GameManager.Days == 0)
+                price = 0;
 
             for (int i = 0; i < effectsCount; i++)
             {
