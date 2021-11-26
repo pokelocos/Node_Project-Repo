@@ -23,6 +23,8 @@ public class Seller_Node : NodeView
             }
         }
 
+        money *= 2;
+
         bool success = false;
 
         for (int i = 0; i < inputs.Length; i++)

@@ -118,6 +118,8 @@ public class Void_Node : Supermarket_Node
         {
             isCompleted = true;
 
+            data.maintainCost = 0;
+
             GameManager.points++;
 
             foreach (var input in inputs)
