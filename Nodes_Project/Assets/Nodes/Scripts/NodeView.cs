@@ -13,7 +13,7 @@ public abstract class NodeView : MonoBehaviour
     [SerializeField]
     private SpriteRenderer bright;
     [SerializeField]
-    private NodeData data;
+    protected NodeData data;
 
     public bool isDebugMode;
 
