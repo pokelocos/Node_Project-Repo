@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Supermarket_Node : NodeView
+public class Supermarket_Node : Seller_Node
 {
     Ingredient[] ingredients;
 
@@ -53,7 +53,10 @@ public class Supermarket_Node : NodeView
         }
 
         if (success)
+        {
             GetComponent<Animator>().SetTrigger("Success");
+            DisplayMoney(money);
+        }
         else
             GetComponent<Animator>().SetTrigger("Fail");
 

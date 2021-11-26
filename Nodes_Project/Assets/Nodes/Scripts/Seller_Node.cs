@@ -6,6 +6,10 @@ public class Seller_Node : NodeView
 {
     Ingredient[] ingredients;
 
+    [SerializeField] private Animator price_animation;
+    [SerializeField] private TextMesh price;
+    [SerializeField] private TextMesh price_shadow;
+
     protected override void OnWorkFinish()
     {
         internalSpeed = 0;
@@ -32,11 +36,22 @@ public class Seller_Node : NodeView
         }
 
         if (success)
+        {
             GetComponent<Animator>().SetTrigger("Success");
+
+            DisplayMoney(money);
+        }
         else
             GetComponent<Animator>().SetTrigger("Fail");
 
         GameManager.AddMoney(money);
+    }
+
+    protected void DisplayMoney(float money)
+    {
+        price.text = "$" + money;
+        price_shadow.text = "$" + money;
+        price_animation.SetTrigger("Show Money");
     }
 
     public override void ConnectionChange()

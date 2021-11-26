@@ -31,6 +31,10 @@ public abstract class NodeView : MonoBehaviour
 
     private void Awake()
     {
+        string nameAux = data.name;
+        data = Instantiate(data);
+        data.name = nameAux;
+
         nodeIcon.sprite = data.icon;
         body.color = data.color;
 
