@@ -179,6 +179,8 @@ public class CameraHandler : MonoBehaviour
 
     private void MoveByDrag()
     {
+        Vector3 newCameraPosition = Vector3.zero;
+
         if (draggingNode != null) return;
         if (Input.GetMouseButton(0))
         {
@@ -196,8 +198,13 @@ public class CameraHandler : MonoBehaviour
         }
 
         if (drag)
-        {           
-            transform.position = (origen - difference);
+        {
+            float x = Mathf.Clamp((origen - difference).x, movementBoundries.x - movementBoundries.width, movementBoundries.x + movementBoundries.width);
+            float y = Mathf.Clamp((origen - difference).y, movementBoundries.y - movementBoundries.height, movementBoundries.y + movementBoundries.height);
+
+            newCameraPosition = new Vector3(x, y, (origen - difference).z);
+
+            transform.position = newCameraPosition;
             cameraFollowPosition = transform.position;
         }
     }
