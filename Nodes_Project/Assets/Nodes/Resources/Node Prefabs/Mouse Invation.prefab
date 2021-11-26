@@ -119,7 +119,7 @@ MonoBehaviour:
   nodeIcon: {fileID: 2295734672169090573}
   fillBar: {fileID: 2295734671696281709}
   bright: {fileID: 6841953147400823470}
-  data: {fileID: 11400000, guid: 6907e7916c56cb5439b3b6c7c35531cc, type: 2}
+  data: {fileID: 11400000, guid: 9b5207c8080ed8e418d9a677a87a0d68, type: 2}
   isDebugMode: 0
   isActive: 1
   price_animation: {fileID: 0}
