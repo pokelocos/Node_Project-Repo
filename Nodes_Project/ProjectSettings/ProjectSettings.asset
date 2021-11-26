@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: RandomAdjective
   productName: Micro-Factory
-  defaultCursor: {fileID: 0}
+  defaultCursor: {fileID: 2800000, guid: fa2e7845768499543a953da74dd37a64, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -68,12 +68,6 @@ PlayerSettings:
   androidRenderOutsideSafeArea: 1
   androidUseSwappy: 1
   androidBlitType: 0
-  androidResizableWindow: 0
-  androidDefaultWindowWidth: 1920
-  androidDefaultWindowHeight: 1080
-  androidMinimumWindowWidth: 400
-  androidMinimumWindowHeight: 300
-  androidFullscreenMode: 1
   defaultIsNativeResolution: 1
   macRetinaSupport: 1
   runInBackground: 1
@@ -127,7 +121,6 @@ PlayerSettings:
   vulkanEnableSetSRGBWrite: 0
   vulkanEnablePreTransform: 0
   vulkanEnableLateAcquireNextImage: 0
-  vulkanEnableCommandBufferRecycling: 1
   m_SupportedAspectRatios:
     4:3: 1
     5:4: 1
@@ -153,7 +146,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.RandomAdjective.NodesProject
+    Standalone: com.RandomAdjective.Micro-Factory
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -243,7 +236,6 @@ PlayerSettings:
   useCustomGradlePropertiesTemplate: 0
   useCustomProguardFile: 0
   AndroidTargetArchitectures: 1
-  AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: 
@@ -260,7 +252,6 @@ PlayerSettings:
     height: 180
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
-  chromeosInputEmulation: 1
   AndroidMinifyWithR8: 0
   AndroidMinifyRelease: 0
   AndroidMinifyDebug: 0
@@ -362,7 +353,6 @@ PlayerSettings:
   cameraUsageDescription: 
   locationUsageDescription: 
   microphoneUsageDescription: 
-  bluetoothUsageDescription: 
   switchNMETAOverride: 
   switchNetLibKey: 
   switchSocketMemoryPoolSize: 6144

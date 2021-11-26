@@ -4617,7 +4617,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &725022316
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6114,7 +6114,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Bienvenido a <b>Red Alimenticia</b>, ahora estar\xE1s encargado de <b>Gestionar</b>
+  m_Text: "Bienvenido a <b>Micro Fractory</b>, ahora estar\xE1s encargado de <b>Gestionar</b>
     a los participantes de esta red para tener a la ciudad <b>Abastecida de alimento</b>.\r"
 --- !u!222 &1083732462
 CanvasRenderer:
@@ -6776,7 +6776,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1169190903
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6972,7 +6972,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1197505978
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7522,7 +7522,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1279657973
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8639,7 +8639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1421636626
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9822,7 +9822,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1621938794
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10212,7 +10212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1722563999
 RectTransform:
   m_ObjectHideFlags: 0
