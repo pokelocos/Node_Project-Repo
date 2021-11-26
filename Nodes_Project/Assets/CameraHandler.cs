@@ -204,7 +204,7 @@ public class CameraHandler : MonoBehaviour
 
     void MoveNodeByDrag()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
             if (draggingNode == null)
             {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class NodeInformationDisplay : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class NodeInformationDisplay : MonoBehaviour
     [SerializeField] private GameObject recipePrefab;
 
     private List<GameObject> recipes = new List<GameObject>();
+
+    private IngredientView lastView;
 
     public void SetData(NodeData node)
     {
@@ -53,9 +56,8 @@ public class NodeInformationDisplay : MonoBehaviour
                         }
                     }
                 }
-
-                clone.name = ingredient.ingredientName;
-                clone.GetComponentsInChildren<Image>()[clone.GetComponentsInChildren<Image>().Length - 1].sprite = ingredient.icon;
+                clone.GetComponent<IngredientView>().SetIngredientName(ingredient.ingredientName);
+                clone.GetComponent<IngredientView>().SetIngredientSprite(ingredient.icon);
             }
 
             if(recipe.GetInputs().Length > 0 && recipe.GetOutputs().Length > 0)
@@ -63,15 +65,16 @@ public class NodeInformationDisplay : MonoBehaviour
                 GameObject imageClone = Instantiate(ingredientPrefab, recipeClone.transform);
                 imageClone.GetComponentInChildren<Image>().enabled = false;
                 imageClone.transform.Rotate(new Vector3(0, 0, 90));
-                imageClone.GetComponentsInChildren<Image>()[imageClone.GetComponentsInChildren<Image>().Length - 1].sprite = equalSign;
+                imageClone.GetComponent<IngredientView>().SetIngredientSprite(equalSign);
+                imageClone.GetComponent<IngredientView>().SetActivatable(false);
             }
 
             foreach (Ingredient ingredient in recipe.GetOutputs())
             {
                 GameObject clone = Instantiate(ingredientPrefab,recipeClone.transform);
                 clone.transform.SetAsLastSibling();
-                clone.name = ingredient.ingredientName;
-                clone.GetComponentsInChildren<Image>()[clone.GetComponentsInChildren<Image>().Length-1].sprite = ingredient.icon;
+                clone.GetComponent<IngredientView>().SetIngredientName(ingredient.ingredientName);
+                clone.GetComponent<IngredientView>().SetIngredientSprite(ingredient.icon);
             }
 
             recipes.Add(recipeClone);
@@ -151,4 +154,5 @@ public class NodeInformationDisplay : MonoBehaviour
     {
         Destroy(this.gameObject);
     }
+
 }
