@@ -149,6 +149,27 @@ public class Production_Node : NodeView
        
     }
 
+    public override RecipeInformationData[] GetRecipeInformationStatus()
+    {
+        var recipesStatusData = new List<RecipeInformationData>();
+
+        foreach (var recipe in GetRecipes())
+        {
+            var data = new RecipeInformationData(recipe);
+
+            for (int i = 0; i < data.inputsStatus.Count; i++)
+            {
+                data.inputsStatus[i] = new RecipeInformationData.IngredientStatus(data.inputsStatus[i].ingredient, true);
+            }
+
+            data.canCraft = true;
+
+            recipesStatusData.Add(data);
+        }
+
+        return recipesStatusData.ToArray();
+    }
+
     public override Recipe[] ValidRecipes()
     {
         return new Recipe[1] { GetCurrentRecipe() };

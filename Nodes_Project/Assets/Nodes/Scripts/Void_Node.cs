@@ -161,9 +161,9 @@ public class Void_Node : Supermarket_Node
             {
                 if (input != null && input.GetIngredient() != null)
                 {
-                    if (input.GetIngredient().ingredientName == data.inputsStatus[i].ingredient.ingredientName)
+                    for (int i = 0; i < data.inputsStatus.Count; i++)
                     {
-                        for (int i = 0; i < data.inputsStatus.Count; i++)
+                        if (input.GetIngredient().ingredientName == data.inputsStatus[i].ingredient.ingredientName)
                         {
                             if (data.inputsStatus[i].status == false)
                             {
