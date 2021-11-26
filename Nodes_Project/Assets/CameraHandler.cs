@@ -248,7 +248,16 @@ public class CameraHandler : MonoBehaviour
 
         if (drag && draggingNode != null)
         {
-            draggingNode.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, draggingNode.transform.position.z);
+            Vector3 newPos = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, draggingNode.transform.position.z);
+
+            if (GameManager.snapTool)
+            {
+                newPos.x = Mathf.CeilToInt(newPos.x);
+                newPos.y = Mathf.CeilToInt(newPos.y);
+                newPos.z = Mathf.CeilToInt(newPos.z);
+            }
+
+            draggingNode.transform.position = newPos;
         }
 
         if(Input.GetMouseButtonUp(0) && hitNode)

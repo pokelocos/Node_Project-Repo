@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     private float balance_alpha = 0;
     private Color balance_color = Color.green;
     private static List<int> dayTransactions = new List<int>();
+    public static bool snapTool;
 
     private static Dictionary<RogueLikeManager.GameEffect, EffectView> gameEffects = new Dictionary<RogueLikeManager.GameEffect, EffectView>();
 
@@ -81,10 +82,16 @@ public class GameManager : MonoBehaviour
         money = 1000;
         day = 0;
         negativeDays = 0;
+        snapTool = false;
 
         lastBalance = money;
 
         SetTimeScale(0);
+    }
+
+    public void ToggleSnapTool()
+    {
+        snapTool = !snapTool;
     }
 
     public void ToggleMoneyBalance()
