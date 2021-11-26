@@ -8,7 +8,7 @@ public class ConectionView : MonoBehaviour
     private NodeView destination;
 
     [SerializeField]
-    private SpriteRenderer border, color;
+    private SpriteRenderer border, color, feedback;
     [SerializeField]
     private SpriteRenderer element;
 
@@ -132,7 +132,11 @@ public class ConectionView : MonoBehaviour
         {
             if (isReadyToClaim)
             {
-                destination.GetComponent<Animator>().SetTrigger("Fail");
+                GetComponentInChildren<Animator>().SetTrigger("Fail");
+            }
+            else
+            {
+                GetComponentInChildren<Animator>().SetTrigger("Success");
             }
 
             actualTime = 0;
@@ -151,6 +155,8 @@ public class ConectionView : MonoBehaviour
         this.transform.right = to - from;
         var dis = Vector3.Distance(from, to);
         border.size = color.size = new Vector2(dis * 5, border.size.y);
+
+        feedback.size = border.size;
 
         UpdateBoxCollider(gameObject.GetComponent<BoxCollider2D>(), border.sprite);
     }
