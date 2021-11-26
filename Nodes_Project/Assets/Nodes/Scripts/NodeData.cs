@@ -6,6 +6,7 @@ using UnityEngine;
 public class NodeData : ScriptableObject
 {
     public Color color = Color.gray;
+    public string description;
     public Sprite icon;
     public float speed = 1f;
     public float successProbability = 1;
