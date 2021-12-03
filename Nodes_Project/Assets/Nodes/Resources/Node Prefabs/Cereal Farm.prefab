@@ -50,7 +50,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7cf67370df60a38418086c724b5d9688, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 7614223752104794975}
   - component: {fileID: 7614223752104794969}
   - component: {fileID: -2968162372407739519}
+  - component: {fileID: 1317468285442944896}
   m_Layer: 0
   m_Name: Cereal Farm
   m_TagString: Untagged
@@ -370,6 +371,7 @@ MonoBehaviour:
   bright: {fileID: 8657393247705239117}
   data: {fileID: 11400000, guid: adc39ba06ec56b24b9da3efad59ebd27, type: 2}
   isDebugMode: 0
+  isActive: 1
 --- !u!95 &-2968162372407739519
 Animator:
   serializedVersion: 3
@@ -389,6 +391,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1317468285442944896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606992679866144278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b35d2d508c76014b8d9e240a2e11e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3243514718196432142
 GameObject:
   m_ObjectHideFlags: 0

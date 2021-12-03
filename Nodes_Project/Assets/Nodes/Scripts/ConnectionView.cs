@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConectionView : MonoBehaviour
+public class ConnectionView : MonoBehaviour
 {
     private NodeView origin;
     private NodeView destination;
+
+    private Transform from;
+    private Transform to;
 
     [SerializeField]
     private SpriteRenderer border, color, feedback;
@@ -14,6 +17,12 @@ public class ConectionView : MonoBehaviour
 
     public Color border_color;
     public Color body_color;
+
+    public delegate void ConnectionCreated(ConnectionView connection);
+    public delegate void ConnectionDestroyed(ConnectionView connection);
+
+    public event ConnectionCreated onConnectionCreated;
+    public event ConnectionDestroyed onConnectionDestroyed;
 
     private int hasIngredient;
     public bool isReadyToClaim;
@@ -26,15 +35,28 @@ public class ConectionView : MonoBehaviour
 
     private void Start()
     {
-        SetLineColor(body_color, border_color);
+        Paint(body_color, border_color);
     }
 
     void Update()
     {
-        if (origin != null && destination != null)
+        switch (NodeManager.Filter)
         {
-            FollowPositions(origin.transform.position, destination.transform.position);
-            MoveElement(origin.transform.position, destination.transform.position);
+            case NodeManager.Filters.NONE:
+                Paint(body_color, border_color);
+                break;
+            case NodeManager.Filters.CONNECTION_MODE:
+
+                Color darker = Color.Lerp(Color.gray, Color.black, 0.2f);
+
+                Paint(Color.gray, darker);
+                break;
+        }
+
+        if (from != null && to != null)
+        {
+            FollowPositions(from.position, to.position);
+            //MoveElement(from.position, to.position);
         }
         else
         {
@@ -44,7 +66,7 @@ public class ConectionView : MonoBehaviour
 
     public Vector3 GetMiddlePoint()
     {
-        return (origin.transform.position + destination.transform.position) / 2;
+        return (from.position + to.position) / 2;
     }
 
     public Ingredient GetOutputIngredient()
@@ -70,6 +92,7 @@ public class ConectionView : MonoBehaviour
         return result;
     }
 
+    [System.Obsolete("This is an obsolete method")]
     public void Disconnect()
     {
         origin.RemoveConnection(this);
@@ -81,7 +104,7 @@ public class ConectionView : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void SetLineColor(Color body, Color border)
+    public void Paint(Color body, Color border)
     {
         this.border.color = border;
         this.color.color = body;
@@ -92,6 +115,7 @@ public class ConectionView : MonoBehaviour
         element.color = color;
     }
 
+    [System.Obsolete("This is an obsolete method")]
     public void SetNodes(NodeView origin, NodeView dest)
     {
         this.origin = origin;
@@ -104,6 +128,22 @@ public class ConectionView : MonoBehaviour
         {
             SetDotColor(GetIngredient().color);
         }
+    }
+
+    public void SetPoints(Transform from, Transform to)
+    {
+        this.from = from;
+        this.to = to;
+
+        onConnectionCreated?.Invoke(this);
+    }
+
+    //Destroy the connection objects and send onConnectionDestroyed event
+    public void DestroyConnection()
+    {
+        onConnectionDestroyed?.Invoke(this);
+
+        Destroy(this.gameObject);
     }
 
     public NodeView GetOrigin()

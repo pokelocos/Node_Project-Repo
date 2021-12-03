@@ -77,7 +77,7 @@ public class Seller_Node : NodeView
         return 0;
     }
 
-    public override void InputIngredientReady(ConectionView connection)
+    public override void InputIngredientReady(ConnectionView connection)
     {
         foreach (var input in inputs)
         {

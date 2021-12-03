@@ -4,17 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using RA.InputManager;
 
 public class NodeManager : MonoBehaviour
 {
+    [Header("Settings")]
+    [SerializeField] private Filters filter = Filters.NONE;
+
+    //Visible variables
+    [Header("Components")]
+    [SerializeField] private ConnectionView proxyConnection;
+
+    //Hidden variables
+    private InputManager inputManager;
+    private NodeController dragOriginNode;
+    private static NodeManager _singleton;
+
+    //All below this is deprecated;
     private NodeView overNode;  
-    private NodeView originNode;
-    private NodeView destNode;
+    private NodeController destNode;
     private bool drag = false;
     [Header("References")]
-    [SerializeField]
-    private ConectionView auxiliarConection;
-
     [SerializeField]
     private SpriteRenderer mouseIcon;
     [SerializeField]
@@ -41,12 +51,42 @@ public class NodeManager : MonoBehaviour
     public AudioClip canConect;
     public AudioClip nothingConect;
 
+    //Properties
+    public static Filters Filter
+    {
+        get
+        {
+            if (_singleton == null)
+                _singleton = FindObjectOfType<NodeManager>();
+
+            return _singleton.filter;
+        }
+    }
+
+    public enum Filters
+    {
+        NONE, CONNECTION_MODE
+    }
+
+    private void Start()
+    {
+        inputManager = FindObjectOfType<InputManager>();   
+    }
+
     void Update()
     {
+        ManageConnections();
+
+        return;
+
+        //All below this are deprecated.
+
         RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
 
         NodeView hitNode = null;
-        ConectionView hitConnection = null;
+        NodeController nodeController = null;
+        ConnectionView hitConnection = null;
+        ConnectionController connectionController = null;
 
         mouseIcon.color = Color.clear;
         mouseIcon_background.color = Color.clear;
@@ -75,10 +115,12 @@ public class NodeManager : MonoBehaviour
                     try
                     {
                         hitNode = hit.collider.GetComponentInChildren<NodeView>();
+                        nodeController = hit.collider.GetComponentInChildren<NodeController>();
                     }
                     catch
                     {
                         hitNode = null;
+                        nodeController = null;
                     }
                 }
 
@@ -86,11 +128,13 @@ public class NodeManager : MonoBehaviour
                 {
                     try
                     {
-                        hitConnection = hit.collider.GetComponentInChildren<ConectionView>();
+                        hitConnection = hit.collider.GetComponentInChildren<ConnectionView>();
+                        connectionController = hit.collider.GetComponentInChildren<ConnectionController>();
                     }
                     catch
                     {
                         hitConnection = null;
+                        connectionController = null;
                     }
                 }
             }
@@ -141,7 +185,7 @@ public class NodeManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            originNode = overNode;
+            dragOriginNode = nodeController;
 
             float timeSinceLastClick = Time.unscaledTime - lastClickTime;
 
@@ -149,7 +193,8 @@ public class NodeManager : MonoBehaviour
             {
                 if (hitConnection!= null)
                 {
-                    hitConnection.Disconnect();
+                    //hitConnection.Disconnect();
+                    connectionController.Disconnect();
                 }
             }
 
@@ -158,26 +203,28 @@ public class NodeManager : MonoBehaviour
 
         if (Input.GetMouseButtonUp(1))
         {
-            if (originNode != null && overNode != null && originNode != overNode)
+            if (dragOriginNode != null && overNode != null && dragOriginNode != overNode)
             {
-                destNode = overNode;
+                destNode = nodeController;
 
-                if (originNode.CanConnectWith(destNode) == 2)
-                {
-                    originNode.ConnectWith(destNode);
-                    source.PlayOneShot(canConect);
-                }
-                else
-                {
-                    source.PlayOneShot(cannotConect);
-                }
+                ConnectNodes(dragOriginNode, destNode);
+
+                //if (originNode.CanConnectWith(destNode) == 2)
+                //{
+                //    originNode.ConnectWith(destNode);
+                //    source.PlayOneShot(canConect);
+                //}
+                //else
+                //{
+                //    source.PlayOneShot(cannotConect);
+                //}
             }
             else
             {
                 source.PlayOneShot(nothingConect);
             }
 
-            var connections = FindObjectsOfType<ConectionView>().Where(x => x != auxiliarConection).ToArray(); ;
+            var connections = FindObjectsOfType<ConnectionView>().Where(x => x != proxyConnection).ToArray(); ;
 
             foreach (var connection in connections)
             {
@@ -186,65 +233,65 @@ public class NodeManager : MonoBehaviour
                     connection.SetDotColor(connection.GetIngredient().color);
                 }
 
-                connection.SetLineColor(connection.body_color, connection.border_color);
+                connection.Paint(connection.body_color, connection.border_color);
             }
 
-            foreach (var node in FindObjectsOfType<NodeView>().Where(x => x != originNode).ToArray())
+            foreach (var node in FindObjectsOfType<NodeView>().Where(x => x != dragOriginNode).ToArray())
             {
                 node.Paint(node.GetColor());
                 node.SetBright(Color.clear);
             }
 
-            originNode = null;
+            dragOriginNode = null;
             destNode = null;
         }
 
-        if (originNode != null && destNode == null)
+        if (dragOriginNode != null && destNode == null)
         {
-            Vector3 originPos = originNode.transform.position;
+            Vector3 originPos = dragOriginNode.transform.position;
             destPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            if (originNode.GetCurrentRecipe() != null)
-            {
-                for (int i = 0; i < originNode.GetOutputs().Length; i++)
-                {
-                    if (originNode.GetOutputs()[i] == null)
-                    {
-                        var ingredient = originNode.GetCurrentRecipe().GetOutputs()[i];
+            //if (originNode.GetCurrentRecipe() != null)
+            //{
+            //    for (int i = 0; i < originNode.GetOutputs().Length; i++)
+            //    {
+            //        if (originNode.GetOutputs()[i] == null)
+            //        {
+            //            var ingredient = originNode.GetCurrentRecipe().GetOutputs()[i];
 
-                        mouseIcon.sprite = ingredient.icon;
-                        mouseIcon.color = ingredient.color;
+            //            mouseIcon.sprite = ingredient.icon;
+            //            mouseIcon.color = ingredient.color;
 
-                        Color darker = Color.Lerp(ingredient.color, Color.black, 0.5f);
+            //            Color darker = Color.Lerp(ingredient.color, Color.black, 0.5f);
 
-                        mouseIcon_background.color = darker;
-                        mouseIcon_ring.color = new Color(0, 0, 0, 0.15f);
+            //            mouseIcon_background.color = darker;
+            //            mouseIcon_ring.color = new Color(0, 0, 0, 0.15f);
 
-                        price_handler.text = "$" + ingredient.price;
-                        price_handler_shadow.text = "$" + ingredient.price;
+            //            price_handler.text = "$" + ingredient.price;
+            //            price_handler_shadow.text = "$" + ingredient.price;
 
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                mouseIcon.sprite = invalidIngredient;
-                mouseIcon.color = Color.red;
+            //            break;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    mouseIcon.sprite = invalidIngredient;
+            //    mouseIcon.color = Color.red;
 
-                Color darker = Color.Lerp(Color.red, Color.black, 0.5f);
+            //    Color darker = Color.Lerp(Color.red, Color.black, 0.5f);
 
-                mouseIcon_background.color = darker;
-                mouseIcon_ring.color = new Color(0, 0, 0, 0.15f);
-            }
+            //    mouseIcon_background.color = darker;
+            //    mouseIcon_ring.color = new Color(0, 0, 0, 0.15f);
+            //}
 
             destPos.z = originPos.z;
 
-            auxiliarConection.gameObject.SetActive(true);
+            proxyConnection.gameObject.SetActive(true);
 
-            auxiliarConection.FollowPositions(originPos, destPos);
+            proxyConnection.FollowPositions(originPos, destPos);
 
-            var connections = FindObjectsOfType<ConectionView>().Where(x => x != auxiliarConection).ToArray();
+            var connections = FindObjectsOfType<ConnectionView>().Where(x => x != proxyConnection).ToArray();
 
             foreach (var connection in connections)
             {
@@ -252,67 +299,120 @@ public class NodeManager : MonoBehaviour
 
                 Color lightGray = Color.Lerp(Color.gray, Color.white, 0.5f);
 
-                connection.SetLineColor(lightGray, Color.gray);
+                connection.Paint(lightGray, Color.gray);
             }
 
-            var nodes = FindObjectsOfType<NodeView>().Where(x => x != originNode).ToArray();
+            //var nodes = FindObjectsOfType<NodeView>().Where(x => x != originNode).ToArray();
 
-            if (hitNode)
-            {
-                if (hitNode != originNode)
-                {
-                    int affinity = originNode.CanConnectWith(hitNode);
+            //if (hitNode)
+            //{
+            //    if (hitNode != originNode)
+            //    {
+            //        int affinity = originNode.CanConnectWith(hitNode);
 
-                    switch (affinity)
-                    {
-                        case 0:
-                            Color lightGray = Color.Lerp(Color.gray, Color.white, 0.5f);
-                            auxiliarConection.SetLineColor(lightGray, Color.gray);
-                            break;
+            //        switch (affinity)
+            //        {
+            //            case 0:
+            //                Color lightGray = Color.Lerp(Color.gray, Color.white, 0.5f);
+            //                auxiliarConection.SetLineColor(lightGray, Color.gray);
+            //                break;
 
-                        case 1:
-                            Color lightOrange = Color.Lerp(new Color(1, 0.6f, 0, 1), Color.white, 0.5f);
-                            auxiliarConection.SetLineColor(lightOrange, new Color(1, 0.6f, 0, 1));
-                            break;
+            //            case 1:
+            //                Color lightOrange = Color.Lerp(new Color(1, 0.6f, 0, 1), Color.white, 0.5f);
+            //                auxiliarConection.SetLineColor(lightOrange, new Color(1, 0.6f, 0, 1));
+            //                break;
 
-                        case 2:
-                            Color lightGreen = Color.Lerp(new Color(0.7f, 0.9f, 0.3f), Color.white, 0.5f);
-                            auxiliarConection.SetLineColor(lightGreen, new Color(0.7f, 0.9f, 0.3f));
-                            break;
-                    }
-                }
-            }
-            else
-            {
-                Color lightGray = Color.Lerp(Color.gray, Color.white, 0.5f);
-                auxiliarConection.SetLineColor(lightGray, Color.gray);
-            }
+            //            case 2:
+            //                Color lightGreen = Color.Lerp(new Color(0.7f, 0.9f, 0.3f), Color.white, 0.5f);
+            //                auxiliarConection.SetLineColor(lightGreen, new Color(0.7f, 0.9f, 0.3f));
+            //                break;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    Color lightGray = Color.Lerp(Color.gray, Color.white, 0.5f);
+            //    auxiliarConection.SetLineColor(lightGray, Color.gray);
+            //}
 
-            foreach (var node in nodes)
-            {
-                int affinity = originNode.CanConnectWith(node);
+            //foreach (var node in nodes)
+            //{
+            //    int affinity = originNode.CanConnectWith(node);
 
-                switch (affinity)
-                {
-                    case 0:
-                        node.Paint(Color.gray);
-                        break;
+            //    switch (affinity)
+            //    {
+            //        case 0:
+            //            node.Paint(Color.gray);
+            //            break;
 
-                    case 1:
-                        node.SetBright(new Color(1, 0.6f, 0, 1));
-                        break;
+            //        case 1:
+            //            node.SetBright(new Color(1, 0.6f, 0, 1));
+            //            break;
 
-                    case 2:
-                        node.SetBright(new Color(0.7f, 0.9f, 0.3f));
-                        break;
-                }
-            }
+            //        case 2:
+            //            node.SetBright(new Color(0.7f, 0.9f, 0.3f));
+            //            break;
+            //    }
+            //}
             
         }
         else
         {
-            auxiliarConection.gameObject.SetActive(false);
+            proxyConnection.gameObject.SetActive(false);
         }
 
     }    
+
+    private void ManageConnections()
+    {
+        // Proxy connection
+        if (dragOriginNode != null)
+        {
+            Vector3 from = dragOriginNode.transform.position;
+            Vector3 to = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            to.z = 0;
+
+            proxyConnection.gameObject.SetActive(true);
+            proxyConnection.FollowPositions(from, to);
+        }
+        else
+        {
+            proxyConnection.gameObject.SetActive(false);
+        }
+
+        // Input events
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (inputManager.OverObject is NodeController)
+            {
+                dragOriginNode = inputManager.OverObject as NodeController;
+            }
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            if (inputManager.OverObject is NodeController)
+            {
+                ConnectNodes(dragOriginNode, inputManager.OverObject as NodeController);
+            }
+
+            dragOriginNode = null;
+        }
+
+        if (inputManager.RightDoubleClick)
+        {
+            if (inputManager.OverObject is ConnectionController)
+            {
+                (inputManager.OverObject as ConnectionController).Disconnect();
+            }
+        }
+    }
+
+    public void ConnectNodes(NodeController from, NodeController to)
+    {
+        var connection = (Instantiate(Resources.Load("Nodes/Connection"), null) as GameObject).GetComponent<ConnectionController>();
+
+        connection.Connect(from, to);
+    }
 }

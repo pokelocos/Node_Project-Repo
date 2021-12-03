@@ -13,7 +13,7 @@ public class Void_Node : Supermarket_Node
     {
         selectedRecipe = GetRecipes()[0];
 
-        inputs = new ConectionView[4];
+        inputs = new ConnectionView[4];
 
         star.SetActive(false);
 
@@ -39,6 +39,8 @@ public class Void_Node : Supermarket_Node
 
     public override int CanConnectWith(NodeView inputNode)
     {
+        return 0;
+
         if (isCompleted)
             return 0;
 
@@ -130,7 +132,7 @@ public class Void_Node : Supermarket_Node
                 }
             }
 
-            inputs = new ConectionView[0];
+            inputs = new ConnectionView[0];
 
             foreach (Transform child in transform)
             {

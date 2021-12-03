@@ -39,6 +39,8 @@ public class Production_Node : NodeView
 
     public override int CanConnectWith(NodeView inputNode)
     {
+        return 0;
+
         if (inputNode.GetInputs().Length == 0)
         {
             return 0;
@@ -144,7 +146,7 @@ public class Production_Node : NodeView
        
     }
 
-    public override void InputIngredientReady(ConectionView connection)
+    public override void InputIngredientReady(ConnectionView connection)
     {
        
     }

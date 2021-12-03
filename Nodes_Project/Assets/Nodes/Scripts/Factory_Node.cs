@@ -81,6 +81,8 @@ public class Factory_Node : NodeView
 
     public override int CanConnectWith(NodeView inputNode)
     {
+        return 0;
+
         if (GetCurrentRecipe() != null)
         {
             if (inputNode is Void_Node)
@@ -187,7 +189,7 @@ public class Factory_Node : NodeView
         return 0;
     }
 
-    public override void InputIngredientReady(ConectionView connection)
+    public override void InputIngredientReady(ConnectionView connection)
     {
         foreach (var input in inputs)
         {

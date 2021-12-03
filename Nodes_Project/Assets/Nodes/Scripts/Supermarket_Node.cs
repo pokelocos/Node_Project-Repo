@@ -7,7 +7,7 @@ public class Supermarket_Node : Seller_Node
 {
     private void Start()
     {
-        inputs = new ConectionView[4];
+        inputs = new ConnectionView[4];
     }
 
     protected override void OnWorkFinish()
@@ -71,7 +71,7 @@ public class Supermarket_Node : Seller_Node
 
     }
 
-    public override void InputIngredientReady(ConectionView connection)
+    public override void InputIngredientReady(ConnectionView connection)
     {
         var readyforSell = inputs.Count(x => x != null && x.isReadyToClaim);
 

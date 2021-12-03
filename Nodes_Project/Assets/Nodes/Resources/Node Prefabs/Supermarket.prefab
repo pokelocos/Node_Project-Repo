@@ -730,6 +730,7 @@ GameObject:
   - component: {fileID: 3632827566362206658}
   - component: {fileID: 6029534737933495477}
   - component: {fileID: 6204151347996877857}
+  - component: {fileID: 620345432497871052}
   m_Layer: 0
   m_Name: Supermarket
   m_TagString: Untagged
@@ -865,6 +866,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &620345432497871052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6029534737933495435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b35d2d508c76014b8d9e240a2e11e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6525071445769641267
 GameObject:
   m_ObjectHideFlags: 0

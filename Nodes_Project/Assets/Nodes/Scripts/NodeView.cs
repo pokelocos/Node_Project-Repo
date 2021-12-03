@@ -24,8 +24,8 @@ public abstract class NodeView : MonoBehaviour
     protected float internalSpeed = 0;
     private bool isFailure;
 
-    protected ConectionView[] inputs = new ConectionView[0];
-    protected ConectionView[] outputs = new ConectionView[0];
+    protected ConnectionView[] inputs = new ConnectionView[0];
+    protected ConnectionView[] outputs = new ConnectionView[0];
 
     protected Recipe selectedRecipe;
 
@@ -39,10 +39,10 @@ public abstract class NodeView : MonoBehaviour
         body.color = data.color;
 
         if(data.recipes[0].GetInputs().Length > 0)
-            inputs = new ConectionView[data.recipes[0].GetInputs().Length];
+            inputs = new ConnectionView[data.recipes[0].GetInputs().Length];
 
         if (data.recipes[0].GetOutputs().Length > 0)
-            outputs = new ConectionView[data.recipes[0].GetOutputs().Length];
+            outputs = new ConnectionView[data.recipes[0].GetOutputs().Length];
     }
 
     public int GetMantainCost()
@@ -57,14 +57,24 @@ public abstract class NodeView : MonoBehaviour
 
     void Update()
     {
-        if (isActive)
+        switch (NodeManager.Filter)
         {
-            Paint(GetColor());
+            case NodeManager.Filters.NONE:
+                Paint(data.color);
+                break;
+            case NodeManager.Filters.CONNECTION_MODE:
+                Paint(Color.gray);
+                break;
         }
-        else
-        {
-            Paint(Color.gray);
-        }
+
+        //if (isActive)
+        //{
+        //    Paint(GetColor());
+        //}
+        //else
+        //{
+        //    Paint(Color.gray);
+        //}
 
         Work();
     }
@@ -125,7 +135,7 @@ public abstract class NodeView : MonoBehaviour
         bright.color = color;
     }
 
-    public void RemoveConnection(ConectionView connection)
+    public void RemoveConnection(ConnectionView connection)
     {
         for (int i = 0; i < inputs.Length; i++)
         {
@@ -146,12 +156,12 @@ public abstract class NodeView : MonoBehaviour
         }
     }
 
-    public ConectionView[] GetInputs()
+    public ConnectionView[] GetInputs()
     {
         return inputs;
     }
 
-    public ConectionView[] GetOutputs()
+    public ConnectionView[] GetOutputs()
     {
         return outputs;
     }
@@ -161,6 +171,7 @@ public abstract class NodeView : MonoBehaviour
         return selectedRecipe;
     }
 
+    [System.Obsolete("This is an obsolete method")]
     /// <summary>
     /// Returns:
     ///  0 - Cant connect
@@ -171,6 +182,8 @@ public abstract class NodeView : MonoBehaviour
     /// <returns></returns>
     public virtual int CanConnectWith(NodeView inputNode)
     {
+        return 0;
+
         if (outputs.Length > 0)
         {
             for (int i = 0; i < outputs.Length; i++)
@@ -194,8 +207,10 @@ public abstract class NodeView : MonoBehaviour
         return 0;
     }
 
+    [System.Obsolete("This is an obsolete method")]
     public abstract Recipe[] ValidRecipes();
 
+    [System.Obsolete("This is an obsolete method")]
     public void ConnectWith(NodeView inputNode)
     {
         if (outputs.Length > 0)
@@ -210,7 +225,7 @@ public abstract class NodeView : MonoBehaviour
                         {
                             if (inputNode.inputs[j] == null)
                             {
-                                var connection = (Instantiate(Resources.Load("Nodes/Connection"), null) as GameObject).GetComponent<ConectionView>();
+                                var connection = (Instantiate(Resources.Load("Nodes/Connection"), null) as GameObject).GetComponent<ConnectionView>();
 
                                 inputNode.inputs[j] = connection;
                                 outputs[i] = connection;
@@ -224,7 +239,7 @@ public abstract class NodeView : MonoBehaviour
             }
         }
     }
-    public static Ingredient[] GetInputIngredients(ConectionView[] inputs)
+    public static Ingredient[] GetInputIngredients(ConnectionView[] inputs)
     {
         List<Ingredient> ingredients = new List<Ingredient>();
 
@@ -256,7 +271,7 @@ public abstract class NodeView : MonoBehaviour
         return ingredients.ToArray();
     }
 
-    public abstract void InputIngredientReady(ConectionView connection);
+    public abstract void InputIngredientReady(ConnectionView connection);
 
     public abstract void ConnectionChange();
 
@@ -290,7 +305,7 @@ public abstract class NodeView : MonoBehaviour
     public int GetConnectedInputs()
     {
         int a = 0;
-        foreach(ConectionView c in inputs)
+        foreach(ConnectionView c in inputs)
         {
             if (c != null)
                 a++;
@@ -301,7 +316,7 @@ public abstract class NodeView : MonoBehaviour
     public int GetConnectedOutputs()
     {
         int a = 0;
-        foreach (ConectionView c in outputs)
+        foreach (ConnectionView c in outputs)
         {
             if (c != null)
                 a++;

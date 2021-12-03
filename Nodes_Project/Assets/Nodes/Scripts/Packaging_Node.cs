@@ -7,7 +7,7 @@ public class Packaging_Node : Factory_Node
 {
     private void Start()
     {
-        inputs = new ConectionView[3];
+        inputs = new ConnectionView[3];
 
         selectedRecipe = GetRecipes()[0];
     }
@@ -18,13 +18,15 @@ public class Packaging_Node : Factory_Node
 
     public override int CanConnectWith(NodeView inputNode)
     {
+        return 0;
+
         if (inputNode.GetNodeName() == "Packaging")
             return 0;
 
         return base.CanConnectWith(inputNode);
     }
 
-    public override void InputIngredientReady(ConectionView connection)
+    public override void InputIngredientReady(ConnectionView connection)
     {
         foreach (var input in inputs)
         {
