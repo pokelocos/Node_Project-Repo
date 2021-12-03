@@ -77,6 +77,9 @@ public class NodeManager : MonoBehaviour
     {
         ManageConnections();
 
+        //Execute at end
+        ManageColors();
+
         return;
 
         //All below this are deprecated.
@@ -363,6 +366,9 @@ public class NodeManager : MonoBehaviour
 
     }    
 
+    /// <summary>
+    /// Controls the logic of the connections.
+    /// </summary>
     private void ManageConnections()
     {
         // Proxy connection
@@ -406,6 +412,20 @@ public class NodeManager : MonoBehaviour
             {
                 (inputManager.OverObject as ConnectionController).Disconnect();
             }
+        }
+    }
+
+    /// <summary>
+    /// Manage the colors of all objects.
+    /// </summary>
+    private void ManageColors()
+    {
+        filter = Filters.NONE;
+
+        //Check if manager is in CONNECTION_MODE
+        if (dragOriginNode != null)
+        {
+            filter = Filters.CONNECTION_MODE;
         }
     }
 
