@@ -15,6 +15,10 @@ public class ConnectionController : MonoBehaviour, SelectableObject
         this.from = from;
         this.to = to;
 
+        //Set inputs and outputs
+        from.AddOutput(this);
+        to.AddInput(this);
+
         //Events created for both nodes
         connectionView.onConnectionCreated += from.ConnectionUpdated;
         connectionView.onConnectionCreated += to.ConnectionUpdated;
@@ -31,5 +35,10 @@ public class ConnectionController : MonoBehaviour, SelectableObject
         var connectionView = GetComponent<ConnectionView>();
 
         connectionView.DestroyConnection();
+
+        from.RemoveOutput(this);
+        to.RemoveInput(this);
+
+        Destroy(this.gameObject);
     }
 }

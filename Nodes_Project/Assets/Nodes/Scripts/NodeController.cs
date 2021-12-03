@@ -61,6 +61,32 @@ public class NodeController : MonoBehaviour, SelectableObject
         outputConnections.Remove(connection);
     }
 
+    /// <summary>
+    /// Evaluate if this node can connect with another node. Returns:
+    /// 0 - Can't connect
+    /// 1 - Can Connect
+    /// 2 - It's possible but not right now.
+    /// </summary>
+    /// <param name="candidate"></param>
+    /// <param name="ingredient"></param>
+    /// <returns></returns>
+    public int CanConnectWith(NodeController candidate, Ingredient ingredient)
+    {
+        //Check if this node is not the same
+        if (this == candidate)
+        {
+            return 0;
+        }
+
+        //Default can connect
+        return 1;
+    }
+
+    public Ingredient GetNextOutputIngredient()
+    {
+        return null;
+    }
+
     //private void OnDestroy()
     //{
     //    foreach (var input in inputConnections)

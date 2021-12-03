@@ -77,7 +77,7 @@ public class NodeManager : MonoBehaviour
     {
         ManageConnections();
 
-        //Execute at end
+        //Execute at the end.
         ManageColors();
 
         return;
@@ -426,6 +426,27 @@ public class NodeManager : MonoBehaviour
         if (dragOriginNode != null)
         {
             filter = Filters.CONNECTION_MODE;
+
+            //Check connection afinity
+            var allNodes = FindObjectsOfType<NodeController>();
+
+            foreach (var node in allNodes)
+            {
+                var nodeView = node.GetComponent<NodeView>();
+
+                switch (dragOriginNode.CanConnectWith(node, dragOriginNode.GetNextOutputIngredient()))
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        nodeView.Paint(nodeView.GetNodeData().color);
+                        nodeView.SetBright(Color.green);
+                        break;
+                    default:
+                        nodeView.Paint(Color.blue);
+                        break;
+                }
+            }
         }
     }
 

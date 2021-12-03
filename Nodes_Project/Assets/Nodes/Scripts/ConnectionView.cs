@@ -142,8 +142,6 @@ public class ConnectionView : MonoBehaviour
     public void DestroyConnection()
     {
         onConnectionDestroyed?.Invoke(this);
-
-        Destroy(this.gameObject);
     }
 
     public NodeView GetOrigin()

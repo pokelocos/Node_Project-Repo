@@ -61,6 +61,7 @@ public abstract class NodeView : MonoBehaviour
         {
             case NodeManager.Filters.NONE:
                 Paint(data.color);
+                SetBright(Color.clear);
                 break;
             case NodeManager.Filters.CONNECTION_MODE:
                 Paint(Color.gray);
