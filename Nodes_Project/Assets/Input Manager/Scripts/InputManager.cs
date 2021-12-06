@@ -132,6 +132,9 @@ namespace RA.InputManager
 
             if (matches.Count > 0)
             {
+                //NodeController objects set to the top
+                matches = matches.OrderByDescending(x => (x is NodeController)? 1 : 0).ToList();
+
                 overObject = matches.First();
                 overObjects = matches.ToArray();
             }

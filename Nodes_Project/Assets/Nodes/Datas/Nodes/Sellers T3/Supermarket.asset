@@ -19,7 +19,7 @@ MonoBehaviour:
   successProbability: 1
   productionTime: 5
   maintainCost: 30
-  allowedRecipes: 1
+  allowedRecipes: 2
   forceRecipes: 1
   onWorkFinish: []
   defaultInputIngredients: []

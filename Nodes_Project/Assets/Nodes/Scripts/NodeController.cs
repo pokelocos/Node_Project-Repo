@@ -55,9 +55,8 @@ public class NodeController : MonoBehaviour, SelectableObject
     /// </summary>
     public void UpdatePorts()
     {
-        //Collect all ingredients
+        //Collect all output ingredients
         var allOutputProducts = new List<Product>();
-        var occupiedPorts = new List<Port>();
 
         foreach (var recipe in selectedRecipes)
         {
@@ -75,19 +74,22 @@ public class NodeController : MonoBehaviour, SelectableObject
                 }
             }
 
+            //Set output products
             allOutputProducts.AddRange(recipe.GenerateProducts(rawMaterials.ToArray(), Mathf.CeilToInt(nodeView.GetNodeData().maintainCost / 4)));
         }
 
         var toRemove = new List<Product>();
+        var occupiedPorts = new List<Port>();
 
         //Check if existing ports are used.
-        foreach (var ingredient in allOutputProducts)
+        foreach (var product in allOutputProducts)
         {
+            //For each port that is not contained in the list of used ports
             foreach (var outputPort in outputPorts.Where(x => !occupiedPorts.Contains(x)))
             {
-                if (ingredient.data == outputPort.Product.data)
+                if (product.data == outputPort.Product.data)
                 {
-                    toRemove.Add(ingredient);
+                    toRemove.Add(product);
                     occupiedPorts.Add(outputPort);
                     break;
                 }
@@ -141,8 +143,6 @@ public class NodeController : MonoBehaviour, SelectableObject
 
             //Calculate all possible combinations
             var inputIngredientDatas = inputPorts.Select(x => x.Product?.data).ToList();
-
-            //print(nodeView.GetNodeData().name + " = " + inputIngredientDatas[0]);
 
             List<List<IngredientData>> allCombinations = new List<List<IngredientData>>();
 
@@ -302,63 +302,6 @@ public class NodeController : MonoBehaviour, SelectableObject
         }
 
         return 0;
-
-        //Get all ingredients that can be used in a recipe
-        //var ingredientsUsedByNode = new List<IngredientData>();
-
-        //foreach (var recipe in candidate.nodeView.GetNodeData().recipes)
-        //{
-        //    foreach (var ingredient in recipe.GetIngredients())
-        //    {
-        //        ingredientsUsedByNode.Add(ingredient.IngredientData);
-        //    }
-        //}
-
-        //Get all ingredients from the input ports.
-        //var ingredientsInInputPorts = new List<IngredientData>();
-
-        //foreach (var input in inputPorts)
-        //{
-        //    if (input.Product != null)
-        //    {
-        //        ingredientsInInputPorts.Add(input.Product.data);
-        //    }
-        //}
-
-        //var ingredientsInUse = new List<IngredientData>();
-
-        //foreach (var ingredient in ingredientsInInputPorts)
-        //{
-        //    if (ingredientsUsedByNode.Contains(ingredient))
-        //    {
-        //        ingredientsInUse.Add(ingredient);
-        //    }
-        //}
-
-        //var remainingdIngredients = ingredientsUsedByNode.Where(x => !ingredientsInInputPorts.Contains(x)).ToList();
-
-        //foreach (var ingredient in ingredientsUsedByNode)
-        //{
-        //    if (ingredient == product.data)
-        //    {
-        //        if (candidate.selectedRecipes.Count < nodeView.GetNodeData().allowedRecipes)
-        //        {
-        //            return 1;
-        //        }
-        //        else
-        //        {
-        //            return 2;
-        //        }
-        //    }
-        //}
-
-        //if (ingredientsInInputPorts.Contains(product.data))
-        //{
-        //    return 2;
-        //}
-
-        //Default can connect
-        //return 0;
     }
 
     /// <summary>

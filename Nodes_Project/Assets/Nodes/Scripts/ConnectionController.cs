@@ -17,7 +17,6 @@ public class ConnectionController : MonoBehaviour, SelectableObject
         this.to = to;
 
         //Set inputs and outputs
-        
         to.AddInput(new Port(this, from.GetFreeOutput().Product));
 
         from.SetOutput(this);
@@ -53,10 +52,10 @@ public class ConnectionController : MonoBehaviour, SelectableObject
     {
         var connectionView = GetComponent<ConnectionView>();
 
-        connectionView.DestroyConnection();
-
-        from.RemoveOutput(this);
         to.RemoveInput(this);
+        from.RemoveOutput(this);
+
+        connectionView.DestroyConnection();
 
         Destroy(this.gameObject);
     }
