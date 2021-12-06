@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Seller_Node : NodeView
 {
-    Ingredient[] ingredients;
+    IngredientData[] ingredients;
 
     [SerializeField] private Animator price_animation;
     [SerializeField] private TextMesh price;

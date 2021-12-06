@@ -65,7 +65,7 @@ public class NodeInformationDisplay : MonoBehaviour
                 imageClone.GetComponent<IngredientView>().SetActivatable(false);
             }
 
-            foreach (Ingredient ingredient in recipe.originalRecipe.GetOutputs())
+            foreach (IngredientData ingredient in recipe.originalRecipe.GetOutputs())
             {
                 GameObject clone = Instantiate(ingredientPrefab,recipeClone.transform);
                 clone.transform.SetAsLastSibling();

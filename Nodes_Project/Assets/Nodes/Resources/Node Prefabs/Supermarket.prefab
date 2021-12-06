@@ -728,9 +728,9 @@ GameObject:
   - component: {fileID: 6029534737933495433}
   - component: {fileID: 6029534737933495434}
   - component: {fileID: 3632827566362206658}
-  - component: {fileID: 6029534737933495477}
   - component: {fileID: 6204151347996877857}
   - component: {fileID: 620345432497871052}
+  - component: {fileID: 4903013269442734885}
   m_Layer: 0
   m_Name: Supermarket
   m_TagString: Untagged
@@ -825,28 +825,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.25
---- !u!114 &6029534737933495477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6029534737933495435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fa1c2b4e8b709642b250010ed5366f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  body: {fileID: 6029534737933495434}
-  nodeIcon: {fileID: 6029534736268727415}
-  fillBar: {fileID: 6029534736735791639}
-  bright: {fileID: 5485333166192806347}
-  data: {fileID: 11400000, guid: 8efe42bf5db084c44a3958ae91373692, type: 2}
-  isDebugMode: 0
-  isActive: 1
-  price_animation: {fileID: 5004974267723145864}
-  price: {fileID: 2692457406395783343}
-  price_shadow: {fileID: 2509843634139955474}
 --- !u!95 &6204151347996877857
 Animator:
   serializedVersion: 3
@@ -878,6 +856,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b35d2d508c76014b8d9e240a2e11e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4903013269442734885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6029534737933495435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e290a14c91a46eb47a47ae3b46c32554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 6029534737933495434}
+  nodeIcon: {fileID: 6029534736268727415}
+  fillBar: {fileID: 6029534736735791639}
+  bright: {fileID: 5485333166192806347}
+  data: {fileID: 11400000, guid: 8efe42bf5db084c44a3958ae91373692, type: 2}
+  isDebugMode: 0
+  isActive: 1
+  isPause: 0
 --- !u!1 &6525071445769641267
 GameObject:
   m_ObjectHideFlags: 0

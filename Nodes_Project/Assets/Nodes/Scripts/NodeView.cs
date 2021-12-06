@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class NodeView : MonoBehaviour
+public class NodeView : MonoBehaviour
 {
     [SerializeField]
     private SpriteRenderer body;
@@ -18,6 +18,7 @@ public abstract class NodeView : MonoBehaviour
     public bool isDebugMode;
 
     public bool isActive = true;
+    public bool isPause = false;
 
     private float maxTime = 4f; //seconds
     private float actualTime = 0f;
@@ -80,6 +81,7 @@ public abstract class NodeView : MonoBehaviour
         Work();
     }
 
+    [System.Obsolete("This is an obsolete method")]
     private void Work()
     {
         if (!isFailure)
@@ -136,6 +138,7 @@ public abstract class NodeView : MonoBehaviour
         bright.color = color;
     }
 
+    [System.Obsolete("This is an obsolete method")]
     public void RemoveConnection(ConnectionView connection)
     {
         for (int i = 0; i < inputs.Length; i++)
@@ -157,16 +160,19 @@ public abstract class NodeView : MonoBehaviour
         }
     }
 
+    [System.Obsolete("This is an obsolete method")]
     public ConnectionView[] GetInputs()
     {
         return inputs;
     }
 
+    [System.Obsolete("This is an obsolete method")]
     public ConnectionView[] GetOutputs()
     {
         return outputs;
     }
 
+    [System.Obsolete("This is an obsolete method")]
     public Recipe GetCurrentRecipe()
     {
         return selectedRecipe;
@@ -209,7 +215,7 @@ public abstract class NodeView : MonoBehaviour
     }
 
     [System.Obsolete("This is an obsolete method")]
-    public abstract Recipe[] ValidRecipes();
+    public virtual Recipe[] ValidRecipes() { return null; }
 
     [System.Obsolete("This is an obsolete method")]
     public void ConnectWith(NodeView inputNode)
@@ -240,9 +246,11 @@ public abstract class NodeView : MonoBehaviour
             }
         }
     }
-    public static Ingredient[] GetInputIngredients(ConnectionView[] inputs)
+
+    [System.Obsolete("This is an obsolete method")]
+    public static IngredientData[] GetInputIngredients(ConnectionView[] inputs)
     {
-        List<Ingredient> ingredients = new List<Ingredient>();
+        List<IngredientData> ingredients = new List<IngredientData>();
 
         foreach (var input in inputs)
         {
@@ -272,11 +280,14 @@ public abstract class NodeView : MonoBehaviour
         return ingredients.ToArray();
     }
 
-    public abstract void InputIngredientReady(ConnectionView connection);
+    [System.Obsolete("This is an obsolete method")]
+    public virtual void InputIngredientReady(ConnectionView connection) { }
 
-    public abstract void ConnectionChange();
+    [System.Obsolete("This is an obsolete method")]
+    public virtual void ConnectionChange() { }
 
-    protected abstract void OnWorkFinish();
+    [System.Obsolete("This is an obsolete method")]
+    protected virtual void OnWorkFinish() { }
 
     public Sprite GetIcon()
     {
@@ -303,6 +314,7 @@ public abstract class NodeView : MonoBehaviour
         return data;
     }
 
+    [System.Obsolete("This is an obsolete method")]
     public int GetConnectedInputs()
     {
         int a = 0;
@@ -314,6 +326,7 @@ public abstract class NodeView : MonoBehaviour
         return a;
     }
 
+    [System.Obsolete("This is an obsolete method")]
     public int GetConnectedOutputs()
     {
         int a = 0;
@@ -323,69 +336,6 @@ public abstract class NodeView : MonoBehaviour
                 a++;
         }
         return a;
-    }
-
-    private void OnGUI()
-    {
-        if (Application.isEditor && isDebugMode)
-        {
-            DebugInfo();
-        }
-    }
-
-    protected virtual void DebugInfo()
-    {
-        Vector3 offset = new Vector3(-5, -0.5f, 0);
-
-        var screenPos = Camera.main.WorldToScreenPoint(transform.position + offset);
-
-        screenPos.y = Screen.height - screenPos.y - 50;
-
-        string inputLog = "NO INPUTS";
-
-        if (inputs.Length > 0)
-        {
-            inputLog = string.Empty;
-
-            foreach (var input in inputs)
-            {
-                if (input == null)
-                {
-                    inputLog += "[EMPTY]";
-                }
-                else
-                {
-                    inputLog += "[" + input.GetIngredient().ingredientName + "]";
-                }
-
-                inputLog += "\n";
-            }
-        }
-
-        string outputLog = "NO OUTPUTS";
-
-        if (outputs.Length > 0)
-        {
-            outputLog = string.Empty;
-
-            foreach (var output in outputs)
-            {
-                if (output == null)
-                {
-                    outputLog += "[EMPTY]";
-                }
-                else
-                {
-                    outputLog += "[" + output.GetIngredient().ingredientName + "]";
-                }
-
-                outputLog += "\n";
-            }
-        }
-
-        GUI.Box(new Rect(screenPos.x, screenPos.y, 70, 70), inputLog);
-
-        GUI.Box(new Rect(screenPos.x + 180, screenPos.y, 70, 70), outputLog);
     }
 
     public virtual RecipeInformationData[] GetRecipeInformationStatus()
@@ -440,10 +390,10 @@ public class RecipeInformationData
 
     public struct IngredientStatus
     {
-        public Ingredient ingredient;
+        public IngredientData ingredient;
         public bool status;
 
-        public IngredientStatus(Ingredient ingredient, bool status)
+        public IngredientStatus(IngredientData ingredient, bool status)
         {
             this.ingredient = ingredient;
             this.status = status;

@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 7982274315426402265}
   - component: {fileID: 7982274315426402271}
   - component: {fileID: 5541142697582280444}
+  - component: {fileID: 2330802303988541718}
   m_Layer: 0
   m_Name: Bird Farm
   m_TagString: Untagged
@@ -370,6 +371,7 @@ MonoBehaviour:
   bright: {fileID: 910153739209487412}
   data: {fileID: 11400000, guid: a16f8467260684d49bfd3df36762dc97, type: 2}
   isDebugMode: 0
+  isActive: 1
 --- !u!95 &5541142697582280444
 Animator:
   serializedVersion: 3
@@ -389,6 +391,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2330802303988541718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081405677048709776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b35d2d508c76014b8d9e240a2e11e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2013555495691062586
 GameObject:
   m_ObjectHideFlags: 0

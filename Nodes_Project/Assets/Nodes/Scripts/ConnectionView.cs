@@ -31,7 +31,7 @@ public class ConnectionView : MonoBehaviour
     private float maxTime = 4f; //seconds
     private float actualTime = 0f;
 
-    Ingredient currentIngredient;
+    IngredientData currentIngredient;
 
     private void Start()
     {
@@ -69,14 +69,14 @@ public class ConnectionView : MonoBehaviour
         return (from.position + to.position) / 2;
     }
 
-    public Ingredient GetOutputIngredient()
+    public IngredientData GetOutputIngredient()
     {
         return currentIngredient;
     }
 
-    public Ingredient GetIngredient()
+    public IngredientData GetIngredient()
     {
-        Ingredient result = null;
+        IngredientData result = null;
 
         for (int i = 0; i < origin.GetOutputs().Length; i++)
         {
@@ -154,7 +154,7 @@ public class ConnectionView : MonoBehaviour
         return destination;
     }
 
-    public void SendIngredient(Ingredient ingredient)
+    public void SendIngredient(IngredientData ingredient)
     {
         currentIngredient = ingredient;
         hasIngredient = 1;

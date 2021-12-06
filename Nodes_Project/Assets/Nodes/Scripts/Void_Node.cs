@@ -47,7 +47,7 @@ public class Void_Node : Supermarket_Node
         if (inputNode.GetCurrentRecipe() == null)
             return 0;
 
-        Ingredient ingredient = null;
+        IngredientData ingredient = null;
 
         for (int i = 0; i < inputNode.GetOutputs().Length; i++)
         {

@@ -28,7 +28,7 @@ public class Factory_Node : NodeView
         {
             if (output != null)
             {
-                Ingredient ingredient = Instantiate(output.GetIngredient());
+                IngredientData ingredient = Instantiate(output.GetIngredient());
 
                 ingredient.price += price;
 
@@ -140,7 +140,7 @@ public class Factory_Node : NodeView
 
                     if (ingredientMatches > 0)
                     {
-                        var currentIngredients = new List<Ingredient>();
+                        var currentIngredients = new List<IngredientData>();
 
                         foreach (var input in inputNode.GetInputs())
                         {

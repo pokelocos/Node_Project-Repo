@@ -10,10 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cff68c5b4f86f7e40a9ee5c737217a4c, type: 3}
-  m_Name: Bread
+  m_Name: Flour
   m_EditorClassIdentifier: 
-  inputs:
-  - {fileID: 11400000, guid: 1ab73061d92f75c499b5fed9dc3ac43b, type: 2}
-  outputs:
-  - {fileID: 11400000, guid: 444902844ecccb64a85d8d5ff00d66e5, type: 2}
+  inputs: []
+  outputs: []
+  ingredients:
+  - ingredientData: {fileID: 11400000, guid: 1ab73061d92f75c499b5fed9dc3ac43b, type: 2}
+    compareItem: 1
+    compareItemTags: 0
+    compareSpecificTags: 0
+    specificTags: []
+    isOptional: 0
+  results:
+  - {fileID: 11400000, guid: 438c974390b381a4abf6cc4fd121bb36, type: 2}
   - {fileID: 11400000, guid: 438c974390b381a4abf6cc4fd121bb36, type: 2}

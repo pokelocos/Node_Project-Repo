@@ -12,12 +12,15 @@ public class ConnectionController : MonoBehaviour, SelectableObject
         var connectionView = GetComponent<ConnectionView>();
 
         //Variable initialization
+
         this.from = from;
         this.to = to;
 
         //Set inputs and outputs
-        from.AddOutput(this);
-        to.AddInput(this);
+        
+        to.AddInput(new Port(this, from.GetFreeOutput().Product));
+
+        from.SetOutput(this);
 
         //Events created for both nodes
         connectionView.onConnectionCreated += from.ConnectionUpdated;
@@ -29,6 +32,22 @@ public class ConnectionController : MonoBehaviour, SelectableObject
         //Set points
         connectionView.SetPoints(from.transform, to.transform);
     }
+
+    public Product GetProduct()
+    {
+        return GetOrigin().GetOutputPort(this).Product;
+    }
+
+    public NodeController GetOrigin()
+    {
+        return from;
+    }
+
+    public NodeController GetDestination()
+    {
+        return to;
+    }
+
 
     public void Disconnect()
     {

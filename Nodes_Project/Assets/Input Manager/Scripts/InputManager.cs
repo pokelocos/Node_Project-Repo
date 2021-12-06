@@ -119,11 +119,14 @@ namespace RA.InputManager
 
             foreach (var hit in hits)
             {
-                var selectable = hit.collider.gameObject.GetComponentsInChildren<SelectableObject>().First();
+                var selectable = hit.collider.gameObject.GetComponentsInChildren<SelectableObject>();
 
-                if (selectable != null)
+                if (selectable.Length > 0)
                 {
-                    matches.Add(selectable);
+                    if (selectable != null)
+                    {
+                        matches.Add(selectable.First());
+                    }
                 }
             }
 

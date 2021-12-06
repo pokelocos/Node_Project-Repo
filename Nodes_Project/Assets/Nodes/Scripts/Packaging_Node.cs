@@ -55,7 +55,7 @@ public class Packaging_Node : Factory_Node
 
     public override Recipe[] ValidRecipes()
     {
-        List<Ingredient> ingredients = new List<Ingredient>();
+        List<IngredientData> ingredients = new List<IngredientData>();
 
         int i = 0;
 
@@ -81,7 +81,7 @@ public class Packaging_Node : Factory_Node
 
         if (ingredients.Count != 3)
         {
-            recipe.SetOutputs(new Ingredient[0]);
+            recipe.SetOutputs(new IngredientData[0]);
             return new Recipe[1] { recipe };
         }
 

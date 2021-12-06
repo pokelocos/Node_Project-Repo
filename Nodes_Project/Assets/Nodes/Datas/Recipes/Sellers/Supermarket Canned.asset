@@ -12,10 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cff68c5b4f86f7e40a9ee5c737217a4c, type: 3}
   m_Name: Supermarket Canned
   m_EditorClassIdentifier: 
-  inputs:
-  - {fileID: 11400000, guid: e8e4c097b0d4eda4bae8bac13cc05aeb, type: 2}
-  - {fileID: 11400000, guid: e8e4c097b0d4eda4bae8bac13cc05aeb, type: 2}
-  - {fileID: 11400000, guid: e8e4c097b0d4eda4bae8bac13cc05aeb, type: 2}
-  - {fileID: 11400000, guid: e8e4c097b0d4eda4bae8bac13cc05aeb, type: 2}
-  outputs:
-  - {fileID: 11400000, guid: 83b6b32114c93874896cd7fa06402f13, type: 2}
+  inputs: []
+  outputs: []
+  ingredients:
+  - ingredientData: {fileID: 11400000, guid: f11b0e1479c32b24d8af9bdb9c61361a, type: 2}
+    compareItem: 0
+    compareItemTags: 0
+    compareSpecificTags: 1
+    specificTags:
+    - NO_PERISHABLE
+    isOptional: 0
+  - ingredientData: {fileID: 11400000, guid: f11b0e1479c32b24d8af9bdb9c61361a, type: 2}
+    compareItem: 0
+    compareItemTags: 0
+    compareSpecificTags: 1
+    specificTags:
+    - NO_PERISHABLE
+    isOptional: 1
+  - ingredientData: {fileID: 11400000, guid: f11b0e1479c32b24d8af9bdb9c61361a, type: 2}
+    compareItem: 0
+    compareItemTags: 0
+    compareSpecificTags: 1
+    specificTags:
+    - NO_PERISHABLE
+    isOptional: 1
+  - ingredientData: {fileID: 11400000, guid: f11b0e1479c32b24d8af9bdb9c61361a, type: 2}
+    compareItem: 0
+    compareItemTags: 0
+    compareSpecificTags: 1
+    specificTags:
+    - NO_PERISHABLE
+    isOptional: 1
+  results:
+  - {fileID: 11400000, guid: cd53a4fb0e18c3647943a7b6acd7744b, type: 2}

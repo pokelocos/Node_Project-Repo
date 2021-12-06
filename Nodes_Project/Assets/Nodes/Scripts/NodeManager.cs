@@ -20,6 +20,8 @@ public class NodeManager : MonoBehaviour
     private NodeController dragOriginNode;
     private static NodeManager _singleton;
 
+    private NodeController targetNode;
+
     //All below this is deprecated;
     private NodeView overNode;  
     private NodeController destNode;
@@ -371,8 +373,17 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     private void ManageConnections()
     {
+        if (inputManager.OverObject is NodeController)
+        {
+            targetNode = inputManager.OverObject as NodeController;
+        }
+        else
+        {
+            targetNode = null;
+        }
+
         // Proxy connection
-        if (dragOriginNode != null)
+        if (dragOriginNode != null && dragOriginNode.GetFreeOutput() != null)
         {
             Vector3 from = dragOriginNode.transform.position;
             Vector3 to = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -396,11 +407,11 @@ public class NodeManager : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1) && dragOriginNode)
         {
-            if (inputManager.OverObject is NodeController)
+            if (targetNode && dragOriginNode.GetFreeOutput() != null && dragOriginNode.CanConnectWith(targetNode, dragOriginNode.GetFreeOutput().Product) == 1)
             {
-                ConnectNodes(dragOriginNode, inputManager.OverObject as NodeController);
+                ConnectNodes(dragOriginNode, targetNode);
             }
 
             dragOriginNode = null;
@@ -434,7 +445,19 @@ public class NodeManager : MonoBehaviour
             {
                 var nodeView = node.GetComponent<NodeView>();
 
-                switch (dragOriginNode.CanConnectWith(node, dragOriginNode.GetNextOutputIngredient()))
+                Product product;
+
+                if (dragOriginNode.GetFreeOutput() != null)
+                {
+                    product = dragOriginNode.GetFreeOutput().Product;
+                }
+                else
+                {
+                    product = null;
+                    return;
+                }
+
+                switch (dragOriginNode.CanConnectWith(node, product))
                 {
                     case 0:
                         break;
@@ -442,8 +465,8 @@ public class NodeManager : MonoBehaviour
                         nodeView.Paint(nodeView.GetNodeData().color);
                         nodeView.SetBright(Color.green);
                         break;
-                    default:
-                        nodeView.Paint(Color.blue);
+                    case 2:
+                        nodeView.SetBright(Color.magenta);
                         break;
                 }
             }
@@ -453,7 +476,6 @@ public class NodeManager : MonoBehaviour
     public void ConnectNodes(NodeController from, NodeController to)
     {
         var connection = (Instantiate(Resources.Load("Nodes/Connection"), null) as GameObject).GetComponent<ConnectionController>();
-
         connection.Connect(from, to);
     }
 }

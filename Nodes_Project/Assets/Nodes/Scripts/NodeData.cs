@@ -13,5 +13,9 @@ public class NodeData : ScriptableObject
     public float productionTime = 5f;
     public int maintainCost = 3;
 
+    public int allowedRecipes = 1;
+    public bool forceRecipes;
+    public List<NodeActions> onWorkFinish;
+    public List<IngredientData> defaultInputIngredients;
     public Recipe[] recipes;
 }

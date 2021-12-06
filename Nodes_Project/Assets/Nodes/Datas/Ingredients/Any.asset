@@ -16,3 +16,5 @@ MonoBehaviour:
   price: 8
   icon: {fileID: 21300000, guid: f5646b41696bb1f4db2370e23073a99b, type: 3}
   color: {r: 0.5529412, g: 0.3254902, b: 0.7176471, a: 1}
+  tags:
+  - ANY

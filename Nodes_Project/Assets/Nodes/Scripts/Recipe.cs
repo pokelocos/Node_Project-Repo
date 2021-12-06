@@ -6,43 +6,67 @@ using System.Linq;
 [CreateAssetMenu]
 public class Recipe : ScriptableObject
 {
-    [SerializeField] Ingredient[] inputs;
-    [SerializeField] Ingredient[] outputs;
+    [System.Obsolete("This is an obsolete variable")]
+    [SerializeField] IngredientData[] inputs;
+    [System.Obsolete("This is an obsolete variable")]
+    [SerializeField] IngredientData[] outputs;
 
-    public void SetInputs(Ingredient[] ingredients)
+    [SerializeField] private Ingredient[] ingredients;
+    [SerializeField] private IngredientData[] results;
+
+    [System.Obsolete("This is an obsolete method")]
+    public void SetInputs(IngredientData[] ingredients)
     {
         inputs = ingredients;
     }
 
-    public void SetOutputs(Ingredient[] ingredients)
+    [System.Obsolete("This is an obsolete method")]
+    public void SetOutputs(IngredientData[] ingredients)
     {
         outputs = ingredients;
     }
 
-    public Ingredient[] GetOutputs()
+    [System.Obsolete("This is an obsolete method")]
+    public IngredientData[] GetOutputs()
     {
         return outputs;
     }
 
-    public Ingredient[] GetInputs()
+    [System.Obsolete("This is an obsolete method")]
+    public IngredientData[] GetInputs()
     {
         return inputs;
     }
 
-    public int InputIngredientsMatchCount(Ingredient[] ingredients)
+    public Ingredient[] GetIngredients()
     {
-        int matches = 0;
-
-        foreach (var ingredient in ingredients)
-        {
-            if (inputs.Contains(ingredient))
-                matches++;
-        }
-
-        return matches;
+        return ingredients;
     }
 
-    public int OutputIngredientsMatchCount(Ingredient[] ingredients)
+    public IngredientData[] GetResults()
+    {
+        return results;
+    }
+
+    /// <summary>
+    /// Generate products with this recipe.
+    /// </summary>
+    /// <param name="extraCost"></param>
+    /// <returns></returns>
+    public Product[] GenerateProducts(Product[] rawMaterials, int extraCost)
+    {
+        Product[] products = new Product[results.Length];
+
+        for (int i = 0; i < products.Length; i++)
+        {
+            products[i] = new Product(results[i], rawMaterials.Sum(x => x.currentValue) + extraCost, rawMaterials);
+        }
+
+        return products;
+    }
+
+    [System.Obsolete("This is an obsolete method")]
+    public int OutputIngredientsMatchCount(IngredientData[] ingredients)
     {
         int matches = 0;
 
@@ -53,12 +77,12 @@ public class Recipe : ScriptableObject
         }
 
         return matches;
-
     }
 
-    public bool HasInputIngredients(Ingredient[] listToCheck)
+    [System.Obsolete("This is an obsolete method")]
+    public bool HasInputIngredients(IngredientData[] listToCheck)
     {
-        foreach(Ingredient ingredient in inputs)
+        foreach(IngredientData ingredient in inputs)
         {
             if(!listToCheck.Contains(ingredient))
             {
@@ -68,4 +92,195 @@ public class Recipe : ScriptableObject
         return true;
     }
 
+    /// <summary>
+    /// Check if all ingredients matches in this recipe.
+    /// </summary>
+    /// <param name="ingredients"></param>
+    /// <returns></returns>
+    public int InputIngredientsMatchCount(IngredientData[] ingredients)
+    {
+        int matches = 0;
+
+        foreach (var ingredient in ingredients)
+        {
+            if (ingredients.Contains(ingredient))
+                matches++;
+        }
+
+        return matches;
+    }
+
+
+    /// <summary>
+    /// Return true if certain ingredientData is valid in a group of ingredients.
+    /// </summary>
+    /// <param name="ingredientData"></param>
+    /// <param name="recipeIngredients"></param>
+    /// <returns></returns>
+    public static bool CanBeUsedIn(IngredientData ingredientData, Ingredient[] recipeIngredients, out Ingredient matchIngredient)
+    {
+        matchIngredient = null;
+
+        foreach (var ingredient in recipeIngredients)
+        {
+            if (CanBeUsedIn(ingredientData, ingredient))
+            {
+                matchIngredient = ingredient;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Return true if an ingredientData can be used by ingredient.
+    /// </summary>
+    /// <param name="ingredientData"></param>
+    /// <param name="ingredient"></param>
+    /// <returns></returns>
+    public static bool CanBeUsedIn(IngredientData ingredientData, Ingredient ingredient)
+    {
+        bool byIngredient = false;
+        bool byTag = false;
+        bool specifigTag = false;
+        bool itsAny = false;
+
+        if (ingredient.CompareIngredient)
+        {
+            byIngredient = ingredient.IngredientData.Equals(ingredientData);
+        }
+
+        if (ingredient.CompareTags)
+        {
+            byTag = ingredient.IngredientData.tags.Any(x => ingredientData.tags.Contains(x));
+        }
+
+        if (ingredient.CompareSpecificTags)
+        {
+            specifigTag = ingredientData.tags.Any(x => ingredient.SpecificTags.Contains(x));
+        }
+
+        if (ingredient.SpecificTags.Contains("ANY"))
+        {
+            itsAny = true;
+        }
+
+        if (byIngredient || byTag || specifigTag || ingredient.IsOptional || itsAny)
+        {
+            return true;
+        }
+
+        return false;
+    }
+}
+
+[System.Serializable]
+public class Ingredient
+{
+    [SerializeField]
+    private IngredientData ingredientData;
+
+    public IngredientData IngredientData
+    {
+        get
+        {
+            return ingredientData;
+        }
+    }
+
+    public bool CompareIngredient
+    {
+        get
+        {
+            return compareItem;
+        }
+    }
+
+    public bool CompareTags
+    {
+        get
+        {
+            return compareItemTags;
+        }
+    }
+
+    public bool CompareSpecificTags
+    {
+        get
+        {
+            return compareSpecificTags;
+        }
+    }
+
+    public bool IsOptional
+    {
+        get
+        {
+            return isOptional;
+        }
+    }
+
+    public string[] SpecificTags
+    {
+        get
+        {
+            return specificTags;
+        }
+    }
+
+    [Header("Settings")]
+    [SerializeField]
+    private bool compareItem = true;
+
+    [SerializeField]
+    private bool compareItemTags;
+
+    [SerializeField]
+    private bool compareSpecificTags;
+
+    [SerializeField]
+    private string[] specificTags;
+
+    [SerializeField]
+    private bool isOptional;
+}
+
+public static class RecipeExtensions
+{
+    /// <summary>
+    /// Return true if certain ingredientData is valid in a group of ingredients.
+    /// </summary>
+    /// <param name="recipe"></param>
+    /// <param name="ingredientData"></param>
+    /// <param name="matchIngredient"></param>
+    /// <returns></returns>
+    public static bool CanBeUsedIn(this Recipe recipe, IngredientData ingredientData, out Ingredient matchIngredient)
+    {
+        return Recipe.CanBeUsedIn(ingredientData, recipe.GetIngredients(), out matchIngredient);
+    }
+
+    /// <summary>
+    /// Return true if certain ingredientData is valid in a group of ingredients.
+    /// </summary>
+    /// <param name="recipe"></param>
+    /// <param name="ingredientData"></param>
+    /// <returns></returns>
+    public static bool CanBeUsedIn(this Recipe recipe, IngredientData ingredientData)
+    {
+        Ingredient outAux = null;
+        return Recipe.CanBeUsedIn(ingredientData, recipe.GetIngredients(), out outAux);
+    }
+
+
+    /// <summary>
+    /// Return true if an ingredientData can be used by ingredient.
+    /// </summary>
+    /// <param name="recipe"></param>
+    /// <param name="ingredientData"></param>
+    /// <returns></returns>
+    public static bool CanBeUsedIn(this Recipe recipe, IngredientData ingredientData, Ingredient ingredient)
+    {
+        return Recipe.CanBeUsedIn(ingredientData, ingredient);
+    }
 }

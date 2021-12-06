@@ -93,7 +93,7 @@ public class Production_Node : NodeView
 
                 if (ingredientMatches > 0)
                 {
-                    var currentIngredients = new List<Ingredient>();
+                    var currentIngredients = new List<IngredientData>();
 
                     foreach (var input in inputNode.GetInputs())
                     {
