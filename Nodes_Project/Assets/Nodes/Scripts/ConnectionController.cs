@@ -7,6 +7,10 @@ public class ConnectionController : MonoBehaviour, SelectableObject
     [SerializeField] private ConnectionView connectionView;
     [SerializeField] private Gradient fadeGradient;
     private NodeController from, to;
+    private Port inputPort;
+
+    public delegate void ProductReceive(Port port);
+    public event ProductReceive onProductReceive;
 
     private int productQueue;
     private Color fadeColor = Color.clear;
@@ -21,7 +25,8 @@ public class ConnectionController : MonoBehaviour, SelectableObject
         this.to = to;
 
         //Set inputs and outputs
-        to.AddInput(new Port(this, from.GetFreeOutput().Product));
+        inputPort = new Port(this, from.GetFreeOutput().Product);
+        to.AddInput(inputPort);
 
         from.SetOutput(this);
 
@@ -33,6 +38,7 @@ public class ConnectionController : MonoBehaviour, SelectableObject
         connectionView.onConnectionDestroyed += to.ConnectionUpdated;
 
         connectionView.onElementReach += ProductReach;
+        onProductReceive += to.OnInputPortReceiveProduct;
 
         //Set points
         connectionView.SetPoints(from.transform, to.transform);
@@ -49,13 +55,18 @@ public class ConnectionController : MonoBehaviour, SelectableObject
         }
     }
 
+    /// <summary>
+    /// Called when this connection element reach the end of the line.
+    /// </summary>
     private void ProductReach()
     {
         productQueue++;
-
-        productQueue = Mathf.Clamp(productQueue, 0, 3);
+        onProductReceive?.Invoke(inputPort);
     }
 
+    /// <summary>
+    /// Reset the counter of times that this connetion alredy receive a product.
+    /// </summary>
     public void UseConnection()
     {
         productQueue = 0;

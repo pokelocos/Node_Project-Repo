@@ -23,7 +23,8 @@ MonoBehaviour:
   productionTime: 5
   maintainCost: 10
   allowedRecipes: 1
-  forceRecipes: 0
+  onInitialize:
+  - {fileID: 11400000, guid: 4e2ad47acf6848348a5351377e8b1033, type: 2}
   onWorkFinish:
   - {fileID: 11400000, guid: 4e2ad47acf6848348a5351377e8b1033, type: 2}
   defaultInputIngredients:

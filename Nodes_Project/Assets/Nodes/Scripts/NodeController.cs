@@ -7,11 +7,27 @@ using RA.InputManager;
 [RequireComponent(typeof(NodeView))]
 public class NodeController : MonoBehaviour, SelectableObject
 {
-    private List<Recipe> selectedRecipes = new List<Recipe>();
+    private Dictionary<Recipe, Port[]> selectedRecipes = new Dictionary<Recipe, Port[]>();
     private List<Port> inputPorts = new List<Port>();
     private List<Port> outputPorts = new List<Port>();
 
     private NodeView nodeView;
+
+    private List<ProductionQueue> productionQueue = new List<ProductionQueue>();
+
+    private struct ProductionQueue
+    {
+        public Recipe recipe;
+        public Port[] inputPorts;
+        public Port[] outputPorts;
+
+        public ProductionQueue(Recipe recipe, Port[] inputPorts, Port[] outputPorts)
+        {
+            this.recipe = recipe;
+            this.inputPorts = inputPorts;
+            this.outputPorts = outputPorts;
+        }
+    }
 
     private void Awake()
     {
@@ -23,7 +39,13 @@ public class NodeController : MonoBehaviour, SelectableObject
     void Start()
     {
         InitializeDefaultInputPorts();
-        InitializeDefaultRecipes();
+
+        //Execute all actions on initialize node
+        foreach (var action in nodeView.GetNodeData().onInitialize)
+        {
+            action.CallAction(this);
+        }
+
         CheckWhatCanCraft();
     }
 
@@ -35,13 +57,11 @@ public class NodeController : MonoBehaviour, SelectableObject
         }
     }
 
-    private void InitializeDefaultRecipes()
+    public void OnInputPortReceiveProduct(Port port)
     {
-        if (nodeView.GetNodeData().forceRecipes)
-        {
-            selectedRecipes.Capacity = nodeView.GetNodeData().allowedRecipes;
-            selectedRecipes.AddRange(nodeView.GetNodeData().recipes);
-        }
+        port.isProductInPort = true;
+
+        UpdateProductionQueue();
     }
 
     private void OnWorkFinish()
@@ -52,59 +72,65 @@ public class NodeController : MonoBehaviour, SelectableObject
             action.CallAction(this);
         }
 
-        //Get reached ingredients
-        var reachedPorts = new List<Port>();
-
-        foreach (var port in inputPorts)
+        foreach (var queue in productionQueue)
         {
-            if (port.Product != null && port.isProductInPort)
+            foreach (var input in queue.inputPorts)
             {
-                reachedPorts.Add(port);
+                input.isProductInPort = false;
+                input.connection?.UseConnection();
+            }
+
+            foreach (var output in queue.outputPorts)
+            {
+                output.connection?.SendProduct();
             }
         }
 
-     //   print(nodeView.name + " = " + reachedPorts.Count);
+        UpdateProductionQueue();
 
-        //Check what ingredients can be used in some recipe
-        foreach (var recipe in selectedRecipes)
+        if (productionQueue.Count == 0)
         {
-            var requiredIngredients = new List<Port>();
+            nodeView.SetInternalSpeed(0);
+        }
+    }
 
-            foreach (var reachedIngredient in reachedPorts)
+    private void UpdateProductionQueue()
+    {
+        productionQueue.Clear();
+
+        var workingPorts = new List<Port>();
+
+        //Check if can produce eny products
+        foreach (var selectedRecipe in selectedRecipes)
+        {
+            var usedPorts = new List<Port>();
+            //Determine if this recipe have all his input ports ready for collect.
+            bool canProduce = selectedRecipe.Value.All(x => x.isProductInPort);
+
+            if (canProduce)
             {
-                if (reachedIngredient.isProductInPort)
+                //Find the output nodes
+                foreach (var result in selectedRecipe.Key.GetResults())
                 {
-                    if (recipe.CanBeUsedIn(reachedIngredient.Product.data))
+                    foreach (var outputPort in outputPorts)
                     {
-                        requiredIngredients.Add(reachedIngredient);
-                    }
-
-                    //If all the required ingredients are found
-                    if (recipe.CanBeUsedIn(requiredIngredients.ToArray()))
-                    {
-                        foreach (var port in requiredIngredients)
+                        if (outputPort.connection != null && outputPort.Product.data == result)
                         {
-                            reachedIngredient.isProductInPort = false;
-                            port.connection.UseConnection();
-                        }
-
-                        foreach (var outputData in recipe.GetResults())
-                        {
-                            var port = FindOutput(outputData);
-
-                            if (port != null && port.connection != null)
+                            if (!workingPorts.Contains(outputPort))
                             {
-                                port.connection.SendProduct();
+                                workingPorts.Add(outputPort);
+                                usedPorts.Add(outputPort);
                             }
                         }
-
-                        break;
                     }
                 }
+
+               // print(outputPorts.ToArray().Length);
+                productionQueue.Add(new ProductionQueue(selectedRecipe.Key, selectedRecipe.Value, usedPorts.ToArray()));
             }
         }
 
-        if (selectedRecipes.Count > 0)
+        if (productionQueue.Count > 0)
         {
             nodeView.SetInternalSpeed(1);
         }
@@ -120,25 +146,13 @@ public class NodeController : MonoBehaviour, SelectableObject
 
         foreach (var recipe in selectedRecipes)
         {
-            var rawMaterials = new List<Product>();
-
-            foreach (var ingredient in recipe.GetIngredients())
-            {
-                foreach (var port in inputPorts)
-                {
-                    if (ingredient.IngredientData == port.Product.data)
-                    {
-                        rawMaterials.Add(port.Product);
-                        break;
-                    }
-                }
-            }
+            var rawMaterials = recipe.Value.Select(x => x.Product).ToArray();
 
             //Set output products
-            allOutputProducts.AddRange(recipe.GenerateProducts(rawMaterials.ToArray(), Mathf.CeilToInt(nodeView.GetNodeData().maintainCost / 4)));
+            allOutputProducts.AddRange(recipe.Key.GenerateProducts(rawMaterials, Mathf.CeilToInt(nodeView.GetNodeData().maintainCost / 4)));
         }
 
-        var toRemove = new List<Product>();
+        var occupiedProducts = new List<Product>();
         var occupiedPorts = new List<Port>();
 
         //Check if existing ports are used.
@@ -149,14 +163,14 @@ public class NodeController : MonoBehaviour, SelectableObject
             {
                 if (product.data == outputPort.Product.data)
                 {
-                    toRemove.Add(product);
+                    occupiedProducts.Add(product);
                     occupiedPorts.Add(outputPort);
                     break;
                 }
             }
         }
 
-        allOutputProducts = allOutputProducts.Except(toRemove).ToList();
+        allOutputProducts = allOutputProducts.Except(occupiedProducts).ToList();
 
         //If some output ingredients still remaining create new ones.
 
@@ -195,51 +209,43 @@ public class NodeController : MonoBehaviour, SelectableObject
     /// </summary>
     private void CheckWhatCanCraft()
     {
-        if (!nodeView.GetNodeData().forceRecipes)
+        selectedRecipes.Clear();
+
+        NodeData data = nodeView.GetNodeData();
+
+        //Calculate all possible combinations
+        var inputIngredientPorts = inputPorts.Where(x => x.Product?.data).ToList();
+
+        List<List<Port>> allCombinations = new List<List<Port>>();
+
+        for (int i = 1; i <= inputIngredientPorts.Count; i++)
         {
-            selectedRecipes.Clear();
+            List<List<Port>> combinations = Combinations<Port>.GetCombinations(inputIngredientPorts, i);
 
-            NodeData data = nodeView.GetNodeData();
+            allCombinations.AddRange(combinations);
+        }
 
-            //Calculate all possible combinations
-            var inputIngredientDatas = inputPorts.Select(x => x.Product?.data).ToList();
+        //Generate the list of possible Recipes
+        var validRecipes = new Dictionary<Recipe, List<Port>>();
 
-            List<List<IngredientData>> allCombinations = new List<List<IngredientData>>();
-
-            for (int i = 1; i <= inputIngredientDatas.Count; i++)
+        foreach (var combination in allCombinations)
+        {
+            foreach (var recipe in data.recipes)
             {
-                List<List<IngredientData>> combinations = Combinations<IngredientData>.GetCombinations(inputIngredientDatas, i);
+                bool validRecipe = true;
+                var ingredients = recipe.GetIngredients().ToList();
+                var validPorts = new List<Port>();
 
-                allCombinations.AddRange(combinations);
-            }
-
-            //Generate the list of possible Recipes
-            var validRecipes = new List<Recipe>();
-
-            foreach (var combination in allCombinations)
-            {
-                // print(nodeView.GetNodeData().name + " = " + combination[0]);
-
-                foreach (var recipe in data.recipes)
+                foreach (var candidate in combination)
                 {
-                    bool validRecipe = true;
-                    var ingredients = recipe.GetIngredients().ToList();
-
-                    foreach (var ingredient in combination)
+                    if (ingredients.Count > 0)
                     {
-                        if (ingredients.Count > 0)
-                        {
-                            Ingredient matchIngredient = null;
+                        Ingredient matchIngredient = null;
 
-                            if (Recipe.CanBeUsedIn(ingredient, ingredients.ToArray(), out matchIngredient))
-                            {
-                                ingredients.Remove(matchIngredient);
-                            }
-                            else
-                            {
-                                validRecipe = false;
-                                break;
-                            }
+                        if (Recipe.CanBeUsedIn(candidate.Product.data, ingredients.ToArray(), out matchIngredient))
+                        {
+                            ingredients.Remove(matchIngredient);
+                            validPorts.Add(candidate);
                         }
                         else
                         {
@@ -247,34 +253,35 @@ public class NodeController : MonoBehaviour, SelectableObject
                             break;
                         }
                     }
-
-                    if (validRecipe)
-                        validRecipes.Add(recipe);
+                    else
+                    {
+                        validRecipe = false;
+                        break;
+                    }
                 }
-            }
 
-            //Select the best recipes
-            validRecipes = validRecipes.OrderByDescending(x => x.GetIngredients().Length).ToList(); //Order by recipe input size
-
-            foreach (var recipe in validRecipes)
-            {
-                var recipeIngredients = recipe.GetIngredients().Select(x => x.IngredientData).ToArray();
-
-                if (recipeIngredients.All(value => inputIngredientDatas.Contains(value)))
-                {
-                    selectedRecipes.Add(recipe);
-                }
+                if (validRecipe)
+                    validRecipes.Add(recipe, validPorts);
             }
         }
 
-        if (selectedRecipes.Count > 0)
+        //Select the best recipes
+        validRecipes = validRecipes.OrderByDescending(x => x.Key.GetIngredients().Length).ToDictionary(x => x.Key, y => y.Value); //Order by recipe input size
+
+        foreach (var recipe in validRecipes)
         {
-            nodeView.SetInternalSpeed(1);
+            var recipeIngredients = recipe.Key.GetIngredients().Select(x => x.IngredientData).ToArray();
+
+            if (selectedRecipes.Count < nodeView.GetNodeData().allowedRecipes)
+            {
+                selectedRecipes.Add(recipe.Key, recipe.Value.ToArray());
+            }
         }
 
         //Apply Buffs with the rest of the unnused ingredients
 
         UpdatePorts();
+        UpdateProductionQueue();
     }
 
     public Port GetOutputPort(ConnectionController connection)
