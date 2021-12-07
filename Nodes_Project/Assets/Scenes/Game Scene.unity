@@ -631,6 +631,13 @@ MonoBehaviour:
   isDebugMode: 0
   isActive: 1
   isPause: 0
+  maxTime: 4
+  actualTime: 0
+  internalSpeed: 0
+  isFailure: 0
+  inputs: []
+  outputs: []
+  selectedRecipe: {fileID: 0}
 --- !u!58 &107677634
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3894,6 +3901,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Supermarket
       objectReference: {fileID: 0}
+    - target: {fileID: 6029534737933495435, guid: 8386fd0c320c7474995b360a311c18b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8386fd0c320c7474995b360a311c18b4, type: 3}
 --- !u!1 &1475371340
@@ -6346,9 +6357,6 @@ MonoBehaviour:
   fillBar: {fileID: 1964388103895480663}
   bright: {fileID: 6770555529015203641}
   data: {fileID: 11400000, guid: 1da698d0f00940c49b72ab702fb00722, type: 2}
-  isDebugMode: 0
-  isActive: 1
-  isPause: 0
 --- !u!95 &3877011634287110520
 Animator:
   serializedVersion: 3

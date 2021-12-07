@@ -124,7 +124,7 @@ public class RogueLikeManager : MonoBehaviour
                 {
                     for (int i = allNodes.Count - 1; i >= 0; i--)
                     {
-                        if (!(allNodes[i] is Production_Node))
+                        if (!(allNodes[i].GetNodeData().categorie is NodeData.Categorie.PRODUCTOR))
                         {
                             if (Random.Range(0, 1f) > 0.5f)
                             {
@@ -138,7 +138,7 @@ public class RogueLikeManager : MonoBehaviour
                 {
                     for (int i = allNodes.Count - 1; i >= 0; i--)
                     {
-                        if (!(allNodes[i] is Production_Node))
+                        if (!(allNodes[i].GetNodeData().categorie is NodeData.Categorie.MANUFACTORER))
                         {
                             if (Random.Range(0, 1f) > 0.5f)
                             {
@@ -152,7 +152,7 @@ public class RogueLikeManager : MonoBehaviour
                 {
                     for (int i = allNodes.Count - 1; i >= 0; i--)
                     {
-                        if (!(allNodes[i] is Seller_Node))
+                        if (!(allNodes[i].GetNodeData().categorie is NodeData.Categorie.SHOP))
                         {
                             if (Random.Range(0, 1f) > 0.5f)
                             {
@@ -193,7 +193,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Farm").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().type == NodeData.Type.FARM || x.GetNodeData().type == NodeData.Type.PLANTATION || x.GetNodeData().type == NodeData.Type.FIELD).ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -203,7 +203,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Farm").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().type == NodeData.Type.FARM || x.GetNodeData().type == NodeData.Type.PLANTATION || x.GetNodeData().type == NodeData.Type.FIELD).ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -222,7 +222,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Horticulture").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Horticulture").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -232,7 +232,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Horticulture").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Horticulture").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -251,7 +251,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Apiculture").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Apiculture").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -261,7 +261,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Apiculture").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Apiculture").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -280,7 +280,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Aviar Farm").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Aviar Farm").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -290,7 +290,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Aviar Farm").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Aviar Farm").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -309,7 +309,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Bakery").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Bakery").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -319,7 +319,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Bakery").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Bakery").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -338,7 +338,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Chips Factory").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Chips Factory").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -348,7 +348,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Chips Factory").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Chips Factory").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -367,7 +367,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Juice Factory").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Juice Factory").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -377,7 +377,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Juice Factory").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Juice Factory").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -396,7 +396,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Dairy Factory").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Dairy Factory").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -406,7 +406,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Dairy Factory").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Dairy Factory").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -425,7 +425,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Butcher").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Butcher").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -435,7 +435,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Butcher").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Butcher").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -454,7 +454,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Cake Shop").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Cake Shop").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -464,7 +464,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Cake Shop").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Cake Shop").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -483,7 +483,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Restaurant").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Restaurant").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -493,7 +493,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Restaurant").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Restaurant").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -512,7 +512,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Farm").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Farm").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -522,7 +522,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Farm").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Farm").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -541,7 +541,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Supermarket").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Supermarket").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -551,7 +551,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Supermarket").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Supermarket").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -570,7 +570,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Chips Factory").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Chips Factory").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -580,7 +580,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Chips Factory").ToArray();
+            var cerealFarms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Chips Factory").ToArray();
 
             foreach (var farm in cerealFarms)
             {
@@ -599,7 +599,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var farms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Animal Keeper").ToArray();
+            var farms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Animal Keeper").ToArray();
 
             foreach (var farm in farms)
             {
@@ -609,7 +609,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var farms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Animal Keeper").ToArray();
+            var farms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Animal Keeper").ToArray();
 
             foreach (var farm in farms)
             {
@@ -628,7 +628,7 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void RemoveEffect()
         {
-            var farms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Animal Keeper").ToArray();
+            var farms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Animal Keeper").ToArray();
 
             foreach (var farm in farms)
             {
@@ -638,185 +638,11 @@ public class RogueLikeManager : MonoBehaviour
 
         public override void SetEffect()
         {
-            var farms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Animal Keeper").ToArray();
+            var farms = FindObjectsOfType<NodeView>().Where(x => x.GetNodeData().name == "Animal Keeper").ToArray();
 
             foreach (var farm in farms)
             {
                 farm.GetNodeData().speed = 0.28f;
-            }
-        }
-    }
-
-    public class BreweringStrike_GE : GameEffect
-    {
-        public BreweringStrike_GE()
-        {
-            title = "Huelga Cervecera";
-            description = "Tus fabricas de bebidas alcoholicas se encuentran cerradas.";
-        }
-
-        public override void RemoveEffect()
-        {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Brewering").ToArray();
-
-            foreach (var farm in cerealFarms)
-            {
-                farm.isActive = true;
-            }
-        }
-
-        public override void SetEffect()
-        {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Brewering").ToArray();
-
-            foreach (var farm in cerealFarms)
-            {
-                farm.isActive = false;
-            }
-        }
-    }
-
-    public class ApicultureStrike_GE : GameEffect
-    {
-        public ApicultureStrike_GE()
-        {
-            title = "Huelga Apicultora";
-            description = "Tus granjas de miel se encuentran cerradas.";
-        }
-
-        public override void RemoveEffect()
-        {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Apiculture").ToArray();
-
-            foreach (var farm in cerealFarms)
-            {
-                farm.isActive = true;
-            }
-        }
-
-        public override void SetEffect()
-        {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Apiculture").ToArray();
-
-            foreach (var farm in cerealFarms)
-            {
-                farm.isActive = false;
-            }
-        }
-    }
-
-    public class PackagingStrike_GE : GameEffect
-    {
-        public PackagingStrike_GE()
-        {
-            title = "Huelga de enlatados";
-            description = "Tus fabricas de enlatados se encuentran cerradas.";
-        }
-
-        public override void RemoveEffect()
-        {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Packaging").ToArray();
-
-            foreach (var farm in cerealFarms)
-            {
-                farm.isActive = true;
-            }
-        }
-
-        public override void SetEffect()
-        {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Packaging").ToArray();
-
-            foreach (var farm in cerealFarms)
-            {
-                farm.isActive = false;
-            }
-        }
-    }
-
-    public class DairyStrike_GE : GameEffect
-    {
-        public DairyStrike_GE()
-        {
-            title = "Huelga de lacteos";
-            description = "Tus fabricas de lacteos se encuentran cerradas.";
-        }
-
-        public override void RemoveEffect()
-        {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Dairy Factory").ToArray();
-
-            foreach (var farm in cerealFarms)
-            {
-                farm.isActive = true;
-            }
-        }
-
-        public override void SetEffect()
-        {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Dairy Factory").ToArray();
-
-            foreach (var farm in cerealFarms)
-            {
-                farm.isActive = false;
-            }
-        }
-    }
-
-    public class SupermarketStrike_GE : GameEffect
-    {
-        public SupermarketStrike_GE()
-        {
-            title = "Huelga de supermercados";
-            description = "Tus supermercados se encuentran cerrados.";
-        }
-
-        public override void RemoveEffect()
-        {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Supermarket").ToArray();
-
-            foreach (var farm in cerealFarms)
-            {
-                farm.isActive = true;
-            }
-        }
-
-        public override void SetEffect()
-        {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Supermarket").ToArray();
-
-            foreach (var farm in cerealFarms)
-            {
-                farm.isActive = false;
-            }
-        }
-    }
-
-    public class BistroStrike_GE : GameEffect
-    {
-        public BistroStrike_GE()
-        {
-            title = "Huelga de meseros";
-            description = "Tus restaurantes elegantes se encuentran cerrados.";
-        }
-
-        public override void RemoveEffect()
-        {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Expensive Restaurant").ToArray();
-
-            foreach (var farm in cerealFarms)
-            {
-                farm.isActive = true;
-            }
-        }
-
-        public override void SetEffect()
-        {
-            var cerealFarms = FindObjectsOfType<Production_Node>().Where(x => x.GetNodeData().name == "Expensive Restaurant").ToArray();
-
-            foreach (var farm in cerealFarms)
-            {
-                farm.isActive = false;
             }
         }
     }

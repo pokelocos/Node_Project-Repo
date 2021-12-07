@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New node data",menuName = "Node game.../Create node data")]
 public class NodeData : ScriptableObject
 {
+    public Categorie categorie;
+    public TechLevel techLevel;
+    public Type type;
     public Color color = Color.gray;
     public string description;
     public Sprite icon;
@@ -18,4 +21,19 @@ public class NodeData : ScriptableObject
     public List<NodeActions> onWorkFinish;
     public List<IngredientData> defaultInputIngredients;
     public Recipe[] recipes;
+
+    public enum Categorie
+    {
+        PRODUCTOR, MANUFACTORER, SHOP, LOGISTIC
+    }
+
+    public enum Type
+    {
+        FARM, PLANTATION, FIELD, FACTORY, INDUSTRY, SHOP, MALL
+    }
+
+    public enum TechLevel
+    {
+        T0, T1, T2, T3, T4, T5
+    }
 }

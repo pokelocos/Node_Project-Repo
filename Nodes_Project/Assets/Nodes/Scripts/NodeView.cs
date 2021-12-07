@@ -15,20 +15,15 @@ public class NodeView : MonoBehaviour
     [SerializeField]
     protected NodeData data;
 
-    public bool isDebugMode;
+    //Events
+    public delegate void OnBarFilled();
+    public event OnBarFilled onBarFilled;
 
-    public bool isActive = true;
-    public bool isPause = false;
-
+    //Hidden variables
     private float maxTime = 4f; //seconds
     private float actualTime = 0f;
     protected float internalSpeed = 0;
     private bool isFailure;
-
-    protected ConnectionView[] inputs = new ConnectionView[0];
-    protected ConnectionView[] outputs = new ConnectionView[0];
-
-    protected Recipe selectedRecipe;
 
     private void Awake()
     {
@@ -38,12 +33,21 @@ public class NodeView : MonoBehaviour
 
         nodeIcon.sprite = data.icon;
         body.color = data.color;
+    }
 
-        if(data.recipes[0].GetInputs().Length > 0)
-            inputs = new ConnectionView[data.recipes[0].GetInputs().Length];
+    public void SetInternalSpeed(float value)
+    {
+        internalSpeed = value;
+    }
 
-        if (data.recipes[0].GetOutputs().Length > 0)
-            outputs = new ConnectionView[data.recipes[0].GetOutputs().Length];
+    public void AddInternalSpeed(float value)
+    {
+        internalSpeed += value;
+    }
+
+    public float GetInternalSpeed()
+    {
+        return internalSpeed;
     }
 
     public int GetMantainCost()
@@ -54,6 +58,31 @@ public class NodeView : MonoBehaviour
     public Recipe[] GetRecipes()
     {
         return data.recipes;
+    }
+
+    public Sprite GetIcon()
+    {
+        return nodeIcon.sprite;
+    }
+
+    public string GetNodeName()
+    {
+        return data.name;
+    }
+
+    public string GetNodeDescription()
+    {
+        return "";
+    }
+
+    public Color GetColor()
+    {
+        return data.color;
+    }
+
+    public NodeData GetNodeData()
+    {
+        return data;
     }
 
     void Update()
@@ -69,24 +98,14 @@ public class NodeView : MonoBehaviour
                 break;
         }
 
-        //if (isActive)
-        //{
-        //    Paint(GetColor());
-        //}
-        //else
-        //{
-        //    Paint(Color.gray);
-        //}
-
-        Work();
+        BarUpdate();
     }
 
-    [System.Obsolete("This is an obsolete method")]
-    private void Work()
+    private void BarUpdate()
     {
         if (!isFailure)
         {
-            actualTime += Time.deltaTime * data.speed * internalSpeed * System.Convert.ToInt32(isActive);
+            actualTime += Time.deltaTime * data.speed * internalSpeed;
 
             fillBar.GetComponent<SpriteRenderer>().color = Color.white;
         }
@@ -106,10 +125,10 @@ public class NodeView : MonoBehaviour
 
         if (actualTime > data.productionTime)
         {
-            if (Random.Range(0,1f) <= data.successProbability)
+            if (Random.Range(0, 1f) <= data.successProbability)
             {
                 actualTime = 0;
-                OnWorkFinish();
+                onBarFilled?.Invoke();
             }
             else
             {
@@ -138,250 +157,50 @@ public class NodeView : MonoBehaviour
         bright.color = color;
     }
 
-    [System.Obsolete("This is an obsolete method")]
-    public void RemoveConnection(ConnectionView connection)
-    {
-        for (int i = 0; i < inputs.Length; i++)
-        {
-            if (inputs[i] != null && inputs[i] == connection)
-            {
-                inputs[i] = null;
-                return;
-            }
-        }
+    //public virtual RecipeInformationData[] GetRecipeInformationStatus()
+    //{
+    //    var recipesStatusData = new List<RecipeInformationData>();
 
-        for (int i = 0; i < outputs.Length; i++)
-        {
-            if (outputs[i] != null && outputs[i] == connection)
-            {
-                outputs[i] = null;
-                return;
-            }
-        }
-    }
+    //    foreach (var recipe in GetRecipes())
+    //    {
+    //        var data = new RecipeInformationData(recipe);
 
-    [System.Obsolete("This is an obsolete method")]
-    public ConnectionView[] GetInputs()
-    {
-        return inputs;
-    }
+    //        foreach (var input in GetInputs())
+    //        {
+    //            if(input != null && input.GetIngredient() != null)
+    //            {
+    //                for (int i = 0; i < data.inputsStatus.Count; i++)
+    //                {
+    //                    if (input.GetIngredient().ingredientName == data.inputsStatus[i].ingredient.ingredientName)
+    //                    {
+    //                        if (data.inputsStatus[i].status == false)
+    //                        {
+    //                            data.inputsStatus[i] = new RecipeInformationData.IngredientStatus(input.GetIngredient(), true);
+    //                            break;
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        }
 
-    [System.Obsolete("This is an obsolete method")]
-    public ConnectionView[] GetOutputs()
-    {
-        return outputs;
-    }
+    //        bool canCraft = true;
 
-    [System.Obsolete("This is an obsolete method")]
-    public Recipe GetCurrentRecipe()
-    {
-        return selectedRecipe;
-    }
+    //        foreach (var ingredient in data.inputsStatus)
+    //        {
+    //            if (ingredient.status == false)
+    //            {
+    //                canCraft = false;
+    //                break;
+    //            }
+    //        }
 
-    [System.Obsolete("This is an obsolete method")]
-    /// <summary>
-    /// Returns:
-    ///  0 - Cant connect
-    ///  1 - Posible connection
-    ///  2 - Satisfactory connection
-    /// </summary>
-    /// <param name="nodeView"></param>
-    /// <returns></returns>
-    public virtual int CanConnectWith(NodeView inputNode)
-    {
-        return 0;
+    //        data.canCraft = canCraft;
 
-        if (outputs.Length > 0)
-        {
-            for (int i = 0; i < outputs.Length; i++)
-            {
-                if (outputs[i] == null)
-                {
-                    if (inputNode.inputs.Length > 0)
-                    {
-                        for (int j = 0; j < inputNode.inputs.Length; j++)
-                        {
-                            if (inputNode.inputs[j] == null)
-                            {
-                                return 2;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    //        recipesStatusData.Add(data);
+    //    }
 
-        return 0;
-    }
-
-    [System.Obsolete("This is an obsolete method")]
-    public virtual Recipe[] ValidRecipes() { return null; }
-
-    [System.Obsolete("This is an obsolete method")]
-    public void ConnectWith(NodeView inputNode)
-    {
-        if (outputs.Length > 0)
-        {
-            for (int i = 0; i < outputs.Length; i++)
-            {
-                if (outputs[i] == null)
-                {
-                    if (inputNode.inputs.Length > 0)
-                    {
-                        for (int j = 0; j < inputNode.inputs.Length; j++)
-                        {
-                            if (inputNode.inputs[j] == null)
-                            {
-                                var connection = (Instantiate(Resources.Load("Nodes/Connection"), null) as GameObject).GetComponent<ConnectionView>();
-
-                                inputNode.inputs[j] = connection;
-                                outputs[i] = connection;
-
-                                connection.SetNodes(this, inputNode);
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    [System.Obsolete("This is an obsolete method")]
-    public static IngredientData[] GetInputIngredients(ConnectionView[] inputs)
-    {
-        List<IngredientData> ingredients = new List<IngredientData>();
-
-        foreach (var input in inputs)
-        {
-            if (input != null)
-            {
-                for (int i = 0; i < input.GetOrigin().GetOutputs().Length; i++)
-                {
-                    if (input.GetOrigin().GetOutputs()[i] != null)
-                    {
-                        if (input.GetOrigin().GetOutputs()[i] == input)
-                        {
-                            if (input.GetOrigin().GetCurrentRecipe() != null)
-                            {
-                                if (input.GetOrigin().GetCurrentRecipe().GetOutputs()[i] != null)
-                                {
-                                    ingredients.Add(input.GetOrigin().GetCurrentRecipe().GetOutputs()[i]);
-                                }
-                            }
-
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        return ingredients.ToArray();
-    }
-
-    [System.Obsolete("This is an obsolete method")]
-    public virtual void InputIngredientReady(ConnectionView connection) { }
-
-    [System.Obsolete("This is an obsolete method")]
-    public virtual void ConnectionChange() { }
-
-    [System.Obsolete("This is an obsolete method")]
-    protected virtual void OnWorkFinish() { }
-
-    public Sprite GetIcon()
-    {
-        return nodeIcon.sprite;
-    }
-
-    public string GetNodeName()
-    {
-        return data.name;
-    }
-
-    public string GetNodeDescription()
-    {
-        return "";
-    }
-
-    public Color GetColor()
-    {
-        return data.color;
-    }
-
-    public NodeData GetNodeData()
-    {
-        return data;
-    }
-
-    [System.Obsolete("This is an obsolete method")]
-    public int GetConnectedInputs()
-    {
-        int a = 0;
-        foreach(ConnectionView c in inputs)
-        {
-            if (c != null)
-                a++;
-        }
-        return a;
-    }
-
-    [System.Obsolete("This is an obsolete method")]
-    public int GetConnectedOutputs()
-    {
-        int a = 0;
-        foreach (ConnectionView c in outputs)
-        {
-            if (c != null)
-                a++;
-        }
-        return a;
-    }
-
-    public virtual RecipeInformationData[] GetRecipeInformationStatus()
-    {
-        var recipesStatusData = new List<RecipeInformationData>();
-
-        foreach (var recipe in GetRecipes())
-        {
-            var data = new RecipeInformationData(recipe);
-
-            foreach (var input in GetInputs())
-            {
-                if(input != null && input.GetIngredient() != null)
-                {
-                    for (int i = 0; i < data.inputsStatus.Count; i++)
-                    {
-                        if (input.GetIngredient().ingredientName == data.inputsStatus[i].ingredient.ingredientName)
-                        {
-                            if (data.inputsStatus[i].status == false)
-                            {
-                                data.inputsStatus[i] = new RecipeInformationData.IngredientStatus(input.GetIngredient(), true);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-
-            bool canCraft = true;
-
-            foreach (var ingredient in data.inputsStatus)
-            {
-                if (ingredient.status == false)
-                {
-                    canCraft = false;
-                    break;
-                }
-            }
-
-            data.canCraft = canCraft;
-
-            recipesStatusData.Add(data);
-        }
-
-        return recipesStatusData.ToArray();
-    }
+    //    return recipesStatusData.ToArray();
+    //}
 }
 
 public class RecipeInformationData

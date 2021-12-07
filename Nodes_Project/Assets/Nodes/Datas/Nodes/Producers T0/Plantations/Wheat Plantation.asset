@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0963106baaa381f49bcf0b1f7355bb30, type: 3}
   m_Name: Wheat Plantation
   m_EditorClassIdentifier: 
+  categorie: 0
+  techLevel: 0
+  type: 0
   color: {r: 1, g: 0.37254903, b: 0.37254903, a: 1}
   description: 
   icon: {fileID: 21300000, guid: 512848e777ca78043a1a0ea214f60c40, type: 3}
@@ -20,7 +23,9 @@ MonoBehaviour:
   productionTime: 5
   maintainCost: 10
   allowedRecipes: 1
-  onWorkFinish: []
+  forceRecipes: 0
+  onWorkFinish:
+  - {fileID: 11400000, guid: 4e2ad47acf6848348a5351377e8b1033, type: 2}
   defaultInputIngredients:
   - {fileID: 11400000, guid: 0659f4fee475d69469840fc044e9ffe2, type: 2}
   recipes:

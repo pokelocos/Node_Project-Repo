@@ -16,6 +16,8 @@ public class NodeController : MonoBehaviour, SelectableObject
     private void Awake()
     {
         nodeView = GetComponent<NodeView>();
+
+        nodeView.onBarFilled += OnWorkFinish;
     }
 
     void Start()
@@ -42,12 +44,70 @@ public class NodeController : MonoBehaviour, SelectableObject
         }
     }
 
-    /// <summary>
-    /// Load progress bar of the node.
-    /// </summary>
-    public void Work()
+    private void OnWorkFinish()
     {
-        
+        //Execute all actions when the node fill his bar.
+        foreach (var action in nodeView.GetNodeData().onWorkFinish)
+        {
+            action.CallAction(this);
+        }
+
+        //Get reached ingredients
+        var reachedPorts = new List<Port>();
+
+        foreach (var port in inputPorts)
+        {
+            if (port.Product != null && port.isProductInPort)
+            {
+                reachedPorts.Add(port);
+            }
+        }
+
+     //   print(nodeView.name + " = " + reachedPorts.Count);
+
+        //Check what ingredients can be used in some recipe
+        foreach (var recipe in selectedRecipes)
+        {
+            var requiredIngredients = new List<Port>();
+
+            foreach (var reachedIngredient in reachedPorts)
+            {
+                if (reachedIngredient.isProductInPort)
+                {
+                    if (recipe.CanBeUsedIn(reachedIngredient.Product.data))
+                    {
+                        requiredIngredients.Add(reachedIngredient);
+                    }
+
+                    //If all the required ingredients are found
+                    if (recipe.CanBeUsedIn(requiredIngredients.ToArray()))
+                    {
+                        foreach (var port in requiredIngredients)
+                        {
+                            reachedIngredient.isProductInPort = false;
+                            port.connection.UseConnection();
+                        }
+
+                        foreach (var outputData in recipe.GetResults())
+                        {
+                            var port = FindOutput(outputData);
+
+                            if (port != null && port.connection != null)
+                            {
+                                port.connection.SendProduct();
+                            }
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (selectedRecipes.Count > 0)
+        {
+            nodeView.SetInternalSpeed(1);
+        }
     }
 
     /// <summary>
@@ -207,6 +267,11 @@ public class NodeController : MonoBehaviour, SelectableObject
             }
         }
 
+        if (selectedRecipes.Count > 0)
+        {
+            nodeView.SetInternalSpeed(1);
+        }
+
         //Apply Buffs with the rest of the unnused ingredients
 
         UpdatePorts();
@@ -232,9 +297,32 @@ public class NodeController : MonoBehaviour, SelectableObject
         return inputPorts.First(x => x.Product == product);
     }
 
+    public Port[] GetInputPorts()
+    {
+        return inputPorts.ToArray();
+    }
+
+    public Port[] GetOutputPorts()
+    {
+        return outputPorts.ToArray();
+    }
+
     public void AddInput(Port port)
     {
         inputPorts.Add(port);
+    }
+
+    public Port FindOutput(IngredientData filter)
+    {
+        foreach (var port in outputPorts)
+        {
+            if (port.Product != null && port.Product.data == filter)
+            {
+                return port;
+            }
+        }
+
+        return null;
     }
 
     public void SetOutput(ConnectionController connection)
@@ -350,6 +438,7 @@ public class Port
 {
     public ConnectionController connection;
     private Product product;
+    public bool isProductInPort;
 
     public Product Product
     {

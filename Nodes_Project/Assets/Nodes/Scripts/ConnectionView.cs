@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class ConnectionView : MonoBehaviour
 {
-    private NodeView origin;
-    private NodeView destination;
-
     private Transform from;
     private Transform to;
 
     [SerializeField]
-    private SpriteRenderer border, color, feedback;
+    private SpriteRenderer border, color;
+    [SerializeField] private GameObject fade;
     [SerializeField]
     private SpriteRenderer element;
 
@@ -20,18 +18,17 @@ public class ConnectionView : MonoBehaviour
 
     public delegate void ConnectionCreated(ConnectionView connection);
     public delegate void ConnectionDestroyed(ConnectionView connection);
+    public delegate void ElementReach();
 
     public event ConnectionCreated onConnectionCreated;
     public event ConnectionDestroyed onConnectionDestroyed;
+    public event ElementReach onElementReach;
 
-    private int hasIngredient;
-    public bool isReadyToClaim;
-    
+    private bool isMovingElement;
+
     private float speed = 1f;
     private float maxTime = 4f; //seconds
     private float actualTime = 0f;
-
-    IngredientData currentIngredient;
 
     private void Start()
     {
@@ -44,11 +41,11 @@ public class ConnectionView : MonoBehaviour
         {
             case NodeManager.Filters.NONE:
                 Paint(body_color, border_color);
+                
                 break;
             case NodeManager.Filters.CONNECTION_MODE:
-
+                PaintFade(Color.clear);
                 Color darker = Color.Lerp(Color.gray, Color.black, 0.2f);
-
                 Paint(Color.gray, darker);
                 break;
         }
@@ -56,7 +53,11 @@ public class ConnectionView : MonoBehaviour
         if (from != null && to != null)
         {
             FollowPositions(from.position, to.position);
-            //MoveElement(from.position, to.position);
+
+            if (isMovingElement)
+            {
+                MoveElement(from.position, to.position);
+            }
         }
         else
         {
@@ -64,44 +65,14 @@ public class ConnectionView : MonoBehaviour
         }
     }
 
+    public void SendElement()
+    {
+        isMovingElement = true;
+    }
+
     public Vector3 GetMiddlePoint()
     {
         return (from.position + to.position) / 2;
-    }
-
-    public IngredientData GetOutputIngredient()
-    {
-        return currentIngredient;
-    }
-
-    public IngredientData GetIngredient()
-    {
-        IngredientData result = null;
-
-        for (int i = 0; i < origin.GetOutputs().Length; i++)
-        {
-            if (origin.GetOutputs()[i] != null && origin.GetOutputs()[i] == this)
-            {
-                if (origin.GetCurrentRecipe() != null)
-                {
-                    result = origin.GetCurrentRecipe().GetOutputs()[i];
-                }
-            }
-        }
-
-        return result;
-    }
-
-    [System.Obsolete("This is an obsolete method")]
-    public void Disconnect()
-    {
-        origin.RemoveConnection(this);
-        destination.RemoveConnection(this);
-
-        origin.ConnectionChange();
-        destination.ConnectionChange();
-
-        Destroy(gameObject);
     }
 
     public void Paint(Color body, Color border)
@@ -110,24 +81,14 @@ public class ConnectionView : MonoBehaviour
         this.color.color = body;
     }
 
+    public void PaintFade(Color color)
+    {
+        fade.GetComponentInChildren<SpriteRenderer>().color = color;
+    }
+
     public void SetDotColor(Color color)
     {
         element.color = color;
-    }
-
-    [System.Obsolete("This is an obsolete method")]
-    public void SetNodes(NodeView origin, NodeView dest)
-    {
-        this.origin = origin;
-        this.destination = dest;
-
-        this.origin.ConnectionChange();
-        this.destination.ConnectionChange();
-
-        if (GetIngredient() != null)
-        {
-            SetDotColor(GetIngredient().color);
-        }
     }
 
     public void SetPoints(Transform from, Transform to)
@@ -144,44 +105,17 @@ public class ConnectionView : MonoBehaviour
         onConnectionDestroyed?.Invoke(this);
     }
 
-    public NodeView GetOrigin()
-    {
-        return origin;
-    }
-
-    public NodeView GetDestination()
-    {
-        return destination;
-    }
-
-    public void SendIngredient(IngredientData ingredient)
-    {
-        currentIngredient = ingredient;
-        hasIngredient = 1;
-    }
-
     public void MoveElement(Vector3 from, Vector3 to)
     {
         element.gameObject.SetActive(true);
 
-        actualTime += Time.deltaTime * speed * hasIngredient;
+        actualTime += Time.deltaTime * speed;
 
         if (actualTime > maxTime)
         {
-            if (isReadyToClaim)
-            {
-                GetComponentInChildren<Animator>().SetTrigger("Fail");
-            }
-            else
-            {
-                GetComponentInChildren<Animator>().SetTrigger("Success");
-            }
-
             actualTime = 0;
-            hasIngredient = 0;
-            isReadyToClaim = true;
-
-            destination.InputIngredientReady(this);
+            isMovingElement = false;
+            onElementReach?.Invoke();
         }
 
         element.transform.position = Vector3.Lerp(from, to, actualTime / maxTime);
@@ -194,7 +128,9 @@ public class ConnectionView : MonoBehaviour
         var dis = Vector3.Distance(from, to);
         border.size = color.size = new Vector2(dis * 5, border.size.y);
 
-        feedback.size = border.size;
+        fade.transform.position = to;
+
+        fade.transform.localPosition -= Vector3.right * 8;
 
         UpdateBoxCollider(gameObject.GetComponent<BoxCollider2D>(), border.sprite);
     }

@@ -271,16 +271,4 @@ public static class RecipeExtensions
         Ingredient outAux = null;
         return Recipe.CanBeUsedIn(ingredientData, recipe.GetIngredients(), out outAux);
     }
-
-
-    /// <summary>
-    /// Return true if an ingredientData can be used by ingredient.
-    /// </summary>
-    /// <param name="recipe"></param>
-    /// <param name="ingredientData"></param>
-    /// <returns></returns>
-    public static bool CanBeUsedIn(this Recipe recipe, IngredientData ingredientData, Ingredient ingredient)
-    {
-        return Recipe.CanBeUsedIn(ingredientData, ingredient);
-    }
 }
