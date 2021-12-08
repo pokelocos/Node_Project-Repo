@@ -28,7 +28,7 @@ namespace MicroFactory.Effects
 
             var nodes = new List<NodeView>();
             nodes.Concat(GetNodesByTypes(effect.byTypes));
-            nodesConcat(GetNodesByNames(effect.byNames).Where(x => !nodes.Contains(x)));
+            nodes.Concat(GetNodesByNames(effect.byNames).Where(x => !nodes.Contains(x)));
         }
 
 
