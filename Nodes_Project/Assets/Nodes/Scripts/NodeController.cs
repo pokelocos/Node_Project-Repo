@@ -67,11 +67,6 @@ public class NodeController : MonoBehaviour, SelectableObject
     private void OnWorkFinish()
     {
         //Execute all actions when the node fill his bar.
-        foreach (var action in nodeView.GetNodeData().onWorkFinish)
-        {
-            action.CallAction(this);
-        }
-
         foreach (var queue in productionQueue)
         {
             foreach (var input in queue.inputPorts)
@@ -84,6 +79,11 @@ public class NodeController : MonoBehaviour, SelectableObject
             {
                 output.connection?.SendProduct();
             }
+        }
+
+        foreach (var action in nodeView.GetNodeData().onWorkFinish)
+        {
+            action.CallAction(this);
         }
 
         UpdateProductionQueue();
@@ -260,8 +260,10 @@ public class NodeController : MonoBehaviour, SelectableObject
                     }
                 }
 
-                if (validRecipe)
+                if (validRecipe && !validRecipes.ContainsKey(recipe))
+                {
                     validRecipes.Add(recipe, validPorts);
+                }
             }
         }
 
@@ -353,10 +355,29 @@ public class NodeController : MonoBehaviour, SelectableObject
     }
 
     /// <summary>
+    /// Returns all the connected input ports.
+    /// </summary>
+    /// <returns></returns>
+    public NodeController[] GetConnectedInputNodes()
+    {
+        return inputPorts.Select(x => x.connection?.GetOrigin()).ToArray();
+    }
+
+    /// <summary>
+    /// Returns all the connected output ports.
+    /// </summary>
+    /// <returns></returns>
+    public NodeController[] GetConnectedOutputNodes()
+    {
+        return outputPorts.Select(x => x.connection?.GetDestination()).ToArray();
+    }
+
+    /// <summary>
     /// Evaluate if this node can connect with another node. Returns:
     /// 0 - Can't connect
     /// 1 - Can Connect
-    /// 2 - It's possible but not right now.
+    /// 2 - It's possible but the input slots are full
+    /// 3 - Can't connect because this nodes are alredy connected.
     /// </summary>
     /// <param name="candidate"></param>
     /// <param name="ingredient"></param>
@@ -372,7 +393,7 @@ public class NodeController : MonoBehaviour, SelectableObject
         //Check if the candidate are not connected twice
         if (this.IsConnectedWith(candidate))
         {
-            return 0;
+            return 3;
         }
 
         //Check if the prduct exists
@@ -385,7 +406,7 @@ public class NodeController : MonoBehaviour, SelectableObject
         {
             if (recipe.CanBeUsedIn(product.data))
             {
-                if (inputPorts.Count < 8)
+                if (candidate.GetInputPorts().Length < 8)
                 {
                     return 1;
                 }

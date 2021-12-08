@@ -15,6 +15,13 @@ public class ConnectionController : MonoBehaviour, SelectableObject
     private int productQueue;
     private Color fadeColor = Color.clear;
 
+    [SerializeField] private Sprite[] alert_sprites;
+
+    public enum AlertType
+    {
+        CROSS, TRIANGLE, CIRCLE, DIAMOND
+    }
+
     public void Connect(NodeController from, NodeController to)
     {
         var connectionView = GetComponent<ConnectionView>();
@@ -90,6 +97,26 @@ public class ConnectionController : MonoBehaviour, SelectableObject
     public void SendProduct()
     {
         connectionView.SendElement();
+    }
+
+    /// <summary>
+    /// Display an alert in the ends of the connections. -1 = Input side. 1 = Output side. 0 = Both sides.
+    /// </summary>
+    /// <param name="side"></param>
+    /// <param name="alertType"></param>
+    /// <param name="color"></param>
+    public void ShowAlert(int side, AlertType alertType, Color color)
+    {
+        connectionView.ShowIcons(side, alert_sprites[(int)alertType], color);
+    }
+
+    /// <summary>
+    /// Hide an alert in the ends of the connections. -1 = Input side. 1 = Output side. 0 = Both sides.
+    /// </summary>
+    /// <param name="side"></param>
+    public void HideAlerts(int side)
+    {
+        connectionView.HideIcons(side);
     }
 
     public void Disconnect()

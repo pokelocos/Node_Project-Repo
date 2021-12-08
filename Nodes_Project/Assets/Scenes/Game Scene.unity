@@ -623,21 +623,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e9e6e290ae75b4d91b00f6d2559006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 107677635}
-  nodeIcon: {fileID: 2146705506}
-  fillBar: {fileID: 1509406883}
-  bright: {fileID: 0}
-  data: {fileID: 11400000, guid: 63cc7b2c29eb57843b0698ac2eaaad5c, type: 2}
-  isDebugMode: 0
-  isActive: 1
-  isPause: 0
-  maxTime: 4
-  actualTime: 0
-  internalSpeed: 0
-  isFailure: 0
-  inputs: []
-  outputs: []
-  selectedRecipe: {fileID: 0}
 --- !u!58 &107677634
 CircleCollider2D:
   m_ObjectHideFlags: 0

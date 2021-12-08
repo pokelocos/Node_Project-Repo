@@ -462,10 +462,24 @@ public class NodeManager : MonoBehaviour
                         break;
                     case 1:
                         nodeView.Paint(nodeView.GetNodeData().color);
-                        nodeView.SetBright(Color.green);
                         break;
                     case 2:
-                        nodeView.SetBright(Color.magenta);
+
+                        foreach (var inputPort in node.GetInputPorts().Where(x => x.connection != null))
+                        {
+                            inputPort.connection.ShowAlert(1, ConnectionController.AlertType.CROSS, new Color(1, 0.2877358f, 0.2877358f, 1));
+                        }
+
+                        break;
+                    case 3:
+                        foreach (var outputPort in dragOriginNode.GetOutputPorts())
+                        {
+                            if (outputPort.connection != null && outputPort.connection.GetDestination() == node)
+                            {
+                                outputPort.connection.ShowAlert(1, ConnectionController.AlertType.TRIANGLE, new Color(1, 0.2877358f, 0.2877358f, 1));
+                                break;
+                            }
+                        }
                         break;
                 }
             }
