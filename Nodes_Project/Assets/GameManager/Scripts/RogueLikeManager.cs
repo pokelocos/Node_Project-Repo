@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Reflection;
+using System;
 
+[Obsolete]
 public class RogueLikeManager : MonoBehaviour
 {
     private GameManager gameManager;
@@ -68,7 +70,7 @@ public class RogueLikeManager : MonoBehaviour
     public class Reward
     {
         public NodeView[] nodes = new NodeView[3];
-        public GameEffect[] effects;
+        public GameEffect_OB[] effects;
         public int price;
 
         public Reward()
@@ -79,37 +81,37 @@ public class RogueLikeManager : MonoBehaviour
 
             for (int i = 0; i < nodes.Length; i++)
             {
-                nodes[i] = allNodes[Random.Range(0, allNodes.Length)];
+                nodes[i] = allNodes[UnityEngine.Random.Range(0, allNodes.Length)];
 
                 price += nodes[i].GetMantainCost();
             }
 
             int effectsCount = 0;
 
-            if (Random.Range(0, 1f) > 0.5f)
+            if (UnityEngine.Random.Range(0, 1f) > 0.5f)
             {
                 effectsCount++;
 
-                if (Random.Range(0, 1f) > 0.75f)
+                if (UnityEngine.Random.Range(0, 1f) > 0.75f)
                     effectsCount++;
             }
 
             price /= effectsCount + 1;
 
-            price += Random.Range(1, 3) * GameManager.Days * 5;
+            price += UnityEngine.Random.Range(1, 3) * GameManager.Days * 5;
 
-            effects = new GameEffect[effectsCount];
+            effects = new GameEffect_OB[effectsCount];
 
             if (GameManager.Days == 0)
                 price = 0;
 
             for (int i = 0; i < effectsCount; i++)
             {
-                var effectsClasses = FindDerivedTypes(Assembly.GetExecutingAssembly(), typeof(GameEffect)).ToArray();
+                var effectsClasses = FindDerivedTypes(Assembly.GetExecutingAssembly(), typeof(GameEffect_OB)).ToArray();
 
-                effects[i] = System.Activator.CreateInstance(effectsClasses[Random.Range(0, effectsClasses.Length)]) as GameEffect;
+                effects[i] = System.Activator.CreateInstance(effectsClasses[UnityEngine.Random.Range(0, effectsClasses.Length)]) as GameEffect_OB;
 
-                effects[i].daysDuration = Random.Range(3, 6);
+                effects[i].daysDuration = UnityEngine.Random.Range(3, 6);
                 effects[i].duration = effects[i].daysDuration;
             }
         }
@@ -126,7 +128,7 @@ public class RogueLikeManager : MonoBehaviour
                     {
                         if (!(allNodes[i].GetNodeData().categorie is NodeData.Categorie.PRODUCTOR))
                         {
-                            if (Random.Range(0, 1f) > 0.5f)
+                            if (UnityEngine.Random.Range(0, 1f) > 0.5f)
                             {
                                 allNodes.RemoveAt(i);
                             }
@@ -140,7 +142,7 @@ public class RogueLikeManager : MonoBehaviour
                     {
                         if (!(allNodes[i].GetNodeData().categorie is NodeData.Categorie.MANUFACTORER))
                         {
-                            if (Random.Range(0, 1f) > 0.5f)
+                            if (UnityEngine.Random.Range(0, 1f) > 0.5f)
                             {
                                 allNodes.RemoveAt(i);
                             }
@@ -154,7 +156,7 @@ public class RogueLikeManager : MonoBehaviour
                     {
                         if (!(allNodes[i].GetNodeData().categorie is NodeData.Categorie.SHOP))
                         {
-                            if (Random.Range(0, 1f) > 0.5f)
+                            if (UnityEngine.Random.Range(0, 1f) > 0.5f)
                             {
                                 allNodes.RemoveAt(i);
                             }
@@ -167,13 +169,14 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public abstract class GameEffect
+    public abstract class GameEffect_OB
     {
         public string title = "Effect";
         public string description = "Effect";
+        public Sprite icon = null;
         public int daysDuration = 1;
         public int duration = 1;
-        protected GameEffect()
+        protected GameEffect_OB()
         {
             
         }
@@ -183,7 +186,7 @@ public class RogueLikeManager : MonoBehaviour
         public abstract void RemoveEffect();
     }
 
-    public class Drought_GE : GameEffect
+    public class Drought_GE : GameEffect_OB
     {
         public Drought_GE()
         {
@@ -212,7 +215,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class Frost_GE : GameEffect
+    public class Frost_GE : GameEffect_OB
     {
         public Frost_GE()
         {
@@ -241,7 +244,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class LazyBees_GE : GameEffect
+    public class LazyBees_GE : GameEffect_OB
     {
         public LazyBees_GE()
         {
@@ -270,7 +273,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class LazyBirds_GE : GameEffect
+    public class LazyBirds_GE : GameEffect_OB
     {
         public LazyBirds_GE()
         {
@@ -299,7 +302,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class BakeryBroken_GE : GameEffect
+    public class BakeryBroken_GE : GameEffect_OB
     {
         public BakeryBroken_GE()
         {
@@ -328,7 +331,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class ChipsBroken_GE : GameEffect
+    public class ChipsBroken_GE : GameEffect_OB
     {
         public ChipsBroken_GE()
         {
@@ -357,7 +360,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class JuiceBroken_GE : GameEffect
+    public class JuiceBroken_GE : GameEffect_OB
     {
         public JuiceBroken_GE()
         {
@@ -386,7 +389,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class DairyBroken_GE : GameEffect
+    public class DairyBroken_GE : GameEffect_OB
     {
         public DairyBroken_GE()
         {
@@ -415,7 +418,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class ButcherRegulations_GE : GameEffect
+    public class ButcherRegulations_GE : GameEffect_OB
     {
         public ButcherRegulations_GE()
         {
@@ -444,7 +447,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class CakesRegulations_GE : GameEffect
+    public class CakesRegulations_GE : GameEffect_OB
     {
         public CakesRegulations_GE()
         {
@@ -473,7 +476,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class RestaurantRegulations_GE : GameEffect
+    public class RestaurantRegulations_GE : GameEffect_OB
     {
         public RestaurantRegulations_GE()
         {
@@ -502,7 +505,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class Plague_GE : GameEffect
+    public class Plague_GE : GameEffect_OB
     {
         public Plague_GE()
         {
@@ -531,7 +534,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class InventoryError_GE : GameEffect
+    public class InventoryError_GE : GameEffect_OB
     {
         public InventoryError_GE()
         {
@@ -560,7 +563,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class BurnedOil_GE : GameEffect
+    public class BurnedOil_GE : GameEffect_OB
     {
         public BurnedOil_GE()
         {
@@ -589,7 +592,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class CrazyCows_GE : GameEffect
+    public class CrazyCows_GE : GameEffect_OB
     {
         public CrazyCows_GE()
         {
@@ -618,7 +621,7 @@ public class RogueLikeManager : MonoBehaviour
         }
     }
 
-    public class SkinnyCows_GE : GameEffect
+    public class SkinnyCows_GE : GameEffect_OB
     {
         public SkinnyCows_GE()
         {

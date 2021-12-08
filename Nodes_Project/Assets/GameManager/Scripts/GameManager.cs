@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text starAmount_text;
     [SerializeField] private GameObject pause_frame;
     [SerializeField] private Image day_image;
-    [SerializeField] private EffectView effectView_template;
+    [SerializeField] private EffectView_Obs effectView_template;
 
     [Space]
     public Color commonDay;
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     private static List<int> dayTransactions = new List<int>();
     public static bool snapTool;
 
-    private static Dictionary<RogueLikeManager.GameEffect, EffectView> gameEffects = new Dictionary<RogueLikeManager.GameEffect, EffectView>();
+    private static Dictionary<RogueLikeManager.GameEffect_OB, EffectView_Obs> gameEffects = new Dictionary<RogueLikeManager.GameEffect_OB, EffectView_Obs>();
 
     public AudioSource source;
     public AudioClip winSound;
@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static void AddEffect(RogueLikeManager.GameEffect gameEffect)
+    public static void AddEffect(RogueLikeManager.GameEffect_OB gameEffect)
     {
         gameEffect.SetEffect();
 

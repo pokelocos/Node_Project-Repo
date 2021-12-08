@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EffectView : MonoBehaviour
+[Obsolete("this class is deprecated use 'EffectView' instead.")]
+public class EffectView_Obs : MonoBehaviour 
 {
+    
     public string title = "Title";
     public string description = "Description lorem ipsum ameta no ate";
 
