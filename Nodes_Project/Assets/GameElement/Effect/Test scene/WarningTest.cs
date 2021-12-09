@@ -1,13 +1,22 @@
+using MicroFactory.Effects;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using static RogueLikeManager;
 
 public class WarningTest : MonoBehaviour
 {
+    private List<GameEffect> effects;
+    private EffectManager manager;
 
-    public void AddEffect()
+    public void Start()
     {
-        GameEffect_OB effect = new Drought_GE();
+        effects = Resources.LoadAll<GameEffect>("Effects/").ToList();
+        manager = FindObjectOfType<EffectManager>();
+    }
+
+    public void AddRandomEffect()
+    {
+        manager.AddEffect(effects[Random.Range(0,effects.Count)]);
     }
 }

@@ -7,13 +7,18 @@ using static RogueLikeManager;
 
 public class EffectView : MonoBehaviour
 {
-    private int maxCharTitle = 35;
-    private int maxCharDescription = 160;
+    //private static int maxCharTitle = 35;
+    //private static int maxCharDescription = 160;
+
+    public delegate void EffectEvent(GameEffect effect);
+    public EffectEvent OnEndEffect;
 
     private GameEffect effect;
 
-    [SerializeField] private Image closedBckground;
-    [SerializeField] private Image openBckground;
+    [SerializeField] private Image closedTab;
+    [SerializeField] private Image openTab;
+    [SerializeField] private Image background;
+    [SerializeField] private Image labelTab;
 
     [SerializeField] private Text title;
     [SerializeField] private Text description;
@@ -23,7 +28,7 @@ public class EffectView : MonoBehaviour
     [SerializeField] private Image secondaryIcon;
 
     [SerializeField] private Image mainClock;
-    [SerializeField] private Image secondaryClock;
+    [SerializeField] private Animator animator;
 
     //timer
     private float maxTime = 1; // no se si esta clase deba encargarse de timer
@@ -35,21 +40,23 @@ public class EffectView : MonoBehaviour
         if (effect == null)
             return;
 
-        /////// esta implementacion es temporal ///////
+        //timer
         if (currentTime >= maxTime)
         {
-            Destroy(this.gameObject);
+            OnEndEffect?.Invoke(effect);
+            animator.SetTrigger("close");
+            animator.SetTrigger("finish");
         }
+        currentTime += Time.deltaTime;
         SetTimer(maxTime, currentTime);
-        /////// esta implementacion es temporal ///////
     }
 
-    private void OnMouseEnter()
+    public void _OnMouseEnter()
     {
         SetOpen(true);
     }
 
-    private void OnMouseExit()
+    public void _OnMouseExit()
     {
         SetOpen(false);
     }
@@ -60,7 +67,7 @@ public class EffectView : MonoBehaviour
         SetColors(c1, c2, c2, c2); // cambiar a 4 colores diferentes si es necesario
         SetIcon(effect.icon);
         SetText(effect.title,effect.description);
-        SetTimer(effect.duration * 60, effect.duration * 60); // este 60 es para evitar cancersito, pero trae un cancersito diferente
+        SetTimer(effect.duration,0); 
     }
 
     protected void SetText(string title,string description)
@@ -71,8 +78,18 @@ public class EffectView : MonoBehaviour
 
     protected void SetOpen(bool b)
     {
-        openBckground.gameObject.SetActive(b);
-        closedBckground.gameObject.SetActive(!b);
+        if(b)
+            animator.SetTrigger("open");
+        else
+            animator.SetTrigger("close");
+
+        openTab.gameObject.SetActive(b);
+        closedTab.gameObject.SetActive(!b);
+    }
+
+    private void Destroy()
+    {
+        Destroy(this.gameObject);
     }
 
     protected void SetIcon(Sprite sprite)
@@ -83,8 +100,10 @@ public class EffectView : MonoBehaviour
 
     protected void SetColors(Color background,Color text,Color icon,Color clock)
     {
-        closedBckground.color = background;
-        openBckground.color = background;
+        closedTab.color = background;
+        openTab.color = background;
+        this.background.color = background;
+        labelTab.color = background;
 
         title.color = text;
         description.color = text;
@@ -94,17 +113,15 @@ public class EffectView : MonoBehaviour
         secondaryIcon.color = icon;
 
         mainClock.color = clock;
-        secondaryClock.color = clock;
     }
 
     protected void SetTimer(float max, float current)
     {
-        maxTime = effect.duration * 60; // este 60 es para evitar cancersito, pero trae un cancersito diferente
-        currentTime = effect.duration * 60;
-        var dt = maxTime / currentTime;
+        maxTime = max;
+        currentTime = current;
+        var dt = 1 - (currentTime/ maxTime);
         mainClock.fillAmount = dt;
-        secondaryClock.fillAmount = dt;
-        timer.text = SegToString((int)current);
+        timer.text = SegToString((int)(max - current));
     }
 
     public static string SegToString(int seg)
