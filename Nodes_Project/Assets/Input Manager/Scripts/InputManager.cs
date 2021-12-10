@@ -13,6 +13,7 @@ namespace RA.InputManager
         private SelectableObject overObject;
         private SelectableObject[] overObjects;
         private SelectableObject draggedObject;
+        private Vector3 worldPos;
         private bool leftDoubleClick;
         private bool rigthDoubleClick;
         private float lastLeftClickTime;
@@ -33,6 +34,14 @@ namespace RA.InputManager
             get
             {
                 return rigthDoubleClick;
+            }
+        }
+
+        public Vector3 MouseWorldPosition
+        {
+            get
+            {
+                return worldPos;
             }
         }
 
@@ -71,6 +80,9 @@ namespace RA.InputManager
 
         void Update()
         {
+            worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            worldPos.z = 0;
+
             //Left double click
             leftDoubleClick = false;
 
