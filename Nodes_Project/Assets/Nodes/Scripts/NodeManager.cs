@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using RA.InputManager;
+using RA.Generic;
 
 public class NodeManager : MonoBehaviour
 {
@@ -22,15 +23,16 @@ public class NodeManager : MonoBehaviour
 
     private NodeController targetNode;
 
-    [Header("References")]
+    [Header("References Handler")]
     [SerializeField]
     private SpriteRenderer icon_handler;
     [SerializeField]
     private SpriteRenderer icon_background_handler;
     [SerializeField]
-    private GameObject price_shadow_handler;
-    [SerializeField]
     private TextMesh price_handler;
+    [SerializeField]
+    private TextMesh price_shadow_handler;
+
     [SerializeField]
     private Vector3 hanlder_offset = new Vector3(0.5f, 1, 0);
 
@@ -100,12 +102,13 @@ public class NodeManager : MonoBehaviour
             var output = dragOriginNode.GetFreeOutput();
 
             icon_background_handler.gameObject.SetActive(true);
-            price_shadow_handler.gameObject.SetActive(false);
 
             if (output != null)
             {
                 icon_handler.sprite = output.Product.data.icon;
                 price_handler.text = "$" + output.Product.currentValue;
+                price_shadow_handler.text = "$" + output.Product.currentValue;
+                price_shadow_handler.gameObject.SetActive(true);
             }
             else
             {
@@ -180,6 +183,9 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     private void ManageColors()
     {
+        //Repaint connection proxy in gray
+        proxyConnection.Paint(Color.gray, Color.gray.Darker());
+
         filter = Filters.NONE;
 
         //Check if manager is in CONNECTION_MODE
@@ -203,21 +209,45 @@ public class NodeManager : MonoBehaviour
                 else
                 {
                     product = null;
+
+                    if (node == targetNode)
+                    {
+                        proxyConnection.Paint(Color.red, Color.red.Darker());
+                    }
                     return;
                 }
 
-                switch (dragOriginNode.CanConnectWith(node, product))
+                int value = dragOriginNode.CanConnectWith(node, product);
+
+                switch (value)
                 {
                     case 0:
+
+                        if (node == targetNode)
+                        {
+                            proxyConnection.Paint(Color.red, Color.red.Darker());
+                        }
+
                         break;
                     case 1:
                         nodeView.Paint(nodeView.GetNodeData().color);
+
+                        if (node == targetNode)
+                        {
+                            proxyConnection.Paint(Color.green, Color.green.Darker());
+                        }
+
                         break;
                     case 2:
 
                         foreach (var inputPort in node.GetInputPorts().Where(x => x.connection != null))
                         {
                             inputPort.connection.ShowAlert(1, ConnectionController.AlertType.CROSS, new Color(1, 0.2877358f, 0.2877358f, 1));
+                        }
+
+                        if (node == targetNode)
+                        {
+                            proxyConnection.Paint(Color.red, Color.red.Darker());
                         }
 
                         break;
@@ -229,6 +259,11 @@ public class NodeManager : MonoBehaviour
                                 outputPort.connection.ShowAlert(1, ConnectionController.AlertType.TRIANGLE, new Color(1, 0.2877358f, 0.2877358f, 1));
                                 break;
                             }
+                        }
+
+                        if (node == targetNode)
+                        {
+                            proxyConnection.Paint(Color.red, Color.red.Darker());
                         }
                         break;
                 }
