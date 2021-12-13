@@ -20,28 +20,28 @@ MonoBehaviour:
     compareItemTags: 0
     compareSpecificTags: 1
     specificTags:
-    - NO_PERISHABLE
+    - CANNED
     isOptional: 0
   - ingredientData: {fileID: 11400000, guid: f11b0e1479c32b24d8af9bdb9c61361a, type: 2}
     compareItem: 0
     compareItemTags: 0
     compareSpecificTags: 1
     specificTags:
-    - NO_PERISHABLE
+    - CANNED
     isOptional: 1
   - ingredientData: {fileID: 11400000, guid: f11b0e1479c32b24d8af9bdb9c61361a, type: 2}
     compareItem: 0
     compareItemTags: 0
     compareSpecificTags: 1
     specificTags:
-    - NO_PERISHABLE
+    - CANNED
     isOptional: 1
   - ingredientData: {fileID: 11400000, guid: f11b0e1479c32b24d8af9bdb9c61361a, type: 2}
     compareItem: 0
     compareItemTags: 0
     compareSpecificTags: 1
     specificTags:
-    - NO_PERISHABLE
+    - CANNED
     isOptional: 1
   results:
   - {fileID: 11400000, guid: cd53a4fb0e18c3647943a7b6acd7744b, type: 2}

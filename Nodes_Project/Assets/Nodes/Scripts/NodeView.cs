@@ -12,6 +12,9 @@ public class NodeView : MonoBehaviour
     private SpriteRenderer fillBar;
     [SerializeField]
     private SpriteRenderer bright;
+    [SerializeField] private TextMesh misc_text;
+    [SerializeField] private TextMesh misc_shadow_text;
+    [SerializeField] private Animator misc_text_animator;
     [SerializeField]
     protected NodeData data;
 
@@ -157,50 +160,14 @@ public class NodeView : MonoBehaviour
         bright.color = color;
     }
 
-    //public virtual RecipeInformationData[] GetRecipeInformationStatus()
-    //{
-    //    var recipesStatusData = new List<RecipeInformationData>();
+    public void DisplayMiscText(string message, Color color)
+    {
+        misc_text.text = message;
+        misc_text.color = color;
+        misc_shadow_text.text = message;
 
-    //    foreach (var recipe in GetRecipes())
-    //    {
-    //        var data = new RecipeInformationData(recipe);
-
-    //        foreach (var input in GetInputs())
-    //        {
-    //            if(input != null && input.GetIngredient() != null)
-    //            {
-    //                for (int i = 0; i < data.inputsStatus.Count; i++)
-    //                {
-    //                    if (input.GetIngredient().ingredientName == data.inputsStatus[i].ingredient.ingredientName)
-    //                    {
-    //                        if (data.inputsStatus[i].status == false)
-    //                        {
-    //                            data.inputsStatus[i] = new RecipeInformationData.IngredientStatus(input.GetIngredient(), true);
-    //                            break;
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-
-    //        bool canCraft = true;
-
-    //        foreach (var ingredient in data.inputsStatus)
-    //        {
-    //            if (ingredient.status == false)
-    //            {
-    //                canCraft = false;
-    //                break;
-    //            }
-    //        }
-
-    //        data.canCraft = canCraft;
-
-    //        recipesStatusData.Add(data);
-    //    }
-
-    //    return recipesStatusData.ToArray();
-    //}
+        misc_text_animator.SetTrigger("Display Text");
+    }
 }
 
 public class RecipeInformationData

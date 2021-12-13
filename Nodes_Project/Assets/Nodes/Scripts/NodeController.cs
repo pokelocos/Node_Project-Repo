@@ -7,15 +7,21 @@ using RA.InputManager;
 [RequireComponent(typeof(NodeView))]
 public class NodeController : MonoBehaviour, SelectableObject
 {
+    public bool isDebugMode;
+
     private Dictionary<Recipe, Port[]> selectedRecipes = new Dictionary<Recipe, Port[]>();
     private List<Port> inputPorts = new List<Port>();
     private List<Port> outputPorts = new List<Port>();
+
+    private ProductionReport[] lasProductionManifest;
 
     private NodeView nodeView;
 
     private List<ProductionQueue> productionQueue = new List<ProductionQueue>();
 
-    private struct ProductionQueue
+    public NodeView NodeView { get => nodeView; private set => nodeView = value; }
+
+    public struct ProductionQueue
     {
         public Recipe recipe;
         public Port[] inputPorts;
@@ -49,6 +55,11 @@ public class NodeController : MonoBehaviour, SelectableObject
         CheckWhatCanCraft();
     }
 
+    public ProductionQueue[] GetProductionQueue()
+    {
+        return productionQueue.ToArray();
+    }
+
     private void InitializeDefaultInputPorts()
     {
         foreach (var ingredient in nodeView.GetNodeData().defaultInputIngredients)
@@ -75,10 +86,16 @@ public class NodeController : MonoBehaviour, SelectableObject
                 input.connection?.UseConnection();
             }
 
+            var productionHistorial = new List<ProductionReport>();
+
             foreach (var output in queue.outputPorts)
-            {
+            { 
+                productionHistorial.Add(new ProductionReport(output.Product, output.connection != null));
+
                 output.connection?.SendProduct();
             }
+
+            lasProductionManifest = productionHistorial.ToArray();
         }
 
         foreach (var action in nodeView.GetNodeData().onWorkFinish)
@@ -86,12 +103,15 @@ public class NodeController : MonoBehaviour, SelectableObject
             action.CallAction(this);
         }
 
-        UpdateProductionQueue();
-
         if (productionQueue.Count == 0)
         {
             nodeView.SetInternalSpeed(0);
         }
+    }
+
+    public ProductionReport[] GetProductionManifest()
+    {
+        return lasProductionManifest;
     }
 
     private void UpdateProductionQueue()
@@ -114,7 +134,7 @@ public class NodeController : MonoBehaviour, SelectableObject
                 {
                     foreach (var outputPort in outputPorts)
                     {
-                        if (outputPort.connection != null && outputPort.Product.data == result)
+                        if (outputPort.Product.data == result)
                         {
                             if (!workingPorts.Contains(outputPort))
                             {
@@ -125,7 +145,6 @@ public class NodeController : MonoBehaviour, SelectableObject
                     }
                 }
 
-               // print(outputPorts.ToArray().Length);
                 productionQueue.Add(new ProductionQueue(selectedRecipe.Key, selectedRecipe.Value, usedPorts.ToArray()));
             }
         }
@@ -213,6 +232,8 @@ public class NodeController : MonoBehaviour, SelectableObject
 
         NodeData data = nodeView.GetNodeData();
 
+        string log =  "[Check crafting options for " + gameObject.name + "]\n [Combinations]\n";
+
         //Calculate all possible combinations
         var inputIngredientPorts = inputPorts.Where(x => x.Product?.data).ToList();
 
@@ -230,10 +251,13 @@ public class NodeController : MonoBehaviour, SelectableObject
 
         foreach (var combination in allCombinations)
         {
+            log += "======= " + Product.ListToString(combination) + "=========\n";
             foreach (var recipe in data.recipes)
             {
+                log += Product.ListToString(combination) + " =";
+
                 bool validRecipe = true;
-                var ingredients = recipe.GetIngredients().ToList();
+                var ingredients = recipe.GetIngredients().OrderByDescending(x => !x.IsOptional).ToList();
                 var validPorts = new List<Port>();
 
                 foreach (var candidate in combination)
@@ -260,9 +284,24 @@ public class NodeController : MonoBehaviour, SelectableObject
                     }
                 }
 
+                //Check if unnused items are optionals
+                foreach (var ingredient in ingredients)
+                {
+                    if (!ingredient.IsOptional)
+                        validRecipe = false;
+                }
+
                 if (validRecipe && !validRecipes.ContainsKey(recipe))
                 {
                     validRecipes.Add(recipe, validPorts);
+
+                    log += recipe.name + "\n";
+
+                    break;
+                }
+                else
+                {
+                    log += "RECIPE NOT FOUND\n";
                 }
             }
         }
@@ -284,6 +323,9 @@ public class NodeController : MonoBehaviour, SelectableObject
 
         UpdatePorts();
         UpdateProductionQueue();
+
+        if (isDebugMode)
+            Debug.Log(log);
     }
 
     public Port GetOutputPort(ConnectionController connection)
@@ -495,5 +537,48 @@ public class Product
         this.data = data;
         this.currentValue = currentValue;
         this.ingredients = ingredients;
+    }
+
+    public static string ListToString(IEnumerable<Port> list)
+    {
+        string text = string.Empty;
+
+        foreach (var port in list)
+        {
+            text += port.Product.data.ingredientName + " + ";
+        }
+
+        return text;
+    }
+}
+
+/// <summary>
+/// This class its used to store the production information.
+/// </summary>
+public class ProductionReport
+{
+    private Product product;
+    private bool wasDispatched;
+
+    public Product Product
+    {
+        get
+        {
+            return product;
+        }
+    }
+
+    public bool WasDispatched
+    {
+        get
+        {
+            return wasDispatched;
+        }
+    }
+
+    public ProductionReport(Product product, bool wasDispatched)
+    {
+        this.product = product;
+        this.wasDispatched = wasDispatched;
     }
 }

@@ -120,16 +120,23 @@ public class Recipe : ScriptableObject
     public static bool CanBeUsedIn(IngredientData ingredientData, Ingredient[] recipeIngredients, out Ingredient matchIngredient)
     {
         matchIngredient = null;
-
+        string log = string.Empty;
         foreach (var ingredient in recipeIngredients)
         {
+            log += "Checking " + ingredientData.ingredientName + " with " + ingredient.IngredientData.name + " -Opt " + ingredient.IsOptional;
+
             if (CanBeUsedIn(ingredientData, ingredient))
             {
                 matchIngredient = ingredient;
+
+                log += " = SUCCESS";
                 return true;
             }
+
+            log += " = FAIL\n";
         }
 
+       // Debug.Log(log);
         return false;
     }
 
@@ -153,7 +160,7 @@ public class Recipe : ScriptableObject
 
         if (ingredient.CompareTags)
         {
-            byTag = ingredient.IngredientData.tags.Any(x => ingredientData.tags.Contains(x));
+            byTag = ingredient.IngredientData.tags.Intersect(ingredientData.tags).Any();
         }
 
         if (ingredient.CompareSpecificTags)
@@ -161,7 +168,7 @@ public class Recipe : ScriptableObject
             specifigTag = ingredientData.tags.Any(x => ingredient.SpecificTags.Contains(x));
         }
 
-        if (ingredient.SpecificTags.Contains("ANY"))
+        if (ingredient.SpecificTags.Contains("ANY") || ingredient.IngredientData.tags.Contains("ANY"))
         {
             itsAny = true;
         }
@@ -244,6 +251,18 @@ public class Ingredient
 
     [SerializeField]
     private bool isOptional;
+
+    public static string ListToString(IEnumerable<Ingredient> list)
+    {
+        string text = string.Empty;
+
+        foreach (var item in list)
+        {
+            text += item.ingredientData.ingredientName + " + ";
+        }
+
+        return text;
+    }
 }
 
 public static class RecipeExtensions
