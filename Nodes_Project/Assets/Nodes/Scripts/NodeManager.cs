@@ -23,6 +23,10 @@ public class NodeManager : MonoBehaviour
 
     private NodeController targetNode;
 
+    [Header("References")]
+    [SerializeField]
+    private NodeInformationView informationView;
+
     [Header("References Handler")]
     [SerializeField]
     private SpriteRenderer icon_handler;
@@ -76,6 +80,8 @@ public class NodeManager : MonoBehaviour
 
     void Update()
     {
+        ManageInteractions();
+
         ManageConnections();
 
         //Execute at the end.
@@ -83,6 +89,17 @@ public class NodeManager : MonoBehaviour
 
         ManageHanlder();
     }    
+
+    private void ManageInteractions()
+    {
+        if (targetNode != null)
+        {
+            if (inputManager.RightDoubleClick)
+            {
+                informationView.DisplayInformation(targetNode);
+            }
+        }
+    }
 
     /// <summary>
     /// Controls the icons from the mouse
