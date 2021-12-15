@@ -55,6 +55,11 @@ public class NodeController : MonoBehaviour, SelectableObject
         CheckWhatCanCraft();
     }
 
+    public Recipe[] GetValidRecipes()
+    {
+        return selectedRecipes.Select(x => x.Key).ToArray();
+    }
+
     public ProductionQueue[] GetProductionQueue()
     {
         return productionQueue.ToArray();

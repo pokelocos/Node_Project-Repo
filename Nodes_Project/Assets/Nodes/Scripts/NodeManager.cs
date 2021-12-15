@@ -288,7 +288,7 @@ public class NodeManager : MonoBehaviour
         }
     }
 
-    public void ConnectNodes(NodeController from, NodeController to)
+    public static void ConnectNodes(NodeController from, NodeController to)
     {
         var connection = (Instantiate(Resources.Load("Nodes/Connection"), null) as GameObject).GetComponent<ConnectionController>();
         connection.Connect(from, to);
