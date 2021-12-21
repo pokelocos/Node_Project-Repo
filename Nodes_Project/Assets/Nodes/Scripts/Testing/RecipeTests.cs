@@ -81,11 +81,13 @@ public class RecipeTests : MonoBehaviour
         //Generate the list of possible Recipes
         var validRecipes = new Dictionary<Recipe, List<IngredientData>>();
 
-        foreach (var combination in allCombinations)
+        foreach (var combination in allCombinations.OrderByDescending(x => x.Count))
         {
             bool validRecipe = true;
             var ingredients = recipe.GetIngredients().OrderByDescending(x => !x.IsOptional).ToList();
             var validPorts = new List<IngredientData>();
+
+            print(ListToString(combination));
 
             foreach (var candidate in combination)
             {
@@ -158,4 +160,19 @@ public class RecipeTests : MonoBehaviour
             }
         }
     }
+
+    public static string ListToString(IEnumerable list)
+    {
+        string log = "";
+
+        foreach (var item in list)
+        {
+            log += item.ToString() + " +";
+        }
+
+        log = log.Substring(0, log.Length - 1);
+
+        return log;
+    }
 }
+

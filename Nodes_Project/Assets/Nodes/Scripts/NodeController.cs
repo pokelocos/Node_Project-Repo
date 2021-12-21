@@ -254,7 +254,7 @@ public class NodeController : MonoBehaviour, SelectableObject
         //Generate the list of possible Recipes
         var validRecipes = new Dictionary<Recipe, List<Port>>();
 
-        foreach (var combination in allCombinations)
+        foreach (var combination in allCombinations.OrderByDescending(x => x.Count))
         {
             log += "======= " + Product.ListToString(combination) + "=========\n";
             foreach (var recipe in data.recipes)
