@@ -153,44 +153,23 @@ public class RecipeInfo
 
     public bool validRecipe;
 
-    public RecipeInfo(NodeController node, Recipe recipe)
+    public RecipeInfo(IngredientInformation[] ingredients, IngredientInformation[] results, bool isValid/*NodeController node, Recipe recipe*/)
     {
-        List<IngredientInformation> validIngredients = new List<IngredientInformation>();
-        List<IngredientInformation> validResults = new List<IngredientInformation>();
+        this.ingredients = ingredients;
+        this.results = results;
+        validRecipe = isValid;
+    }
 
-        List<Port> usedPorts = new List<Port>();
+    public static IngredientInformation[] ConvertFrom(IngredientData[] ingredients, bool hasColor)
+    {
+        var result = new IngredientInformation[ingredients.Length];
 
-        foreach (var ingredient in recipe.GetIngredients())
+        for (int i = 0; i < result.Length; i++)
         {
-            bool isFound = false;
-
-            foreach (var inputPort in node.GetInputPorts())
-            {
-                if (recipe.CanBeUsedIn(inputPort.Product.data) && !usedPorts.Contains(inputPort))
-                {
-                    isFound = inputPort.connection != null;
-
-                    if (isFound)
-                    {
-                        usedPorts.Add(inputPort);
-                    }
-
-                    break;
-                }
-            }
-
-            validIngredients.Add(new IngredientInformation(ingredient.IngredientData, isFound));
+            result[i] = new IngredientInformation(ingredients[i], hasColor);
         }
 
-        validRecipe = node.GetValidRecipes().Contains(recipe);
-
-        foreach (var result in recipe.GetResults())
-        {
-            validResults.Add(new IngredientInformation(result, validRecipe));
-        }
-
-        ingredients = validIngredients.ToArray();
-        results = validResults.ToArray();
+        return result;
     }
 
     [System.Serializable]

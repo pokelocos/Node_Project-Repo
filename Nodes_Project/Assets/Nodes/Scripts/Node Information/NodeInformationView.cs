@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -114,12 +115,20 @@ public class NodeInformationView : MonoBehaviour
         if (currentNode == null)
             return;
 
-        foreach (var recipe in currentNode.NodeView.GetRecipes())
-        {
-            var view = Instantiate(recipeInformationView_template, recipes_content);
-            view.gameObject.SetActive(true);
+        var usedRecipes = new List<Recipe>();
+        var usedIngredients = new List<IngredientData>();
 
-            view.SetData(new RecipeInfo(currentNode, recipe));
+        foreach (var recipe in currentNode.GetValidRecipes())
+        {
+            if (!usedRecipes.Contains(recipe.Key))
+            {
+                usedRecipes.Add(recipe.Key);
+
+                var slot = Instantiate(recipeInformationView_template, recipes_content);
+                slot.gameObject.SetActive(true);
+
+                slot.SetData(new RecipeInfo(RecipeInfo.ConvertFrom(recipe.Value.Select(x => x.Product.data).ToArray(), true), RecipeInfo.ConvertFrom(recipe.Key.GetResults(), true), true)); 
+            }
         }
     }
 
