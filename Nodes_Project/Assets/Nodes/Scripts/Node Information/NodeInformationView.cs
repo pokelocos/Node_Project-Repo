@@ -116,7 +116,7 @@ public class NodeInformationView : MonoBehaviour
             return;
 
         var usedRecipes = new List<Recipe>();
-        var usedIngredients = new List<IngredientData>();
+        var usedPorts = new List<Port>();
 
         foreach (var recipe in currentNode.GetValidRecipes())
         {
@@ -124,11 +124,70 @@ public class NodeInformationView : MonoBehaviour
             {
                 usedRecipes.Add(recipe.Key);
 
+                foreach (var port in recipe.Value)
+                {
+                    usedPorts.Add(port);
+                }
+
                 var slot = Instantiate(recipeInformationView_template, recipes_content);
                 slot.gameObject.SetActive(true);
 
-                slot.SetData(new RecipeInfo(RecipeInfo.ConvertFrom(recipe.Value.Select(x => x.Product.data).ToArray(), true), RecipeInfo.ConvertFrom(recipe.Key.GetResults(), true), true)); 
+                var ingredientsInfo = new List<RecipeInfo.IngredientInformation>();
+
+                var invalidPorts = new List<IngredientData>();
+
+                for (int i = 0; i < recipe.Key.GetIngredients().Length; i++)
+                {
+                    bool hasColor = false;
+                    IngredientData data = recipe.Key.GetIngredients()[i].IngredientData;
+
+                    foreach (var port in recipe.Value)
+                    {
+                        if (!invalidPorts.Contains(port.Product.data) && Recipe.CanBeUsedIn(port.Product.data, recipe.Key.GetIngredients()[i]))
+                        {
+                            hasColor = true;
+                            invalidPorts.Add(port.Product.data);
+                            data = port.Product.data;
+                            break;
+                        }
+                    }
+
+                    ingredientsInfo.Add(new RecipeInfo.IngredientInformation(data, hasColor));
+                }
+
+                slot.SetData(new RecipeInfo(ingredientsInfo.ToArray(), RecipeInfo.ConvertFrom(recipe.Key.GetResults(), true), true)); 
             }
+        }
+        
+        var unnusedRecipes = currentNode.NodeView.GetRecipes().Where(x => !usedRecipes.Contains(x)).ToArray();
+        var unnusedPorts = currentNode.GetInputPorts().Where(x => !usedPorts.Contains(x)).Select(x => x.Product.data).ToArray();
+
+        foreach (var recipe in unnusedRecipes)
+        {
+            var slot = Instantiate(recipeInformationView_template, recipes_content);
+            slot.gameObject.SetActive(true);
+
+            var recipeIngredientInfo = new List<RecipeInfo.IngredientInformation>();
+            var usedPortsInThisRecipe = new List<IngredientData>();
+
+            for (int i = 0; i < recipe.GetIngredients().Length; i++)
+            {
+                bool hasColor = false;
+
+                foreach (var ingredient in unnusedPorts)
+                {
+                    if (!usedPortsInThisRecipe.Contains(ingredient) && Recipe.CanBeUsedIn(ingredient, recipe.GetIngredients()[i]))
+                    {
+                        usedPortsInThisRecipe.Add(ingredient);
+                        hasColor = true;
+                        break;
+                    }
+                }
+
+                recipeIngredientInfo.Add(new RecipeInfo.IngredientInformation(recipe.GetIngredients()[i].IngredientData, hasColor));
+            }
+
+            slot.SetData(new RecipeInfo(recipeIngredientInfo.ToArray(), RecipeInfo.ConvertFrom(recipe.GetResults(), false), false));
         }
     }
 

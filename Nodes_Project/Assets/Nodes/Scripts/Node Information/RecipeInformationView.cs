@@ -153,7 +153,7 @@ public class RecipeInfo
 
     public bool validRecipe;
 
-    public RecipeInfo(IngredientInformation[] ingredients, IngredientInformation[] results, bool isValid/*NodeController node, Recipe recipe*/)
+    public RecipeInfo(IngredientInformation[] ingredients, IngredientInformation[] results, bool isValid)
     {
         this.ingredients = ingredients;
         this.results = results;
