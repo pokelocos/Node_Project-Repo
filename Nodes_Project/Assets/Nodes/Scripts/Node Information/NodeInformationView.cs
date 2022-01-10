@@ -18,6 +18,11 @@ public class NodeInformationView : MonoBehaviour
     [SerializeField] private RecipeInformationView recipeInformationView_template;
     [SerializeField] private Transform recipes_content;
 
+    [Header("References / Connections Page")]
+    [SerializeField] private ConnectionInformationView connectionInfoView_template;
+    [SerializeField] private Transform inputs_content;
+    [SerializeField] private Transform outputs_content;
+
     [Header("References / Reume")]
     [SerializeField] private Text nodeName_text;
     [SerializeField] private Text nodeDesc_text;
@@ -35,6 +40,8 @@ public class NodeInformationView : MonoBehaviour
 
         gameObject.SetActive(true);
         transform.GetChild(0).localPosition = Vector3.zero;
+
+        connectionInfoView_template.gameObject.SetActive(false);
 
         DisplayResume(node);
 
@@ -193,7 +200,35 @@ public class NodeInformationView : MonoBehaviour
 
     private void DisplayConnectionsPage()
     {
+        foreach (Transform child in inputs_content)
+        {
+            if (child.gameObject != connectionInfoView_template.gameObject)
+            {
+                Destroy(child.gameObject);
+            }
+        }
 
+        foreach (Transform child in outputs_content)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (var inputPort in currentNode.GetInputPorts())
+        {
+            var slot = Instantiate(connectionInfoView_template, inputs_content);
+            slot.gameObject.SetActive(true);
+            slot.Display(inputPort, currentNode.NodeView);
+        }
+
+        foreach (var outputPort in currentNode.GetOutputPorts())
+        {
+            if (outputPort.connection != null)
+            {
+                var slot = Instantiate(connectionInfoView_template, outputs_content);
+                slot.gameObject.SetActive(true);
+                slot.Display(outputPort, outputPort.connection.GetDestination().NodeView);
+            }
+        }
     }
 
     private void DisplayStatusPage()

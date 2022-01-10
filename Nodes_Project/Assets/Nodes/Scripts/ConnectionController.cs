@@ -55,11 +55,17 @@ public class ConnectionController : MonoBehaviour, SelectableObject
     {
         if (NodeManager.Filter == NodeManager.Filters.NONE)
         {
-            float value = productQueue / 3f;
-            fadeColor = Color.Lerp(fadeColor, fadeGradient.Evaluate(value), Time.deltaTime * 3);
-            
+            fadeColor = GetQueueColor();
+
+
             connectionView.PaintFade(fadeColor);
         }
+    }
+
+    public Color GetQueueColor()
+    {
+        float value = productQueue / 3f;
+        return Color.Lerp(fadeColor, fadeGradient.Evaluate(value), Time.deltaTime * 3);
     }
 
     /// <summary>
