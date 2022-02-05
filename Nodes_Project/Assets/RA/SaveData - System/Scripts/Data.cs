@@ -27,6 +27,10 @@ namespace DataSystem
         /// </summary>
         public Data(){ }
 
+        public bool IsGameInProgress()
+        {
+            return currentGame != null;
+        }
 
 
     }
