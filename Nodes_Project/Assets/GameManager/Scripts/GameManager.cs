@@ -3,27 +3,22 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
+using MicroFactory;
+using static RogueLikeManager;
+using DataSystem;
 
 public class GameManager : MonoBehaviour
 {
-    public float dayTime = 60;
-    private float currentDayTime;
-    public static int points = 0;
+
     public int lastpoint = 0;
     public int winPoints = 5;
-    
+
     [SerializeField] private Text money_text;
     [SerializeField] private Text days_text;
     [SerializeField] private Text balance_text;
     [SerializeField] private Text starAmount_text;
     [SerializeField] private GameObject pause_frame;
-    [SerializeField] private Image day_image;
-    [SerializeField] private EffectView_Obs effectView_template;
 
-    [Space]
-    public Color commonDay;
-    public Color debDay;
-    public Color AlertDay;
 
     public GameObject warningPanel;
 
@@ -31,28 +26,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
 
-    [Space, Header("Time Controls")]
-    [SerializeField] private Toggle pauseToggle;
-    [SerializeField] private Toggle playToggle;
-    [SerializeField] private Toggle speedPlayToggle;
-    [SerializeField] private AudioClip pause_audio;
-    [SerializeField] private AudioClip play_audio;
-    [SerializeField] private AudioClip speed_audio;
-
     [Header("Balance Settings")]
     [SerializeField] private Text mantainance_text;
     [SerializeField] private Text lastEarnings_text;
 
-    private static int money = 1000;
-    private static int day = 0;
     private int lastBalance = 0;
     private int lastEarnings;
-    private float balance_alpha = 0;
+    private float balance_alpha = 0; //?
     private Color balance_color = Color.green;
     private static List<int> dayTransactions = new List<int>();
     public static bool snapTool;
-
-    private static Dictionary<RogueLikeManager.GameEffect_OB, EffectView_Obs> gameEffects = new Dictionary<RogueLikeManager.GameEffect_OB, EffectView_Obs>();
 
     public AudioSource source;
     public AudioClip winSound;
@@ -60,49 +43,179 @@ public class GameManager : MonoBehaviour
     private static int negativeDays = 0;
     private bool warningonce = true;
 
-    public static int Money
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    public delegate void NodeEvent(NodeController node);
+    public NodeEvent OnAddNode;
+
+    public delegate void EffectEvent(EffectController effect);
+    public NodeEvent OnAddEffect;
+
+    [Header("Managers slaves")]
+    [SerializeField] private TimeManager timeManager; // hud controllers (?)
+    [SerializeField] private NodeManager nodeManager;
+    [SerializeField] private RogueLikeManager rogueLikeManger;
+
+    [Header("Basics prefs")]
+    [SerializeField] private NodeController node_Pref;
+    [SerializeField] private EffectController effect_Pref;  
+    [SerializeField] private GameObject connetion_Pref;
+
+    [Header("Scene references")]
+    [SerializeField] private Transform effectsPivot; // move this to "guiManger" (?)
+
+    private GameState gameState;
+    private List<NodeController> nodes = new List<NodeController>();
+    private List<EffectController> effects = new List<EffectController>();
+
+    #region ##Data##
+
+    private NodeData[] nodeDatas;
+    private EffectData[] effectDatas;
+    private IngredientData[] ingredientsDatas;
+    private Recipe[] RecipesDatas;
+
+    #endregion
+
+    #region ##Events##
+
+    //public delegate void ConnectionEvent(ConnectionController connection);
+    //public ConnectionEvent OnCreateConection;
+
+    #endregion
+
+    private void Awake()
     {
-        get
-        {
-            return money;
-        }
+        LoadAssetsData();
+        Init();
+
+        // Set Events
+        rogueLikeManger.OnSelectedReward += InstanceReward;
+        timeManager.OnEndCycle += NewDay;
     }
 
-    public static int Days
+    private void OnApplicationQuit()
     {
-        get
-        {
-            return day;
-        }
+        gameState.Save(); //??
     }
 
     private void Start()
     {
-        points = 0;
-        money = 1000;
-        day = 0;
-        negativeDays = 0;
-        snapTool = false;
-
-        lastBalance = money;
-
-        SetTimeScale(0);
+        
     }
+
+    private void Init()
+    {
+        var data = DataManager.LoadData<Data>();
+        if (data != null)
+        {
+            this.gameState = data.GameState;
+            LoadState(gameState);
+        }
+        else
+        {
+            Debug.LogError("[LoadData Error]: No se pudo cargar la informacion de la partida");
+        }
+
+        negativeDays = 0; // move this to gamemode conditions  -> "gamemode"
+        lastBalance = gameState.Money; // move this to game conditions -> "gamemode"
+        timeManager.SetTimeScale(0);
+        snapTool = data.options.SnapMode;
+    }
+
+    private void LoadAssetsData()
+    {
+        nodeDatas = Resources.LoadAll<NodeData>("Nodes");
+        Debug.Log("Load ("+nodeDatas.Length+") node resources.");
+        effectDatas = Resources.LoadAll<EffectData>("Effects");
+        Debug.Log("Load (" + effectDatas.Length + ") effect resources.");
+        ingredientsDatas = Resources.LoadAll<IngredientData>("Materials");
+        Debug.Log("Load (" + ingredientsDatas.Length + ") ingredient resources.");
+    }
+
+    public void InstanceReward(Reward reward)
+    {
+        
+        for (int i = 0; i < reward.nodes.Length; i++)
+        {
+            CreateNode(reward.nodes[i],GetUnoccupiedPosition(),0);
+        }
+
+        for (int i = 0; i < reward.effects.Length; i++)
+        {
+           CreateEffect(reward.effects[i],0);
+        }
+
+        AddMoney(-reward.price);
+
+        //gameManager.SetTimeScale(lastTimeScale); // esto no debiese estar aqui
+    }
+
+    
+
+    private void LoadState(GameState gameState)
+    {
+        for (int i = 0; i < gameState.GetNodeAmount(); i++) 
+        {
+            var state = gameState.GetNode(i);
+            var time = state.currentTime;
+            var data = nodeDatas.First(x => x.name == state.dataName);
+            CreateNode(data, state.Position, time);
+        }
+
+        for (int i = 0; i < gameState.GetEffectAmount(); i++)
+        {
+            var state = gameState.GetEffect(i);
+            var time = state.currentTime;
+            var data = effectDatas.First(x => x.name == state.effectName);
+            CreateEffect(data,time);
+        }
+
+        for (int i = 0; i < gameState.GetConnectionAmount(); i++)
+        {
+            var state = gameState.GetConnection(i);
+            var n1 = state.nodeRelationIndex.Item1;
+            var n2 = state.nodeRelationIndex.Item2;
+            var ingr = ingredientsDatas.First(x => x.name == state.ingredientName);
+            NodeManager.ConnectNodes(nodes[n1], nodes[n2]); // falta pasarle el tipo de conexion
+        }
+    }
+
+    private void CreateNode(NodeData nodeData, Vector2 pos, float startTime) 
+    {
+        //var pos = GetUnoccupiedPosition();
+        var node = Instantiate(node_Pref, pos, Quaternion.identity);
+        node.Init(nodeData,startTime);
+        nodes.Add(node);
+    }
+
+    public void CreateEffect(EffectData effectData,float startTime) 
+    {
+        var effect = Instantiate(effect_Pref, effectsPivot);
+        effect.Init(effectData,startTime);
+        effects.Add(effect);
+    }
+
+    public Vector2 GetUnoccupiedPosition()
+    {
+        return Vector2.zero; // IMPLEMENTAR
+    }
+
 
     public void ToggleSnapTool()
     {
         snapTool = !snapTool;
     }
-
+     
     public void ToggleMoneyBalance()
     {
         GetComponent<Animator>().SetBool("Show Balance", !GetComponent<Animator>().GetBool("Show Balance"));
 
         int price = 0;
 
-        foreach (var node in FindObjectsOfType<NodeView>())
+        foreach (var node in FindObjectsOfType<NodeController>()) // change to foreach "nodes"
         {
-            price += node.GetMantainCost();
+            price += node.GetData().maintainCost;
         }
 
         mantainance_text.text = "$" + price;
@@ -110,74 +223,56 @@ public class GameManager : MonoBehaviour
         lastEarnings_text.text = "$" + lastEarnings;
     }
 
-    public static void AddMoney(int amount)
+    
+    public void AddMoney(int amount) // hay que encapsular el manejo de plata o esquematizar mejor sus funciones
     {
         dayTransactions.Add(amount);
-        money += amount;
+        gameState.Money += amount;
 
-        if (money > 0)
+        if (gameState.Money > 0) // esto deberia estar en condiciones de ganr perder dentro de gamemode y que se asignen a eventos de esta clase
         {
             negativeDays = 0;
         }
     }
+    
 
-    public static void AddEffect(RogueLikeManager.GameEffect_OB gameEffect)
+    public List<NodeController> GetNodesByTypes(NodeData.Type[] types) // Change parameter "NodeData.Type" to => "String" (???)
     {
-        gameEffect.SetEffect();
+        List<NodeController> toReturn = new List<NodeController>();
 
-        var template = FindObjectOfType<GameManager>().effectView_template;
-        var effectView = Instantiate(template, template.transform.parent);
-        effectView.gameObject.SetActive(true);
+        foreach (var ty in types)
+        {
+            var temp = nodes.Where(x => x.GetData().type == ty && !toReturn.Contains(x));
+            toReturn.Concat(temp);
+        }
 
-        effectView.SetData(gameEffect.title, gameEffect.description);
-
-        gameEffects.Add(gameEffect, effectView);
+        return toReturn;
     }
 
-    public void SetTimeScale(float value)
+    public List<NodeController> GetNodesByNames(string[] names)
     {
-        if (value == Time.timeScale)
-            return;
+        List<NodeController> toReturn = new List<NodeController>();
 
-        Time.timeScale = value;
+        foreach (var name in names)
+        {
+            var temp = nodes.Where(x => x.GetData().name == name && !toReturn.Contains(x));
+            toReturn.Concat(temp);
+        }
 
-        if (Time.timeScale == 0)
-        {
-            GetComponent<AudioSource>().PlayOneShot(pause_audio, 0.5f);
-        }
-        else if (Time.timeScale == 1)
-        {
-            GetComponent<AudioSource>().PlayOneShot(play_audio, 0.5f);
-        }
-        else
-        {
-            GetComponent<AudioSource>().PlayOneShot(speed_audio, 0.5f);
-        }
+        return toReturn;
     }
+
 
     public void NewDay()
     {
-        //if(FindObjectOfType<RogueLikeManager>().TrySetRewards())
-        //{
-        //    SetHudToggles(true);
-        //}
+        gameState.Day++;
 
-        FindObjectOfType<RogueLikeManager>().TrySetRewards();
-
-        for (int i = gameEffects.Keys.Count - 1; i >= 0; i--)
+        if (gameState.Day % 3 == 0)
         {
-            gameEffects.Keys.ToArray()[i].daysDuration--;
-
-            gameEffects.Keys.ToArray()[i].SetEffect();
-
-            if (gameEffects.Keys.ToArray()[i].daysDuration <= 0)
-            {
-                gameEffects.Keys.ToArray()[i].RemoveEffect();
-
-                Destroy(gameEffects.Values.ToArray()[i].gameObject);
-
-                gameEffects.Remove(gameEffects.Keys.ToArray()[i]);
-            }
+            timeManager.SetTimeScale(0);
+            //rogueLikeManger.OnSelectedReward = timeManager.; // last time
+            var rewards = rogueLikeManger.GenerateRewards(nodeDatas, effectDatas, 3, Random.Range(2, 4), 3, gameState.Day); // nodeDatas y effectDatas podria ser estatica y global en otra clase que guarde datas
+            rogueLikeManger.ShowRewards(rewards); // Esto deberia ser de algo tipo "rewardsView" y no de "rogueLikeManager"
         }
 
         var balance = 0;
@@ -188,12 +283,12 @@ public class GameManager : MonoBehaviour
         }
 
         lastEarnings = balance;
-        balance = money - lastBalance;
-        lastBalance = money;
+        balance = gameState.Money - lastBalance;
+        lastBalance = gameState.Money;
 
-        foreach (var node in FindObjectsOfType<NodeView>())
+        foreach (var node in nodes)
         {
-            AddMoney(-node.GetMantainCost());
+            gameState.Money +=(-node.GetData().maintainCost);
         }
 
         dayTransactions.Clear();
@@ -212,10 +307,10 @@ public class GameManager : MonoBehaviour
 
         balance_alpha = 5;
 
-        day++;
-        days_text.text = day.ToString();
+       
+        days_text.text = gameState.Day.ToString();
 
-        if(money < 0)
+        if(gameState.Money < 0)
         {
             if(warningonce)
             {
@@ -227,58 +322,18 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    //public void SetHudToggles(bool active)
-    //{
-    //    pauseToggle.GetComponentInChildren<Image>().color = active ? Color.red : Color.white;
-    //    pauseToggle.interactable = !active;
-    //    playToggle.interactable = !active;
-    //    speedPlayToggle.interactable = !active;
-    //}
+    
 
-    private void TimeControlsUpdate()
-    {
-        if (Time.timeScale == 0)
-        {
-            pauseToggle.isOn = true;
-            playToggle.isOn = false;
-            speedPlayToggle.isOn = false;
-        }
-        else if (Time.timeScale == 1)
-        {
-            playToggle.isOn = true;
-            pauseToggle.isOn = false;
-            speedPlayToggle.isOn = false;
-        }
-        else
-        {
-            speedPlayToggle.isOn = true;
-            pauseToggle.isOn = false;
-            playToggle.isOn = false;
-        }       
-    }
+    
 
     private void Update()
     {
-        pause_frame.gameObject.SetActive(Time.timeScale == 0);
+        pause_frame.gameObject.SetActive(Time.timeScale == 0); //?
 
-        //if (pauseToggle.interactable == false && Time.timeScale == 1)
-        //    SetHudToggles(false);
+        //timeManager.TimeControlsUpdate();
 
-        TimeControlsUpdate();
+        starAmount_text.text = gameState.ContractPoints + "/" + winPoints; // contract
 
-        starAmount_text.text = points + "/" + winPoints;
-
-        currentDayTime += Time.deltaTime;
-
-        day_image.fillAmount = currentDayTime / dayTime;
-
-        foreach(var effect in gameEffects)
-        {
-            float dayCurrentTime = 1 - (currentDayTime/dayTime);
-            float effectRemainTime = (((float)effect.Key.daysDuration - 1) / effect.Key.duration) + (dayCurrentTime / effect.Key.duration);
-
-            effect.Value.SetFillAmount(effectRemainTime);
-        }
 
         balance_color.a = balance_alpha;
 
@@ -287,13 +342,7 @@ public class GameManager : MonoBehaviour
 
         balance_text.color = balance_color;
 
-        if (currentDayTime > dayTime)
-        {
-            currentDayTime = 0;
-
-            NewDay();
-        }
-
+        /*
         if(negativeDays <= 0)
         {
             day_image.color = commonDay;
@@ -306,9 +355,10 @@ public class GameManager : MonoBehaviour
         {
             day_image.color = debDay;
         }
+        */
 
         // set money value
-        SetMoneyValue(Money);
+        SetMoneyValue(gameState.Money);
 
         //LOSE CON
         if (negativeDays >= 3)
@@ -317,16 +367,16 @@ public class GameManager : MonoBehaviour
         }
 
         // WIN CON
-        if (points >= winPoints)
+        if (gameState.ContractPoints >= winPoints)
         {
             winPanel.SetActive(true);
         }
 
-        if (lastpoint != points)
+        if (lastpoint != gameState.ContractPoints)
         {
             source.PlayOneShot(winSound);
         }
-        lastpoint = points;
+        lastpoint = gameState.ContractPoints;
     }
 
     private void SetMoneyValue(int v)

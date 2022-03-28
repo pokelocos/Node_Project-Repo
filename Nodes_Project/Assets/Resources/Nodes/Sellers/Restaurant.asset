@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0963106baaa381f49bcf0b1f7355bb30, type: 3}
+  m_Name: Restaurant
+  m_EditorClassIdentifier: 
+  categorie: 0
+  techLevel: 0
+  type: 0
+  color: {r: 0.73333335, g: 0.37254903, b: 1, a: 1}
+  description: 
+  icon: {fileID: 21300000, guid: e0fc548386fd35b439bd7360a3f23107, type: 3}
+  speed: 1
+  successProbability: 1
+  productionTime: 3
+  maintainCost: 70
+  allowedRecipes: 1
+  onInitialize: []
+  onWorkFinish: []
+  defaultInputIngredients: []
+  recipes:
+  - {fileID: 11400000, guid: bd6efa8003877a84c94b7e9174a4c91c, type: 2}
+  - {fileID: 11400000, guid: 59139cf3005a44c4581baf3be3222505, type: 2}
+  - {fileID: 11400000, guid: cf922dbad0597634f9dbcc04ed7c8083, type: 2}
+  - {fileID: 11400000, guid: 326c904a486607f458cfb071dd1deb80, type: 2}
+  - {fileID: 11400000, guid: f527d7ba6e6d1954994f1418ef21ceda, type: 2}
+  - {fileID: 11400000, guid: 44255b0da58238d4aa1519df8fcf034d, type: 2}
+  - {fileID: 11400000, guid: 210372eb3b6b1174bb4147f3e4271dad, type: 2}
+  - {fileID: 11400000, guid: 65e269b94078a434d8861048291abdee, type: 2}

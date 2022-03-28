@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be13468f858a1df4eab550400eab5835, type: 3}
+  m_Name: Normal Mode
+  m_EditorClassIdentifier: 
+  modeName: Normal Mode
+  description: Juega una experiencia sencilla en inmersiva prueba tus capacidades.
+  money: 1000
+  maxPoint: 5
+  nodes:
+  - data: {fileID: 11400000, guid: adc39ba06ec56b24b9da3efad59ebd27, type: 2}
+    position: {x: -7, y: 0}
+  - data: {fileID: 11400000, guid: 1d4b907dc1d90a0409554c45ec2698f3, type: 2}
+    position: {x: 0, y: 0}
+  - data: {fileID: 11400000, guid: 8efe42bf5db084c44a3958ae91373692, type: 2}
+    position: {x: 7, y: 0}
+  effects: []
+  allowMods: 1
+  incrementalDificulty: 0

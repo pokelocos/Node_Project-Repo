@@ -24,6 +24,8 @@ namespace DataSystem
         public string lenguage = "En";
         public bool uploadGameplayData = false; // send info from gamplay and errors to balancing purposes and bug fix (not personal information).
 
+        // Other
+        public bool SnapMode = false;
 
         // Input Setting
         public KeyCode closeInfoPanel = KeyCode.Escape;

@@ -16,10 +16,10 @@ namespace DataSystem
     {
         // <----
         // Fill, This area whit varibles and object you want to save.
-        public GeneralStatistics stats; // lab?
-        public GameData currentGame;
-        public OptionData options;
-        public WorkShopTraker WS_Traker; //(nombre??)
+        public GeneralStatistics stats = new GeneralStatistics();
+        public GameState GameState;
+        public OptionData options = new OptionData();
+        public WorkShopTraker WS_Traker = new WorkShopTraker(); 
         // <----
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace DataSystem
 
         public bool IsGameInProgress()
         {
-            return currentGame != null;
+            return GameState != null;
         }
 
 
