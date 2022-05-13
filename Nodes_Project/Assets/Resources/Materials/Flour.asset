@@ -15,5 +15,6 @@ MonoBehaviour:
   ingredientName: Flour
   price: 3
   icon: {fileID: 21300000, guid: 902a7725122c9104289805560eb8f80c, type: 3}
-  color: {r: 0.79607844, g: 0.78160524, b: 0.72156864, a: 1}
+  primaryColor: {r: 1, g: 0.9405483, b: 0.6745283, a: 1}
+  secondaryColor: {r: 0.9339623, g: 0.8219449, b: 0.3216002, a: 1}
   tags: []

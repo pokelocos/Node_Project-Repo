@@ -15,4 +15,6 @@ MonoBehaviour:
   ingredientName: Cheese
   price: 8
   icon: {fileID: 21300000, guid: 32e706b5572b8a64d903b5cbb0f3e49e, type: 3}
-  color: {r: 0.8679245, g: 0.81726825, b: 0.3962976, a: 1}
+  primaryColor: {r: 1, g: 0.90511477, b: 0, a: 1}
+  secondaryColor: {r: 1, g: 0.65916854, b: 0, a: 1}
+  tags: []

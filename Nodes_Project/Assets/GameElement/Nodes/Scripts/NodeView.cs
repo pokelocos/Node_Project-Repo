@@ -18,10 +18,6 @@ public class NodeView : MonoBehaviour
     [SerializeField] private Animator misc_text_animator;
     protected NodeData data;
 
-    //Events
-    public delegate void OnBarFilled();
-    public event OnBarFilled onBarFilled;
-
     public void SetView(NodeData nodeData)
     {
         data = nodeData;

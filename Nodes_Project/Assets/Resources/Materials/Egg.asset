@@ -15,4 +15,6 @@ MonoBehaviour:
   ingredientName: Egg
   price: 4
   icon: {fileID: 21300000, guid: 13a345fb0c166f14ca531e2bc65b12b7, type: 3}
-  color: {r: 0.8773585, g: 0.77889, b: 0.4999288, a: 1}
+  primaryColor: {r: 0.9716981, g: 0.7764587, b: 0.6554379, a: 1}
+  secondaryColor: {r: 0.735849, g: 0.5880107, b: 0.496351, a: 1}
+  tags: []

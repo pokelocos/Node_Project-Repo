@@ -17,22 +17,22 @@ public class NodeData : ScriptableObject
     public int maintainCost = 3;
 
     public int allowedRecipes = 1;
-    public List<NodeActions> onInitialize;
-    public List<NodeActions> onWorkFinish;
-    public List<IngredientData> defaultInputIngredients;
+    public List<NodeActions> onInitialize; // esto deberia ser remplazado con lua o cumplir un rol paralelo o no (?)
+    public List<NodeActions> onWorkFinish; // esto deberia ser remplazado con lua o cumplir un rol paralelo o no (?)
+    public List<IngredientData> defaultInputIngredients; 
     public Recipe[] recipes;
 
-    public enum Categorie
+    public enum Categorie // esto deberia ser un string
     {
         PRODUCTOR, MANUFACTORER, SHOP, LOGISTIC
     }
 
-    public enum Type
+    public enum Type // esto deberia ser un string
     {
         FARM, PLANTATION, FIELD, FACTORY, INDUSTRY, SHOP, MALL
     }
 
-    public enum TechLevel
+    public enum TechLevel // esto deberia ser un string
     {
         T0, T1, T2, T3, T4, T5
     }

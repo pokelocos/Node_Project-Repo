@@ -7,12 +7,13 @@ using RA.InputManager;
 [RequireComponent(typeof(NodeView))] //!?
 public class NodeController : MonoBehaviour, SelectableObject
 {
-    public bool isDebugMode;
+    public bool isDebugMode; // quitar (?)
 
     [SerializeField] private NodeView nodeView;
     [SerializeField] private NodeData data;
 
     private Dictionary<Recipe, Port[]> selectedRecipes = new Dictionary<Recipe, Port[]>();
+
     private List<Port> inputPorts = new List<Port>();
     private List<Port> outputPorts = new List<Port>();
 
@@ -24,7 +25,12 @@ public class NodeController : MonoBehaviour, SelectableObject
     private bool isFailure;
     protected float internalSpeed = 0;
 
+    public float CurrentTime { get => currentTime; }
     public NodeView NodeView { get => nodeView; private set => nodeView = value; }
+
+    //public delegate void NodeEvent();
+    //public NodeEvent onStartProducion;
+    //public NodeEvent onEndProduction;
 
     public struct ProductionQueue
     {
@@ -43,7 +49,6 @@ public class NodeController : MonoBehaviour, SelectableObject
     private void Awake()
     {
         nodeView = GetComponent<NodeView>();
-        nodeView.onBarFilled += OnWorkFinish;
     }
 
     void Start()
@@ -102,7 +107,7 @@ public class NodeController : MonoBehaviour, SelectableObject
             if (Random.Range(0, 1f) <= data.successProbability)
             {
                 currentTime = 0;
-                //onBarFilled?.Invoke();
+                OnWorkFinish();
             }
             else
             {
@@ -111,8 +116,6 @@ public class NodeController : MonoBehaviour, SelectableObject
         }
         nodeView.SetBarAmount((currentTime / data.productionTime));
     }
-
-   
 
     public NodeData GetData() 
     {
@@ -160,8 +163,8 @@ public class NodeController : MonoBehaviour, SelectableObject
             foreach (var output in queue.outputPorts)
             { 
                 productionHistorial.Add(new ProductionReport(output.Product, output.connection != null));
-
-                output.connection?.SendProduct();
+                
+                output.connection?.SendProduct(); // pass product by reference (?)
             }
 
             lasProductionManifest = productionHistorial.ToArray();
@@ -287,7 +290,7 @@ public class NodeController : MonoBehaviour, SelectableObject
     /// This method it's called after connection was made.
     /// </summary>
     /// <param name="connection"></param>
-    public void ConnectionUpdated(ConnectionView connection)
+    public void ConnectionUpdated(ConnectionController connection)
     {
         CheckWhatCanCraft();
     }
@@ -305,7 +308,6 @@ public class NodeController : MonoBehaviour, SelectableObject
         var inputIngredientPorts = inputPorts.Where(x => x.Product?.data).ToList();
 
         List<List<Port>> allCombinations = new List<List<Port>>();
-
         for (int i = 1; i <= inputIngredientPorts.Count; i++)
         {
             List<List<Port>> combinations = Combinations<Port>.GetCombinations(inputIngredientPorts, i);
@@ -315,7 +317,6 @@ public class NodeController : MonoBehaviour, SelectableObject
 
         //Generate the list of possible Recipes
         var validRecipes = new Dictionary<Recipe, List<Port>>();
-
         foreach (var combination in allCombinations.OrderByDescending(x => x.Count))
         {
             log += "======= " + Product.ListToString(combination) + "=========\n";
@@ -387,7 +388,6 @@ public class NodeController : MonoBehaviour, SelectableObject
         }
 
         //Apply Buffs with the rest of the unnused ingredients
-
         UpdatePorts();
         UpdateProductionQueue();
 
@@ -455,12 +455,16 @@ public class NodeController : MonoBehaviour, SelectableObject
 
     public void RemoveInput(ConnectionController connection)
     {
-        inputPorts.Remove(inputPorts.Find(x => x.connection == connection));
+        var port = inputPorts.Find(x => x.connection == connection);
+        Debug.Log("pi:" + port.Product);
+        inputPorts.Remove(port);
     }
 
     public void RemoveOutput(ConnectionController connection)
     {
-        outputPorts.Remove(outputPorts.Find(x => x.connection == connection));
+        var port = outputPorts.Find(x => x.connection == connection);
+        Debug.Log("po:" + port.Product);
+        outputPorts.Remove(port);
     }
 
     /// <summary>
@@ -493,23 +497,17 @@ public class NodeController : MonoBehaviour, SelectableObject
     /// <returns></returns>
     public int CanConnectWith(NodeController candidate, Product product)
     {
+        //Check if the prduct exists
+        if (product == null)
+            return 0;
+
         //Check if this node is not the same
         if (this == candidate)
-        {
             return 0;
-        }
 
         //Check if the candidate are not connected twice
         if (this.IsConnectedWith(candidate))
-        {
             return 3;
-        }
-
-        //Check if the prduct exists
-        if (product == null)
-        {
-            return 0;
-        }
 
         foreach (var recipe in candidate.data.recipes)
         {
@@ -525,8 +523,7 @@ public class NodeController : MonoBehaviour, SelectableObject
                 }
             }
         }
-
-        return 0;
+                                                                                                                                                                                        return 0;
     }
 
     /// <summary>
@@ -542,7 +539,6 @@ public class NodeController : MonoBehaviour, SelectableObject
                 return output;
             }
         }
-
         return null;
     }
 
@@ -570,7 +566,6 @@ public class NodeController : MonoBehaviour, SelectableObject
     }
 }
 
-//[System.Serializable]
 public class Port
 {
     public ConnectionController connection;

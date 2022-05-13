@@ -25,7 +25,6 @@ MonoBehaviour:
   allowedRecipes: 1
   onInitialize:
   - {fileID: 11400000, guid: 4e2ad47acf6848348a5351377e8b1033, type: 2}
-  - {fileID: 11400000, guid: e12b253b505884a4f9ce9458e5c09f0e, type: 2}
   onWorkFinish:
   - {fileID: 11400000, guid: 4e2ad47acf6848348a5351377e8b1033, type: 2}
   defaultInputIngredients:

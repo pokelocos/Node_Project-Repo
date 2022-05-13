@@ -12,11 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0963106baaa381f49bcf0b1f7355bb30, type: 3}
   m_Name: Bakery
   m_EditorClassIdentifier: 
+  categorie: 0
+  techLevel: 0
+  type: 0
   color: {r: 0.37254906, g: 0.47967383, b: 1, a: 1}
+  description: 
   icon: {fileID: 21300000, guid: 996fe08fba56853429af84bad0247826, type: 3}
   speed: 1
   successProbability: 1
   productionTime: 5
   maintainCost: 30
+  allowedRecipes: 1
+  onInitialize: []
+  onWorkFinish: []
+  defaultInputIngredients: []
   recipes:
-  - {fileID: 11400000, guid: 6d1632b7cf8baf3498e504c00c7aae6b, type: 2}
+  - {fileID: 11400000, guid: d9531b34108e13b449557108640b569d, type: 2}

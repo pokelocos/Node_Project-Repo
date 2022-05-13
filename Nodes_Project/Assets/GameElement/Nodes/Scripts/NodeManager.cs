@@ -7,54 +7,41 @@ using UnityEngine.EventSystems;
 using RA.InputManager;
 using RA.Generic;
 
-public class NodeManager : MonoBehaviour
+public class NodeManager : MonoBehaviour // change name (?) -> node (inputs?)(interactions?)(actions??)
 {
     [Header("Settings")]
     [SerializeField] private Filters filter = Filters.NONE;
 
     //Visible variables
     [Header("Components")]
-    [SerializeField] private ConnectionView proxyConnection;
+    private ConnectionView proxyConnection;
+    [SerializeField] private ConnectionView ErrorConnection;
+    [SerializeField] private ConnectionView normalConnection;
+    [SerializeField] private IngredientProxyView ingredientProxyView;
 
     //Hidden variables
     private InputManager inputManager;
     private NodeController dragOriginNode;
-    private static NodeManager _singleton;
+    private static NodeManager _singleton; //!!!
 
-    private NodeController targetNode;
+    //private NodeController targetNode;
 
     [Header("References")]
-    [SerializeField]
-    private NodeInformationView informationView;
-
-    [Header("References Handler")]
-    [SerializeField]
-    private SpriteRenderer icon_handler;
-    [SerializeField]
-    private SpriteRenderer icon_background_handler;
-    [SerializeField]
-    private TextMesh price_handler;
-    [SerializeField]
-    private TextMesh price_shadow_handler;
-
-    [SerializeField]
-    private Vector3 hanlder_offset = new Vector3(0.5f, 1, 0);
-
-    [SerializeField]
-    private Sprite invalidIngredient;
+    [SerializeField] private NodeInformationView informationView;
 
     private float lastClickTime;
     private const float DOUBLE_CLICK_TIME = .2f;
 
-    [SerializeField]
-    private NodeConnectionDisplay connectionDisplay;
-
-    [SerializeField]
+    [SerializeField] private NodeConnectionDisplay connectionDisplay;
 
     public AudioSource source;
     public AudioClip cannotConect;
     public AudioClip canConect;
     public AudioClip nothingConect;
+
+
+    public delegate void ConectionEvent(NodeController n1,NodeController n2);
+    public ConectionEvent OnConnect;
 
     //Properties
     public static Filters Filter
@@ -77,15 +64,51 @@ public class NodeManager : MonoBehaviour
     {
         inputManager = FindObjectOfType<InputManager>();
 
+        proxyConnection = normalConnection;
         proxyConnection.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        targetNode = (inputManager.OverObject is NodeController) ? inputManager.OverObject as NodeController : null;
+        // Double Right Click -> show "NodeView"  or disconect connection
+        if (inputManager.RightDoubleClick)
+        {
+            var overObj = inputManager.OverObject;
+            if (overObj is ConnectionController)
+            {
+                DisconnectConnection(overObj as ConnectionController);
+            }
+            else if (overObj is NodeController)
+            {
+                DisplayNodeInformation(overObj as NodeController);
+            }
+        }
 
-        ManageInteractions(); // Double Right Click -> show "NodeView" 
-        ManageConnections();
+        // Right click -> Drag connection
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (inputManager.OverObject is NodeController)
+            {
+               
+                OnDragConnectionStart();
+            }
+        }
+        else if (Input.GetMouseButton(1))
+        {
+            if (dragOriginNode != null)
+            { 
+                OnDragConnectionStay();
+            }
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            if(dragOriginNode != null)
+            {
+                OnDragConnectionEnd();
+            }
+        }
+
+        //ManageConnections();
 
         //Execute at the end.
         //ManageColors();
@@ -93,114 +116,83 @@ public class NodeManager : MonoBehaviour
         //ManageHanlder();
     }    
 
-    private void ManageInteractions() // Double Right Click -> show "NodeView" 
+    private void DisconnectConnection(ConnectionController connection)
     {
-        if (targetNode != null)
-        {
-            if (inputManager.RightDoubleClick)
-            {
-                informationView.DisplayInformation(targetNode);
-            }
-        }
+        connection.Disconnect();
     }
 
     /// <summary>
-    /// Controls the icons from the mouse 
+    /// Show a panel wiht the information of the node.
     /// </summary>
-    private void ManageHanlder() // cambiar nombre (!!!)
+    /// <param name="target"></param>
+    private void DisplayNodeInformation(NodeController target) // Double Right Click -> show "NodeView" 
     {
-        icon_handler.sprite = null;
-        price_handler.text = string.Empty;
-
-        icon_handler.transform.position = inputManager.MouseWorldPosition + hanlder_offset;
-
-        icon_background_handler.gameObject.SetActive(false);
-        price_shadow_handler.gameObject.SetActive(false);
-
-        if (filter == Filters.CONNECTION_MODE)
-        {
-            var output = dragOriginNode.GetFreeOutput();
-
-            icon_background_handler.gameObject.SetActive(true);
-
-            if (output != null)
-            {
-                icon_handler.sprite = output.Product.data.icon;
-                price_handler.text = "$" + output.Product.currentValue;
-                price_shadow_handler.text = "$" + output.Product.currentValue;
-                price_shadow_handler.gameObject.SetActive(true);
-            }
-            else
-            {
-                icon_handler.sprite = invalidIngredient;
-            }
-        }
+        informationView.DisplayInformation(target);
     }
 
-    /// <summary>
-    /// Controls the logic of the connections.
-    /// </summary>
-    private void ManageConnections()
+    public void OnDragConnectionStart() // pasar el nodecontroller por parametro?
     {
-        //proxyConnection.gameObject.SetActive(false);
+        var node = inputManager.OverObject as NodeController;
+        var freePort = node.GetFreeOutput();
 
-        // Proxy connection
-        if (dragOriginNode != null)
+        if (freePort != null)
         {
-            Vector3 from = dragOriginNode.transform.position;
-            Vector3 to = inputManager.MouseWorldPosition;
+            proxyConnection = normalConnection;
+            ingredientProxyView.ShowInformation(filter, freePort.Product);
+        }
+        else
+        {
+            proxyConnection = ErrorConnection;
+        }
 
+        dragOriginNode = inputManager.OverObject as NodeController;
+        proxyConnection.gameObject.SetActive(true);
+
+        Vector3 from = dragOriginNode.transform.position;
+        Vector3 to = inputManager.MouseWorldPosition;
+        proxyConnection.FollowPositions(from, to);
+    }
+
+    public void OnDragConnectionStay()
+    {
+        Vector3 from = dragOriginNode.transform.position;
+        Vector3 to = inputManager.MouseWorldPosition;
+
+        proxyConnection.FollowPositions(from, to);
+
+        if (dragOriginNode.GetFreeOutput() != null)
+        {
             proxyConnection.gameObject.SetActive(true);
-
-            proxyConnection.FollowPositions(from, to);
-
-            if (dragOriginNode.GetFreeOutput() != null)
-            {
-                proxyConnection.gameObject.SetActive(true);
-            }
-            else // no tiene output libres (son nulo)
-            {
-                // Opcion 1: Aparace la conexion proxy con un shader o de un color
-                // que represente que esa conexion no exite por que no le quedan outputs al nodo.
-
-                // Opcion 2: No puestra nada y suena un sonido de error unico para este error y una animacion unica del nodo.
-            }
-        }
-
-        // Input events
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (inputManager.OverObject is NodeController)
-            {
-                dragOriginNode = inputManager.OverObject as NodeController;
-            }
-        }
-
-        if (Input.GetMouseButtonUp(1) && dragOriginNode)
-        {
-            if (targetNode && dragOriginNode.GetFreeOutput() != null && dragOriginNode.CanConnectWith(targetNode, dragOriginNode.GetFreeOutput().Product) == 1)
-            {
-                ConnectNodes(dragOriginNode, targetNode);
-            }
-
-            dragOriginNode = null;
-        }
-
-        if (inputManager.RightDoubleClick)
-        {
-            if (inputManager.OverObject is ConnectionController)
-            {
-                (inputManager.OverObject as ConnectionController).Disconnect();
-            }
         }
     }
+
+    public void OnDragConnectionEnd()
+    {
+        var overObj = (NodeController)inputManager.OverObject;
+        if (inputManager.OverObject is NodeController)
+        {
+            var originPort = dragOriginNode.GetFreeOutput();
+            if (overObj &&
+                originPort != null &&
+                dragOriginNode.CanConnectWith(overObj, originPort.Product) == 1)
+            {
+                //ConnectNodes(dragOriginNode, overObj);
+                OnConnect?.Invoke(dragOriginNode,overObj);
+            }
+        }
+
+        dragOriginNode = null;
+        proxyConnection.gameObject.SetActive(false);
+        ingredientProxyView.HidenInformation();
+    }
+
 
     /// <summary>
     /// Manage the colors of all objects.
     /// </summary>
     private void ManageColors() // List<NodeController> nodes
     {
+        /*
         //Repaint connection proxy in gray
         proxyConnection.Paint(Color.gray, Color.gray.Darker());
 
@@ -288,11 +280,12 @@ public class NodeManager : MonoBehaviour
                 }
             }
         }
+        */
     }
 
-    public static void ConnectNodes(NodeController from, NodeController to)
+    public static void ConnectNodes(NodeController from, NodeController to) // funcion bosoleta (??)
     {
-        var connection = (Instantiate(Resources.Load("Nodes/Connection"), null) as GameObject).GetComponent<ConnectionController>();
+        var connection = (Instantiate(Resources.Load("Connection"), null) as GameObject).GetComponent<ConnectionController>();
         connection.Connect(from, to);
     }
 }

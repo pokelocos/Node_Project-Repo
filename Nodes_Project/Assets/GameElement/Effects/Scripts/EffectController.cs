@@ -18,6 +18,9 @@ namespace MicroFactory
 
         private float currentTime = 0;
 
+        public EffectData Data { get => data; }
+        public float CurrentTime { get => currentTime; }
+
         void Update()
         {
             if (data == null)

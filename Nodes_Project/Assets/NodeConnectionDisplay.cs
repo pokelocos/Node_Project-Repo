@@ -23,14 +23,15 @@ public class NodeConnectionDisplay : MonoBehaviour
         int inputs = 0, outputs = 0;
         foreach(Recipe r in recipes)
         {
-            foreach(IngredientData i in r.GetInputs())
+            foreach(var ing in r.GetIngredients())
             {
+                var i = ing.IngredientData;
                 if(!(i.name == "$" || i.name == "$$" || i.name == "Time"))
                 {
                     inputs++;
                 }
             }
-            foreach (IngredientData i in r.GetOutputs())
+            foreach (IngredientData i in r.GetResults())
             {
                 if (!(i.name == "$" || i.name == "$$" || i.name == "Time"))
                 {

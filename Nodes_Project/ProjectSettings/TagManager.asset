@@ -41,9 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 1328702345
+    locked: 0
   - name: Connection
     uniqueID: 4253457681
     locked: 0
   - name: Node
     uniqueID: 236961823
+    locked: 0
+  - name: UI
+    uniqueID: 126574099
     locked: 0

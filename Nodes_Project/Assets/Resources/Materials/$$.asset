@@ -15,4 +15,6 @@ MonoBehaviour:
   ingredientName: $$
   price: 3
   icon: {fileID: 21300000, guid: fcd56dc0ecb9f5c4b84a90a9d87dc2f5, type: 3}
-  color: {r: 0.23420742, g: 0.8301887, b: 0.15977213, a: 1}
+  primaryColor: {r: 0.24957943, g: 1, b: 0, a: 1}
+  secondaryColor: {r: 0.04633139, g: 0.49019608, b: 0, a: 1}
+  tags: []

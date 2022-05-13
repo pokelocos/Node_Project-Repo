@@ -4,35 +4,26 @@ using UnityEngine;
 
 public class ConnectionView : MonoBehaviour
 {
+    
+
+    [SerializeField] private SpriteRenderer border, color, input_icon, output_icon;
+    [SerializeField] private GameObject fade;
+
+    // element -> to class "TwoColorView" or "IngredientView"
+    [SerializeField] private SpriteRenderer elementColor;
+    [SerializeField] private SpriteRenderer elementBorder;
+
+    [SerializeField] private Color borderColor;
+    [SerializeField] private Color bodyColor;
+
     private Transform from;
     private Transform to;
 
-    [SerializeField]
-    private SpriteRenderer border, color, input_icon, output_icon;
-    [SerializeField] private GameObject fade;
-    [SerializeField]
-    private SpriteRenderer element;
-
-    public Color border_color;
-    public Color body_color;
-
-    public delegate void ConnectionCreated(ConnectionView connection);
-    public delegate void ConnectionDestroyed(ConnectionView connection);
-    public delegate void ElementReach();
-
-    public event ConnectionCreated onConnectionCreated;
-    public event ConnectionDestroyed onConnectionDestroyed;
-    public event ElementReach onElementReach;
-
-    private bool isMovingElement;
-
-    private float speed = 1f;
-    private float maxTime = 4f; //seconds
-    private float actualTime = 0f;
+    
 
     private void Start()
     {
-        Paint(body_color, border_color);
+        SetColor(bodyColor, borderColor);
     }
 
     void Update()
@@ -40,20 +31,22 @@ public class ConnectionView : MonoBehaviour
         switch (NodeManager.Filter)
         {
             case NodeManager.Filters.NONE:
-                Paint(body_color, border_color);
+                SetColor(bodyColor, borderColor);
                 HideIcons(0);
                 break;
             case NodeManager.Filters.CONNECTION_MODE:
                 PaintFade(Color.clear);
                 Color darker = Color.Lerp(Color.gray, Color.black, 0.2f);
-                Paint(Color.gray, darker);
+                SetColor(Color.gray, darker);
                 break;
         }
+
 
         if (from != null && to != null)
         {
             FollowPositions(from.position, to.position);
-
+        }
+        /*
             if (isMovingElement)
             {
                 MoveElement(from.position, to.position);
@@ -63,6 +56,20 @@ public class ConnectionView : MonoBehaviour
         {
             element.gameObject.SetActive(false);
         }
+        */
+    }
+
+    public Vector2 Size()
+    {
+        return border.size;
+    }
+
+    public void SetFollowingPoints(Transform from, Transform to)
+    {
+        this.from = from;
+        this.to = to;
+
+        //onConnectionCreated?.Invoke(this);
     }
 
     /// <summary>
@@ -121,15 +128,15 @@ public class ConnectionView : MonoBehaviour
 
     public void SendElement()
     {
-        isMovingElement = true;
+        //isMovingElement = true;
     }
 
-    public Vector3 GetMiddlePoint()
-    {
-        return (from.position + to.position) / 2;
-    }
+    //public Vector3 GetMiddlePoint()
+    //{
+    //    return (from.position + to.position) / 2;
+    //}
 
-    public void Paint(Color body, Color border)
+    public void SetColor(Color body, Color border)
     {
         this.border.color = border;
         this.color.color = body;
@@ -140,39 +147,30 @@ public class ConnectionView : MonoBehaviour
         fade.GetComponentInChildren<SpriteRenderer>().color = color;
     }
 
-    public void SetDotColor(Color color)
+    public void SetDotColor(Color c1, Color c2)
     {
-        element.color = color;
+        elementColor.color = c1;
+        elementBorder.color = c2;
     }
 
-    public void SetPoints(Transform from, Transform to)
-    {
-        this.from = from;
-        this.to = to;
 
-        onConnectionCreated?.Invoke(this);
+    public void DestroyConnection() // eliminar ???
+    {
+        //onConnectionDestroyed?.Invoke(this);
     }
 
-    //Destroy the connection objects and send onConnectionDestroyed event
-    public void DestroyConnection()
+    /// <summary>
+    /// Set ingretient position between the nodes following
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetElementPosition(float value)
     {
-        onConnectionDestroyed?.Invoke(this);
+        elementColor.transform.position = Vector3.Lerp(from.position, to.position, value);
     }
 
-    public void MoveElement(Vector3 from, Vector3 to)
+    public void SetElementPosition(Vector3 from, Vector3 to, float value)
     {
-        element.gameObject.SetActive(true);
-
-        actualTime += Time.deltaTime * speed;
-
-        if (actualTime > maxTime)
-        {
-            actualTime = 0;
-            isMovingElement = false;
-            onElementReach?.Invoke();
-        }
-
-        element.transform.position = Vector3.Lerp(from, to, actualTime / maxTime);
+        elementColor.transform.position = Vector3.Lerp(from,to,value);
     }
 
     public void FollowPositions(Vector3 from, Vector3 to)
@@ -190,13 +188,5 @@ public class ConnectionView : MonoBehaviour
 
         input_icon.transform.localPosition += Vector3.right * 8;
         output_icon.transform.localPosition -= Vector3.right * 8;
-
-        UpdateBoxCollider(gameObject.GetComponent<BoxCollider2D>(), border.sprite);
-    }
-    
-    private void UpdateBoxCollider(BoxCollider2D collider, Sprite newSprite)
-    {
-        collider.size = border.size;
-        collider.offset = new Vector2(border.size.x / 2, collider.offset.y);
     }
 }

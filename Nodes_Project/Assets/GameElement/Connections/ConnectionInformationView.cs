@@ -15,8 +15,8 @@ public class ConnectionInformationView : MonoBehaviour
     public void Display(Port port, NodeController node)
     {
         ingredient_image.sprite = port.Product.data.icon;
-        ingredient_image.color = port.Product.data.color.Darker();
-        ingredientBackground_image.color = port.Product.data.color;
+        ingredient_image.color = port.Product.data.primaryColor.Darker();
+        ingredientBackground_image.color = port.Product.data.primaryColor;
 
         node_image.sprite = node.GetData().icon;
         node_image.color = node.GetData().color.Darker();

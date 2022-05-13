@@ -4,18 +4,34 @@ using RA.InputManager;
 
 public class ConnectionController : MonoBehaviour, SelectableObject
 {
+    [Header("Pref references")]
+    [SerializeField] private new BoxCollider2D collider;
     [SerializeField] private ConnectionView connectionView;
+
+    [Header("Variables")]
     [SerializeField] private Gradient fadeGradient;
+
     private NodeController from, to;
     private Port inputPort;
-
-    public delegate void ProductReceive(Port port);
-    public event ProductReceive onProductReceive;
 
     private int productQueue;
     private Color fadeColor = Color.clear;
 
     [SerializeField] private Sprite[] alert_sprites;
+
+    public delegate void ConnectionEvent(ConnectionController connection);
+    public event ConnectionEvent onConnectionCreated;
+    public event ConnectionEvent onConnectionDestroyed;
+    public event ConnectionEvent onElementReach;
+
+    public delegate void ProductReceive(Port port); // "ProductRecive" -> "PortEvent" (?)
+    public event ProductReceive onProductReceive;
+
+    private float speed = 1f;
+    private float maxTime = 4f; //seconds
+    private float actualTime = 0f;
+
+    private bool isMovingElement;
 
     public enum AlertType
     {
@@ -26,10 +42,9 @@ public class ConnectionController : MonoBehaviour, SelectableObject
 
     public void Connect(NodeController from, NodeController to)
     {
-        var connectionView = GetComponent<ConnectionView>();
+        var connectionView = GetComponent<ConnectionView>(); // quitar en su momento
 
         //Variable initialization
-
         this.from = from;
         this.to = to;
 
@@ -40,17 +55,18 @@ public class ConnectionController : MonoBehaviour, SelectableObject
         from.SetOutput(this);
 
         //Events created for both nodes
-        connectionView.onConnectionCreated += from.ConnectionUpdated;
-        connectionView.onConnectionCreated += to.ConnectionUpdated;
+        onConnectionCreated += from.ConnectionUpdated;
+        onConnectionCreated += to.ConnectionUpdated;
 
-        connectionView.onConnectionDestroyed += from.ConnectionUpdated;
-        connectionView.onConnectionDestroyed += to.ConnectionUpdated;
+        onConnectionDestroyed += from.ConnectionUpdated;
+        onConnectionDestroyed += to.ConnectionUpdated;
 
-        connectionView.onElementReach += ProductReach;
+        onElementReach += ProductReach; //?
         onProductReceive += to.OnInputPortReceiveProduct;
 
         //Set points
-        connectionView.SetPoints(from.transform, to.transform);
+        connectionView.SetFollowingPoints(from.transform, to.transform);
+        onConnectionCreated?.Invoke(this);
     }
 
     private void Update()
@@ -58,10 +74,36 @@ public class ConnectionController : MonoBehaviour, SelectableObject
         if (NodeManager.Filter == NodeManager.Filters.NONE)
         {
             fadeColor = GetQueueColor();
-
-
             connectionView.PaintFade(fadeColor);
         }
+
+        UpdateBoxCollider(collider,View.Size());
+
+        if(isMovingElement)
+        {
+            UpdateElement();
+        }
+    }
+
+    public void UpdateElement()
+    {
+        if (actualTime > maxTime)
+        {
+            actualTime = 0;
+            isMovingElement = false;
+            onElementReach?.Invoke(this);
+        }
+        else
+        {
+            View.SetElementPosition(actualTime / maxTime);
+            actualTime += Time.deltaTime;
+        }
+    }
+
+    private void UpdateBoxCollider(BoxCollider2D collider,Vector2 size)
+    {
+        collider.size = size;
+        collider.offset = new Vector2(size.x / 2, collider.offset.y);
     }
 
     public Color GetQueueColor()
@@ -73,7 +115,7 @@ public class ConnectionController : MonoBehaviour, SelectableObject
     /// <summary>
     /// Called when this connection element reach the end of the line.
     /// </summary>
-    private void ProductReach()
+    private void ProductReach(ConnectionController cc)
     {
         productQueue++;
         onProductReceive?.Invoke(inputPort);
@@ -104,6 +146,7 @@ public class ConnectionController : MonoBehaviour, SelectableObject
 
     public void SendProduct()
     {
+        isMovingElement = true;
         connectionView.SendElement();
     }
 
@@ -129,8 +172,6 @@ public class ConnectionController : MonoBehaviour, SelectableObject
 
     public void Disconnect()
     {
-        var connectionView = GetComponent<ConnectionView>();
-
         to.RemoveInput(this);
         from.RemoveOutput(this);
 

@@ -28,9 +28,9 @@ public class RecipeInformationData
     {
         this.originalRecipe = originalRecipe;
 
-        foreach (var input in originalRecipe.GetInputs())
+        foreach (var input in originalRecipe.GetIngredients())
         {
-            inputsStatus.Add(new IngredientStatus(input, false));
+            inputsStatus.Add(new IngredientStatus(input.IngredientData, false));
         }
     }
 }

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5419dea08315074b866dc84abaf1b24, type: 3}
   m_Name: New effect 4
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: da7584c4c781a2f40b3b0f22cc4a6391, type: 3}
   title: Aceite quemado
   description: Tus fabricas de frituras tienen 50% de probabilidad de quemar su aceite.
-  color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  color: {r: 1, g: 0.48377457, b: 0, a: 1}
   duration: 180
   byTypes: 00000000
   byNames: []
