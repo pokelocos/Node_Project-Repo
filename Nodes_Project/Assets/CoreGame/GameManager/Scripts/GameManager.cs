@@ -49,14 +49,17 @@ public class GameManager : MonoBehaviour
 
     public delegate void NodeEvent(NodeController node);
     public NodeEvent OnAddNode;
+    public NodeEvent OnRemoveNode;
 
     public delegate void EffectEvent(EffectController effect);
-    public NodeEvent OnAddEffect;
+    public EffectEvent OnAddEffect;
+    public EffectEvent OnRemoveEffect;
 
     [Header("Managers slaves")]
     [SerializeField] private TimeManager timeManager;
     [SerializeField] private NodeManager nodeManager; 
     [SerializeField] private RewardManager rewardManger;
+    //[SerializableField] private AssetLoader assetLoader; (esto tiene que ser estatico (?))
 
     [Header("Basics prefs")]
     [SerializeField] private NodeController node_Pref;
@@ -161,27 +164,17 @@ public class GameManager : MonoBehaviour
         gameState.SetEffects(effectSave);
         Debug.Log("<color=#FFC300>[Node Engine, saveSys]</color> <b>" + effectSave.Length + "</b> effects saved.");
 
-
         // Save Connections
-        List<ConnectionState> connectionSave = new List<ConnectionState>();
-        /* for (int i = 0; i < nodes.Count; i++)
+        ConnectionState[] connectionSave = new ConnectionState[this.connections.Count];
+        for (int i = 0; i < connections.Count; i++)
         {
-            int r1 = i,r2 = 0;
-            string prod = "";
-            var others = nodes[i].GetConnectedOutputNodes(); // length output: 2
-            for (int j = 0; j < others.Length; j++)
-            {
-                r2 = nodes.IndexOf(others[j]);
-            }
-            connectionSave.Add(new ConnectionState(new Tuple<int, int>(r1, r2), prod)); // fix prod
+            int n1 = nodes.IndexOf(connections[i].GetOriginNode());
+            int n2 = nodes.IndexOf(connections[i].GetDestinationNode());
+            string ingredient = connections[i].GetProduct().data.name;
+            connectionSave[i] = new ConnectionState(n1,n2, ingredient);
         }
-        */
-        gameState.SetConnections(connectionSave.ToArray());
-        Debug.Log("<color=#FFC300>[Node Engine, saveSys]</color> <b>" + connectionSave.Count + "</b> connections saved.");
-
-        gameState.Save();
-        Debug.Log("<color=#FFC300>[Node Engine, saveSys]</color> GameState saved!");
-       
+        gameState.SetConnections(connectionSave);
+        Debug.Log("<color=#FFC300>[Node Engine, saveSys]</color> <b>" + connectionSave.Length + "</b> connections saved.");      
     }
 
     public void InstanceReward(Reward reward)
@@ -224,8 +217,8 @@ public class GameManager : MonoBehaviour
             var state = gameState.GetConnection(i);
             var n1 = state.nodeRelationIndex.Item1;
             var n2 = state.nodeRelationIndex.Item2;
-            //var ingr = ingredientsDatas.First(x => x.name == state.ingredientName);
-           //CreateConnection(nodes[n1], nodes[n2]);
+            var ingr = ingredientsDatas.First(x => x.name == state.ingredientName);
+            CreateConnection(nodes[n1], nodes[n2]);
         }
         Debug.Log("<color=#FFC300>[Node Engine, saveSys]</color> <b>" + connections.Count + "</b> connections loaded.");
     }
@@ -268,6 +261,7 @@ public class GameManager : MonoBehaviour
         var pos = n1.transform.position;
         var connection = Instantiate(connetion_Pref, pos, Quaternion.identity);
         connection.Connect(n1, n2);
+        connections.Add(connection);
     }
 
     /// <summary>

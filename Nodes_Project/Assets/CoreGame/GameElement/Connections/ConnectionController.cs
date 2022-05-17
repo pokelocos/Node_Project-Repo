@@ -13,6 +13,7 @@ public class ConnectionController : MonoBehaviour, SelectableObject
 
     private NodeController from, to;
     private Port inputPort;
+    private Ingredient ingredient;
 
     private int productQueue;
     private Color fadeColor = Color.clear;
@@ -42,7 +43,7 @@ public class ConnectionController : MonoBehaviour, SelectableObject
 
     public void Connect(NodeController from, NodeController to)
     {
-        var connectionView = GetComponent<ConnectionView>(); // quitar en su momento
+        //var connectionView = GetComponent<ConnectionView>(); // quitar en su momento
 
         //Variable initialization
         this.from = from;
@@ -131,15 +132,15 @@ public class ConnectionController : MonoBehaviour, SelectableObject
 
     public Product GetProduct()
     {
-        return GetOrigin().GetOutputPort(this).Product;
+        return GetOriginNode().GetOutputPort(this).Product;
     }
 
-    public NodeController GetOrigin()
+    public NodeController GetOriginNode()
     {
         return from;
     }
 
-    public NodeController GetDestination()
+    public NodeController GetDestinationNode()
     {
         return to;
     }

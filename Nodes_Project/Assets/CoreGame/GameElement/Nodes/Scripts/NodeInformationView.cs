@@ -226,7 +226,7 @@ public class NodeInformationView : MonoBehaviour
             {
                 var slot = Instantiate(connectionInfoView_template, outputs_content);
                 slot.gameObject.SetActive(true);
-                slot.Display(outputPort, outputPort.connection.GetDestination());
+                slot.Display(outputPort, outputPort.connection.GetDestinationNode());
             }
         }
     }

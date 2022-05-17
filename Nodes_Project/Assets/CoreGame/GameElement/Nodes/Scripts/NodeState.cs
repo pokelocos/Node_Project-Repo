@@ -53,5 +53,11 @@ public struct ConnectionState
         this.nodeRelationIndex = nodeRelationIndex;
         this.ingredientName = ingredientName;
     }
+
+    public ConnectionState(int n1,int n2, string ingredientName)
+    {
+        this.nodeRelationIndex = new Tuple<int,int>(n1,n2);
+        this.ingredientName = ingredientName;
+    }
 }
 

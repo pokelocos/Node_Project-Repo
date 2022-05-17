@@ -49,11 +49,12 @@ public class NodeController : MonoBehaviour, SelectableObject
     private void Awake()
     {
         nodeView = GetComponent<NodeView>();
+        InitializeDefaultInputPorts();
     }
 
     void Start()
     {
-        InitializeDefaultInputPorts();
+        
 
         //Execute all actions on initialize node
         foreach (var action in data.onInitialize)
@@ -264,7 +265,6 @@ public class NodeController : MonoBehaviour, SelectableObject
         allOutputProducts = allOutputProducts.Except(occupiedProducts).ToList();
 
         //If some output ingredients still remaining create new ones.
-
         if (allOutputProducts.Count > 0)
         {
             foreach (var product in allOutputProducts)
@@ -473,7 +473,7 @@ public class NodeController : MonoBehaviour, SelectableObject
     /// <returns></returns>
     public NodeController[] GetConnectedInputNodes()
     {
-        return inputPorts.Select(x => x.connection?.GetOrigin()).ToArray();
+        return inputPorts.Select(x => x.connection?.GetOriginNode()).ToArray();
     }
 
     /// <summary>
@@ -482,7 +482,7 @@ public class NodeController : MonoBehaviour, SelectableObject
     /// <returns></returns>
     public NodeController[] GetConnectedOutputNodes()
     {
-        return outputPorts.Select(x => x.connection?.GetDestination()).ToArray();
+        return outputPorts.Select(x => x.connection?.GetDestinationNode()).ToArray();
     }
 
     /// <summary>

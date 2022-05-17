@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class IngredientData : ScriptableObject
 {
-    public string ingredientName;
+    public string ingredientName; // name (???)
     public int price;
     public Sprite icon;
     public Color primaryColor = Color.white;
