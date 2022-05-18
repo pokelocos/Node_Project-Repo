@@ -1,0 +1,98 @@
+{
+    "name": "PlayerInputActions",
+    "maps": [
+        {
+            "name": "Debug Console",
+            "id": "def8d79a-02d5-4aa1-8617-6cd2271d9251",
+            "actions": [
+                {
+                    "name": "Toggle Command Console",
+                    "type": "Button",
+                    "id": "3fd5b0b2-428c-4d35-9f4f-c6111da51f8f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Ejecute Command",
+                    "type": "Button",
+                    "id": "4408cedb-56e6-4287-b399-167f3770ac3a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "37bf07ea-faa8-41ef-ac4c-669e6e44ef84",
+                    "path": "<Keyboard>/f8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Toggle Command Console",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7b9922c-4280-43a0-acf3-3c81389b945b",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ejecute Command",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Player ShortCut",
+            "id": "491eaa68-6979-4272-8933-ca1bcd2125c9",
+            "actions": [
+                {
+                    "name": "Exit Menu",
+                    "type": "Button",
+                    "id": "bb36eeb9-358f-474e-a904-3d1b866185ad",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Change Speed",
+                    "type": "Button",
+                    "id": "74604e83-85a3-4862-8b17-1998aecf5975",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4761e263-7d9d-44ba-a9c5-1b6f83721111",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c8b77b57-ab1b-4436-87bf-17cab6892ea7",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Change Speed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

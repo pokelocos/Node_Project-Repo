@@ -32,30 +32,18 @@ public class NodeController : MonoBehaviour, SelectableObject
     //public NodeEvent onStartProducion;
     //public NodeEvent onEndProduction;
 
-    public struct ProductionQueue
-    {
-        public Recipe recipe;
-        public Port[] inputPorts;
-        public Port[] outputPorts;
-
-        public ProductionQueue(Recipe recipe, Port[] inputPorts, Port[] outputPorts)
-        {
-            this.recipe = recipe;
-            this.inputPorts = inputPorts;
-            this.outputPorts = outputPorts;
-        }
-    }
+    
 
     private void Awake()
     {
         nodeView = GetComponent<NodeView>();
-        InitializeDefaultInputPorts();
+       
     }
 
     void Start()
     {
-        
 
+        InitializeDefaultInputPorts();
         //Execute all actions on initialize node
         foreach (var action in data.onInitialize)
         {
@@ -617,7 +605,7 @@ public class Product
 /// <summary>
 /// This class its used to store the production information.
 /// </summary>
-public class ProductionReport
+public class ProductionReport // estructura (?)
 {
     private Product product;
     private bool wasDispatched;
@@ -642,5 +630,23 @@ public class ProductionReport
     {
         this.product = product;
         this.wasDispatched = wasDispatched;
+    }
+}
+
+/// <summary>
+/// Estructura que pone en conjunto la recipe que se esta haciendo, 
+/// las conexiones de entrada y las conexiones de salida relacionadas a esta.
+/// </summary>
+public struct ProductionQueue
+{
+    public Recipe recipe;
+    public Port[] inputPorts;
+    public Port[] outputPorts;
+
+    public ProductionQueue(Recipe recipe, Port[] inputPorts, Port[] outputPorts)
+    {
+        this.recipe = recipe;
+        this.inputPorts = inputPorts;
+        this.outputPorts = outputPorts;
     }
 }

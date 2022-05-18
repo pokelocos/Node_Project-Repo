@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 [System.Serializable]
-public class Ingredient // esto deberia ser una mimple estructura dentro de "IngredientData"
+public class Ingredient // esto deberia ser una simple estructura dentro de "IngredientData"
 {
     [SerializeField] private IngredientData ingredientData;
 

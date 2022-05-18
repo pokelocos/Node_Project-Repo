@@ -92,42 +92,51 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+
+    }
+
+    private void Start()
+    {
         LoadAssetsData();
-        Init();
+        LoadGameSaved();
+        //Init();
 
         // Set Events
         rewardManger.OnSelectedReward += InstanceReward;
         timeManager.OnEndCycle += NewDay;
         nodeManager.OnConnect += CreateConnection;
+
+        // Start game stopped
+        timeManager.SetTimeScale(0);
     }
+
 
     private void OnApplicationQuit()
     {
         SaveState();
     }
 
-    private void Start()
-    {
-    }
-
-    private void Init()
+    private void LoadGameSaved()
     {
         var data = DataManager.LoadData<Data>();
         if (data != null)
         {
             this.gameState = data.GameState;
-            LoadState(gameState);
+            InitGameState(gameState);
         }
         else
         {
-            Debug.LogError("[LoadData Error]: No se pudo cargar la informacion de la partida");
+            Debug.LogError("< color =#ff0000>[Load Data Error]</color> Failed to load game information");
         }
+    }
 
+    /*
+    private void Init()
+    {
         negativeDays = 0; // move this to gamemode conditions  -> "gamemode"
         lastBalance = gameState.Money; // move this to game conditions -> "gamemode"
-        timeManager.SetTimeScale(0);
-        snapTool = data.options.SnapMode;
     }
+    */
 
     private void LoadAssetsData()
     {
@@ -139,6 +148,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("<color=#70FB5F>[Node Engine, Resources]</color> Load <b>" + ingredientsDatas.Length + "</b> ingredient resources.");
     }
 
+    /// <summary>
+    /// Save the state of the current game
+    /// </summary>
     private void SaveState()
     {
         // Save nodes
@@ -192,7 +204,11 @@ public class GameManager : MonoBehaviour
         AddMoney(-reward.price);
     }
 
-    private void LoadState(GameState gameState)
+    /// <summary>
+    /// Initialize and instantiate the elements delivered in the "GameState"
+    /// </summary>
+    /// <param name="gameState"></param>
+    private void InitGameState(GameState gameState)
     {
         for (int i = 0; i < gameState.GetNodeAmount(); i++) 
         {
@@ -275,26 +291,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void ToggleSnapTool() 
-    {
-        snapTool = !snapTool;
-    }
-     
-    public void ToggleMoneyBalance()
-    {
-        GetComponent<Animator>().SetBool("Show Balance", !GetComponent<Animator>().GetBool("Show Balance"));
-
-        int price = 0;
-
-        foreach (var node in FindObjectsOfType<NodeController>()) // change to foreach "nodes"
-        {
-            price += node.GetData().maintainCost;
-        }
-
-        mantainance_text.text = "$" + price;
-
-        lastEarnings_text.text = "$" + lastEarnings;
-    }
 
     
     public void AddMoney(int amount) // hay que encapsular el manejo de plata o esquematizar mejor sus funciones
@@ -404,7 +400,7 @@ public class GameManager : MonoBehaviour
         }
 #endif
 
-            pause_frame.gameObject.SetActive(Time.timeScale == 0); //?
+        pause_frame.gameObject.SetActive(Time.timeScale == 0); //?
 
         //timeManager.TimeControlsUpdate();
 
@@ -417,21 +413,6 @@ public class GameManager : MonoBehaviour
             balance_alpha -= Time.deltaTime;
 
         balance_text.color = balance_color;
-
-        /*
-        if(negativeDays <= 0)
-        {
-            day_image.color = commonDay;
-        }
-        else if(negativeDays > 3)
-        {
-            day_image.color = AlertDay;
-        }
-        else
-        {
-            day_image.color = debDay;
-        }
-        */
 
         // set money value
         SetMoneyValue(gameState.Money);
@@ -454,6 +435,28 @@ public class GameManager : MonoBehaviour
         }
         lastpoint = gameState.ContractPoints;
     }
+
+    public void ToggleSnapTool()
+    {
+        snapTool = !snapTool;
+    }
+
+    public void ToggleMoneyBalance()
+    {
+        GetComponent<Animator>().SetBool("Show Balance", !GetComponent<Animator>().GetBool("Show Balance"));
+
+        int price = 0;
+
+        foreach (var node in FindObjectsOfType<NodeController>()) // change to foreach "nodes"
+        {
+            price += node.GetData().maintainCost;
+        }
+
+        mantainance_text.text = "$" + price;
+
+        lastEarnings_text.text = "$" + lastEarnings;
+    }
+
 
     private void SetMoneyValue(int v) // mover a un controlador GUI
     {
