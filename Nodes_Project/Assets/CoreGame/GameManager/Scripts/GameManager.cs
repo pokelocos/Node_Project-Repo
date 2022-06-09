@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
 using MicroFactory;
-using static RewardManager;
 using DataSystem;
 using UnityEditor;
 using System;
@@ -14,13 +13,6 @@ public class GameManager : MonoBehaviour
 
     public int lastpoint = 0;
     public int winPoints = 5;
-
-    [SerializeField] private Text money_text;
-    [SerializeField] private Text days_text;
-    [SerializeField] private Text balance_text;
-    [SerializeField] private Text starAmount_text;
-    [SerializeField] private GameObject pause_frame;
-
 
     public GameObject warningPanel;
 
@@ -32,11 +24,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text mantainance_text;
     [SerializeField] private Text lastEarnings_text;
 
-    private int lastBalance = 0;
-    private int lastEarnings;
-    private float balance_alpha = 0; //?
-    private Color balance_color = Color.green;
-    private static List<int> dayTransactions = new List<int>();
+    private int lastBalance = 0; // balanceManager (?)
+    private int lastEarnings; // balanceManager (?)
+    private static List<int> dayTransactions = new List<int>(); // balanceManager (?)
+    
+    // Tool-> talvezs se pueda poner dentro de nodecontroler o lo que deje mover a los nodos(?)
     public static bool snapTool;
 
     public AudioSource source;
@@ -45,20 +37,25 @@ public class GameManager : MonoBehaviour
     private static int negativeDays = 0;
     private bool warningonce = true;
 
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+    #region ##Events##
     public delegate void NodeEvent(NodeController node);
-    public NodeEvent OnAddNode;
-    public NodeEvent OnRemoveNode;
+    public event NodeEvent OnAddNode;
+    public event NodeEvent OnRemoveNode;
 
     public delegate void EffectEvent(EffectController effect);
-    public EffectEvent OnAddEffect;
-    public EffectEvent OnRemoveEffect;
+    public event EffectEvent OnAddEffect;
+    public event EffectEvent OnRemoveEffect;
+
+    public delegate void ConnectionEvent(ConnectionController connection);
+    public event ConnectionEvent OnAddConection;
+    public event ConnectionEvent OnRemoveConection;
+    #endregion
 
     [Header("Managers slaves")]
     [SerializeField] private TimeManager timeManager;
     [SerializeField] private NodeManager nodeManager; 
     [SerializeField] private RewardManager rewardManger;
+    [SerializeField] private GuiManager guiManager; //Manager(??)
     //[SerializableField] private AssetLoader assetLoader; (esto tiene que ser estatico (?))
 
     [Header("Basics prefs")]
@@ -83,31 +80,21 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region ##Events##
-
-    //public delegate void ConnectionEvent(ConnectionController connection);
-    //public ConnectionEvent OnCreateConection;
-
-    #endregion
-
     private void Awake()
     {
+        LoadAssetsData();
+        LoadGameSaved();
 
+        lastBalance = gameState.Money;
+        timeManager.SetTimeScale(0);
     }
 
     private void Start()
     {
-        LoadAssetsData();
-        LoadGameSaved();
-        //Init();
-
         // Set Events
         rewardManger.OnSelectedReward += InstanceReward;
         timeManager.OnEndCycle += NewDay;
         nodeManager.OnConnect += CreateConnection;
-
-        // Start game stopped
-        timeManager.SetTimeScale(0);
     }
 
 
@@ -116,6 +103,42 @@ public class GameManager : MonoBehaviour
         SaveState();
     }
 
+    private void Update()
+    {
+        guiManager.SetContract(gameState.ContractPoints, winPoints); // actualizar en un evento y no en cada update
+        guiManager.SetMoneyValue(gameState.Money); // actualizar en un evento y no en cada update
+
+        if (LoseCondition())
+        {
+            losePanel.SetActive(true);
+        }
+
+        if (WinCondition())
+        {
+            winPanel.SetActive(true);
+        }
+
+        if (lastpoint != gameState.ContractPoints)
+        {
+            source.PlayOneShot(winSound);
+        }
+
+        lastpoint = gameState.ContractPoints;
+    }
+
+    public bool WinCondition()
+    {
+        return gameState.ContractPoints >= winPoints;
+    }
+
+    public bool LoseCondition()
+    {
+        return negativeDays >= 3;
+    }
+
+    /// <summary>
+    /// Load Game state
+    /// </summary>
     private void LoadGameSaved()
     {
         var data = DataManager.LoadData<Data>();
@@ -130,15 +153,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /*
-    private void Init()
-    {
-        negativeDays = 0; // move this to gamemode conditions  -> "gamemode"
-        lastBalance = gameState.Money; // move this to game conditions -> "gamemode"
-    }
-    */
-
-    private void LoadAssetsData()
+    /// <summary>
+    /// load the information of the game resources
+    /// </summary>
+    private void LoadAssetsData() // tabien hay que hacer un "loadModAssets" o seria aqui mismo?
     {
         nodeDatas = Resources.LoadAll<NodeData>("Nodes");
         Debug.Log("<color=#70FB5F>[Node Engine, Resources]</color> Load <b>" + nodeDatas.Length + "</b> node resources.");
@@ -187,21 +205,6 @@ public class GameManager : MonoBehaviour
         }
         gameState.SetConnections(connectionSave);
         Debug.Log("<color=#FFC300>[Node Engine, saveSys]</color> <b>" + connectionSave.Length + "</b> connections saved.");      
-    }
-
-    public void InstanceReward(Reward reward)
-    {
-        for (int i = 0; i < reward.nodes.Length; i++)
-        {
-            CreateNode(reward.nodes[i],GetUnoccupiedPosition(),0);
-        }
-
-        for (int i = 0; i < reward.effects.Length; i++)
-        {
-           CreateEffect(reward.effects[i],0);
-        }
-
-        AddMoney(-reward.price);
     }
 
     /// <summary>
@@ -303,30 +306,6 @@ public class GameManager : MonoBehaviour
             negativeDays = 0;
         }
     }
-    
-
-    public List<NodeController> GetNodesByTypes(NodeData.Type[] types) // Change parameter "NodeData.Type" to => "String" (???)
-    {
-        List<NodeController> toReturn = new List<NodeController>();
-        foreach (var ty in types)
-        {
-            var temp = nodes.Where(x => x.GetData().type == ty && !toReturn.Contains(x));
-            toReturn.Concat(temp);
-        }
-        return toReturn;
-    }
-
-    public List<NodeController> GetNodesByNames(string[] names)
-    {
-        List<NodeController> toReturn = new List<NodeController>();
-        foreach (var name in names)
-        {
-            var temp = nodes.Where(x => x.GetData().name == name && !toReturn.Contains(x));
-            toReturn.Concat(temp);
-        }
-        return toReturn;
-    }
-
 
     public void NewDay()
     {
@@ -358,22 +337,10 @@ public class GameManager : MonoBehaviour
 
         dayTransactions.Clear();
 
-        //SHOW BALANCE 
-        if (balance > 0)
-        {
-            balance_text.text = "$" + balance;
-            balance_color = Color.green;
-        }
-        else
-        {
-            balance_text.text = "$" + balance;
-            balance_color = Color.red;
-        }
 
-        balance_alpha = 5;
-
+        guiManager.SetBalance(balance);
+        guiManager.SetDay(gameState.Day);
        
-        days_text.text = gameState.Day.ToString();
 
         if(gameState.Money < 0)
         {
@@ -387,53 +354,19 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    
-
-    
-
-    private void Update()
+    public void InstanceReward(Reward reward) // el reward deberia recibor el game manager por parametro y hacer lo que corresponda (o hacrlo con funciones estaticas)
     {
-#if UNITY_EDITOR
-        if(Input.GetKey(KeyCode.P))
+        for (int i = 0; i < reward.nodes.Length; i++)
         {
-            gameState.Money += 1000;
-        }
-#endif
-
-        pause_frame.gameObject.SetActive(Time.timeScale == 0); //?
-
-        //timeManager.TimeControlsUpdate();
-
-        starAmount_text.text = gameState.ContractPoints + "/" + winPoints; // contract
-
-
-        balance_color.a = balance_alpha;
-
-        if (balance_alpha > 0)
-            balance_alpha -= Time.deltaTime;
-
-        balance_text.color = balance_color;
-
-        // set money value
-        SetMoneyValue(gameState.Money);
-
-        //LOSE CON
-        if (negativeDays >= 3)
-        {
-            losePanel.SetActive(true); 
+            CreateNode(reward.nodes[i], GetUnoccupiedPosition(), 0);
         }
 
-        // WIN CON
-        if (gameState.ContractPoints >= winPoints)
+        for (int i = 0; i < reward.effects.Length; i++)
         {
-            winPanel.SetActive(true);
+            CreateEffect(reward.effects[i], 0);
         }
 
-        if (lastpoint != gameState.ContractPoints)
-        {
-            source.PlayOneShot(winSound);
-        }
-        lastpoint = gameState.ContractPoints;
+        AddMoney(-reward.price);
     }
 
     public void ToggleSnapTool()
@@ -458,17 +391,5 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void SetMoneyValue(int v) // mover a un controlador GUI
-    {
-        if (v < 0)
-        {
-            money_text.color = new Color(251f / 255f, 181f / 255f, 181f / 255f);
-            money_text.text = "-$" + (-v);
-        }
-        else
-        {
-            money_text.color = Color.white;
-            money_text.text = "$" + v;
-        }
-    }
+
 }

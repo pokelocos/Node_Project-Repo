@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NodeInformationView : MonoBehaviour
+public class NodeInformationView : MonoBehaviour // heredar de "InformationView" o algo asi (??)
 {
     private bool isDragging;
     private Vector3 dragPoint;
@@ -32,18 +32,18 @@ public class NodeInformationView : MonoBehaviour
     [SerializeField] private Image icon_image;
     [SerializeField] private Image iconBackground_image;
 
-    private NodeController currentNode;
+    private NodeController target;
 
-    public void DisplayInformation(NodeController node)
+    public  void DisplayInformation(object node)
     {
-        currentNode = node;
+        target = node as NodeController;
 
         gameObject.SetActive(true);
         transform.GetChild(0).localPosition = Vector3.zero;
 
         connectionInfoView_template.gameObject.SetActive(false);
 
-        DisplayResume(node);
+        DisplayResume(target);
 
         ChangePage(0);
     }
@@ -119,13 +119,13 @@ public class NodeInformationView : MonoBehaviour
 
         recipeInformationView_template.gameObject.SetActive(false);
 
-        if (currentNode == null)
+        if (target == null)
             return;
 
         var usedRecipes = new List<Recipe>();
         var usedPorts = new List<Port>();
 
-        foreach (var recipe in currentNode.GetValidRecipes())
+        foreach (var recipe in target.GetValidRecipes())
         {
             if (!usedRecipes.Contains(recipe.Key))
             {
@@ -166,8 +166,8 @@ public class NodeInformationView : MonoBehaviour
             }
         }
         
-        var unnusedRecipes = currentNode.GetData().recipes.Where(x => !usedRecipes.Contains(x)).ToArray();
-        var unnusedPorts = currentNode.GetInputPorts().Where(x => !usedPorts.Contains(x)).Select(x => x.Product.data).ToArray();
+        var unnusedRecipes = target.GetData().recipes.Where(x => !usedRecipes.Contains(x)).ToArray();
+        var unnusedPorts = target.GetInputPorts().Where(x => !usedPorts.Contains(x)).Select(x => x.Product.data).ToArray();
 
         foreach (var recipe in unnusedRecipes)
         {
@@ -213,14 +213,14 @@ public class NodeInformationView : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (var inputPort in currentNode.GetInputPorts())
+        foreach (var inputPort in target.GetInputPorts())
         {
             var slot = Instantiate(connectionInfoView_template, inputs_content);
             slot.gameObject.SetActive(true);
-            slot.Display(inputPort, currentNode);
+            slot.Display(inputPort, target);
         }
 
-        foreach (var outputPort in currentNode.GetOutputPorts())
+        foreach (var outputPort in target.GetOutputPorts())
         {
             if (outputPort.connection != null)
             {

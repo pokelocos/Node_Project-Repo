@@ -60,10 +60,13 @@ public class NodeManager : MonoBehaviour // change name (?) -> node (inputs?)(in
         NONE, CONNECTION_MODE 
     }
 
-    private void Start()
+    private void Awake()
     {
         inputManager = FindObjectOfType<InputManager>();
+    }
 
+    private void Start()
+    {
         proxyConnection = normalConnection;
         proxyConnection.gameObject.SetActive(false);
     }
@@ -85,35 +88,20 @@ public class NodeManager : MonoBehaviour // change name (?) -> node (inputs?)(in
         }
 
         // Right click -> Drag connection
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && inputManager.OverObject is NodeController)
         {
-            if (inputManager.OverObject is NodeController)
-            {
-               
-                OnDragConnectionStart();
-            }
+            OnDragConnectionStart();
         }
-        else if (Input.GetMouseButton(1))
+        else if (Input.GetMouseButton(1) && dragOriginNode != null)
         {
-            if (dragOriginNode != null)
-            { 
-                OnDragConnectionStay();
-            }
+            OnDragConnectionStay();
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (Input.GetMouseButtonUp(1) && dragOriginNode != null)
         {
-            if(dragOriginNode != null)
-            {
-                OnDragConnectionEnd();
-            }
+            OnDragConnectionEnd();
         }
 
-        //ManageConnections();
-
-        //Execute at the end.
         //ManageColors();
-
-        //ManageHanlder();
     }    
 
     private void DisconnectConnection(ConnectionController connection)
@@ -130,7 +118,11 @@ public class NodeManager : MonoBehaviour // change name (?) -> node (inputs?)(in
         informationView.DisplayInformation(target);
     }
 
-    public void OnDragConnectionStart() // pasar el nodecontroller por parametro?
+    /// <summary>
+    /// Obtains an available port and activates the proxy connection
+    /// with the corresponding ingredient.
+    /// </summary>
+    private void OnDragConnectionStart() 
     {
         var node = inputManager.OverObject as NodeController;
         var freePort = node.GetFreeOutput();
@@ -153,7 +145,10 @@ public class NodeManager : MonoBehaviour // change name (?) -> node (inputs?)(in
         proxyConnection.FollowPositions(from, to);
     }
 
-    public void OnDragConnectionStay()
+    /// <summary>
+    /// Keep the proxy connection following the pointer.
+    /// </summary>
+    private void OnDragConnectionStay()
     {
         Vector3 from = dragOriginNode.transform.position;
         Vector3 to = inputManager.MouseWorldPosition;
@@ -166,7 +161,12 @@ public class NodeManager : MonoBehaviour // change name (?) -> node (inputs?)(in
         }
     }
 
-    public void OnDragConnectionEnd()
+    /// <summary>
+    /// Connects the origin node and the node below the pointer,
+    /// if the connection is not valid or there is no node below the pointer, it does nothing.
+    /// besides, the proxy connection is activated.
+    /// </summary>
+    private void OnDragConnectionEnd()
     {
         var overObj = (NodeController)inputManager.OverObject;
         if (inputManager.OverObject is NodeController)
@@ -176,7 +176,7 @@ public class NodeManager : MonoBehaviour // change name (?) -> node (inputs?)(in
                 originPort != null &&
                 dragOriginNode.CanConnectWith(overObj, originPort.Product) == 1)
             {
-                //ConnectNodes(dragOriginNode, overObj);
+                ConnectNodes(dragOriginNode, overObj);
                 OnConnect?.Invoke(dragOriginNode,overObj);
             }
         }
@@ -187,9 +187,6 @@ public class NodeManager : MonoBehaviour // change name (?) -> node (inputs?)(in
     }
 
 
-    /// <summary>
-    /// Manage the colors of all objects.
-    /// </summary>
     private void ManageColors() // List<NodeController> nodes
     {
         /*

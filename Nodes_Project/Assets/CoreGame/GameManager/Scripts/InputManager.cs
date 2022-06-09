@@ -6,13 +6,13 @@ using UnityEngine.EventSystems;
 
 namespace RA.InputManager
 {
-    public class InputManager : MonoBehaviour
+    public class InputManager : MonoBehaviour // handler en ves de manager (??)
     {
         private const float DOUBLE_CLICK_TIME = .2f;
 
-        private SelectableObject overObject;
-        private SelectableObject[] overObjects; 
-        private SelectableObject draggedObject;
+        private ISelectableObject overObject;
+        private ISelectableObject[] overObjects; 
+        private ISelectableObject draggedObject;
         private Vector3 worldPos;
         private bool leftDoubleClick;
         private bool rigthDoubleClick;
@@ -21,62 +21,26 @@ namespace RA.InputManager
 
         public bool isDebugMode = false;
 
-        public bool LeftDoubleClick
-        {
-            get
-            {
-                return leftDoubleClick;
-            }
-        }
+        public bool LeftDoubleClick { get { return leftDoubleClick; } }
 
-        public bool RightDoubleClick
-        {
-            get
-            {
-                return rigthDoubleClick;
-            }
-        }
+        public bool RightDoubleClick { get { return rigthDoubleClick; } }
 
-        public Vector3 MouseWorldPosition
-        {
-            get
-            {
-                return worldPos;
-            }
-        }
+        public Vector3 MouseWorldPosition { get { return worldPos; } }
 
         /// <summary>
         /// Get the first selectable object in the raycast.
         /// </summary>
-        public SelectableObject OverObject
-        {
-            get
-            {
-                return overObject;
-            }
-        }
+        public ISelectableObject OverObject { get { return overObject; } }
 
         /// <summary>
         /// Get all selectable objects in the raycast.
         /// </summary>
-        public SelectableObject[] OverObjects
-        {
-            get
-            {
-                return overObjects;
-            }
-        }
+        public ISelectableObject[] OverObjects { get { return overObjects; } }
 
         /// <summary>
         /// Get current dragged object.
         /// </summary>
-        public SelectableObject DraggedObject
-        {
-            get
-            {
-                return draggedObject;
-            }
-        }
+        public ISelectableObject DraggedObject { get { return draggedObject; } }
 
         void Update()
         {
@@ -126,11 +90,11 @@ namespace RA.InputManager
 
             RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
 
-            List<SelectableObject> matches = new List<SelectableObject>();
+            List<ISelectableObject> matches = new List<ISelectableObject>();
 
             foreach (var hit in hits)
             {
-                var selectable = hit.collider.gameObject.GetComponentsInChildren<SelectableObject>();
+                var selectable = hit.collider.gameObject.GetComponentsInChildren<ISelectableObject>();
 
                 if (selectable.Length > 0)
                 {
@@ -186,7 +150,7 @@ namespace RA.InputManager
     }
 }
 
-public interface SelectableObject
+public interface ISelectableObject
 {
 
 }

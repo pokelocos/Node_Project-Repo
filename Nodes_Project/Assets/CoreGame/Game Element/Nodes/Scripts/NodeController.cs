@@ -5,10 +5,8 @@ using System.Linq;
 using RA.InputManager;
 
 [RequireComponent(typeof(NodeView))] //!?
-public class NodeController : MonoBehaviour, SelectableObject
+public class NodeController : MonoBehaviour, ISelectableObject
 {
-    public bool isDebugMode; // quitar (?)
-
     [SerializeField] private NodeView nodeView;
     [SerializeField] private NodeData data;
 
@@ -37,13 +35,13 @@ public class NodeController : MonoBehaviour, SelectableObject
     private void Awake()
     {
         nodeView = GetComponent<NodeView>();
-       
+        
     }
 
     void Start()
     {
-
         InitializeDefaultInputPorts();
+
         //Execute all actions on initialize node
         foreach (var action in data.onInitialize)
         {
@@ -106,6 +104,7 @@ public class NodeController : MonoBehaviour, SelectableObject
         nodeView.SetBarAmount((currentTime / data.productionTime));
     }
 
+    [System.Obsolete("Usar la propiedad 'Data' en su lugar")]
     public NodeData GetData() 
     {
         return data;
@@ -378,9 +377,6 @@ public class NodeController : MonoBehaviour, SelectableObject
         //Apply Buffs with the rest of the unnused ingredients
         UpdatePorts();
         UpdateProductionQueue();
-
-        if (isDebugMode)
-            Debug.Log(log);
     }
 
     public Port GetOutputPort(ConnectionController connection)
@@ -453,24 +449,6 @@ public class NodeController : MonoBehaviour, SelectableObject
         var port = outputPorts.Find(x => x.connection == connection);
         Debug.Log("po:" + port.Product);
         outputPorts.Remove(port);
-    }
-
-    /// <summary>
-    /// Returns all the connected input ports.
-    /// </summary>
-    /// <returns></returns>
-    public NodeController[] GetConnectedInputNodes()
-    {
-        return inputPorts.Select(x => x.connection?.GetOriginNode()).ToArray();
-    }
-
-    /// <summary>
-    /// Returns all the connected output ports.
-    /// </summary>
-    /// <returns></returns>
-    public NodeController[] GetConnectedOutputNodes()
-    {
-        return outputPorts.Select(x => x.connection?.GetDestinationNode()).ToArray();
     }
 
     /// <summary>

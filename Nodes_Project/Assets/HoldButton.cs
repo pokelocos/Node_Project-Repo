@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+[System.Obsolete]
 public class HoldButton : MonoBehaviour
 {
     public UnityEvent evnt;

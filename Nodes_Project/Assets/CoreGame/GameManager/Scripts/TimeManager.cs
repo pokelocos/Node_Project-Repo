@@ -30,7 +30,6 @@ public class TimeManager : MonoBehaviour
 
     public void Update()
     {
-
         TimeControlsUpdate();
 
         currentDayTime += Time.deltaTime;
@@ -40,8 +39,6 @@ public class TimeManager : MonoBehaviour
         {
             OnEndCycle?.Invoke();
             currentDayTime = 0;
-            
-            //NewDay();
         }
     }
 
@@ -66,7 +63,7 @@ public class TimeManager : MonoBehaviour
         }
         else
         {
-            source.PlayOneShot(speed_audio, v );
+            source.PlayOneShot(speed_audio, v);
         }
     }
 

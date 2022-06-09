@@ -1,0 +1,444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CameraHandler" Collapsed="true">
+    <Position X="13.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AARCgFAgASAACBICgABAICAAABAAAAICADIEACFgAIA=</HashCode>
+      <FileName>Assets\CoreGame\CameraHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IngredientProxyView" Collapsed="true">
+    <Position X="13.5" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACBAAAAACgAAAAAAIAAMABAAAAAAAAAAQiAAAAAIAA=</HashCode>
+      <FileName>Assets\CoreGame\IngredientProxyView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IngredientView" Collapsed="true">
+    <Position X="13.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAEAAACAAAgIAAAAAAAAgABQAAAAAAQAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\IngredientView.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MainRadio" Collapsed="true">
+    <Position X="13.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\MainRadio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Credits" Collapsed="true">
+    <Position X="11.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEIAACACAAAAAgAAAAAAAAAIAAAQAAAAAABAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Scenes\Credits.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainMenu_Controller" Collapsed="true">
+    <Position X="11.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAAAAGA=</HashCode>
+      <FileName>Assets\CoreGame\Scenes\MainMenu_Controller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SelectModeScene" Collapsed="true">
+    <Position X="11.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAIAAAAAAAgBgEA=</HashCode>
+      <FileName>Assets\CoreGame\Scenes\SelectModeScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConnectionController" BaseTypeListCollapsed="true">
+    <Position X="31.75" Y="1.5" Width="1.75" />
+    <NestedTypes>
+      <Delegate Name="ConnectionController.ConnectionEvent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\Game Element\Connections\ConnectionController.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="ConnectionController.ProductReceive" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\Game Element\Connections\ConnectionController.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Enum Name="ConnectionController.AlertType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\Game Element\Connections\ConnectionController.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQEEAKAQAQBAAAGZAAAQIgAgAQhIQEAQAAAGMAgIAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Connections\ConnectionController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.658" Collapsed="true" />
+  </Class>
+  <Class Name="ConnectionInformationView">
+    <Position X="33.75" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AASAAgAQAAAAAAAAAAAAAQBAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Connections\ConnectionInformationView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConnectionView">
+    <Position X="36.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAIAICCBgAAAAAMQAAhYAEQEBAGAAAigAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Connections\ConnectionView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MicroFactory.EffectController" Collapsed="true">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAABCAAQASgAAABAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Effects\Scripts\EffectController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MicroFactory.EffectData" Collapsed="true">
+    <Position X="2.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAQIAABAAAIAAAAAEAAAAAAYCAAQAIEAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Effects\Scripts\EffectData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EffectView" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQQABEAAwEAAAAAAIoAAAAAIAABABAAQAAgAAIgAJAE=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Effects\Scripts\EffectView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameManager">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="GameManager.NodeEvent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\GameManager\Scripts\GameManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="GameManager.EffectEvent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\GameManager\Scripts\GameManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="GameManager.ConnectionEvent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\GameManager\Scripts\GameManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ogQIADYFGDAgEEMAIBFAECAGFAICMlgIIEIlCAABImU=</HashCode>
+      <FileName>Assets\CoreGame\GameManager\Scripts\GameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameState" Collapsed="true">
+    <Position X="2.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAwCIIAIAAAAAAAAAACAAQUEAIAAACBIAAAARAAsAI=</HashCode>
+      <FileName>Assets\CoreGame\GameManager\Scripts\GameState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GuiManager">
+    <Position X="4" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQABCAAAAAAgAAAEAAAAIACAAIAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\GameManager\Scripts\GuiManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RewardManager" Collapsed="true">
+    <Position X="2.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAACAAAAAAAgAAAAAASAAAAQAMAAAAAAAAADA=</HashCode>
+      <FileName>Assets\CoreGame\GameManager\Scripts\RewardManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeManager" Collapsed="true">
+    <Position X="4" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAYAAAAEDIAAUAhAAgAAAAAAAAAAJBAAAAQAQA=</HashCode>
+      <FileName>Assets\CoreGame\GameManager\Scripts\TimeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RA.InputManager.InputManager" Collapsed="true">
+    <Position X="2.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQAACQAAAAEAAAACAAAAQoAAABAAAABAAaAAQUAAEA=</HashCode>
+      <FileName>Assets\CoreGame\GameManager\Scripts\InputManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MicroFactory.GameMode" Collapsed="true">
+    <Position X="12.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAIIAAQAAABIIYAAAAAEEAAAAAEAAACAAAAAMAI=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\GameMode\GameMode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ingredient" Collapsed="true">
+    <Position X="13.25" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABAAAAAAAIBAAACAAAAAAAIIAiBCIAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Ingredients\Ingredient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IngredientData" Collapsed="true">
+    <Position X="15" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAgAAAAAAAAAAAAIQAAQBCAAAAAAI=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Ingredients\IngredientData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Combinations&lt;T&gt;">
+    <Position X="19.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAQAAAAAAAAAAAAAAAhAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\Combinations.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NodeController" BaseTypeListCollapsed="true">
+    <Position X="21.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hYYADIACECQCACGBAAAAIJAoAAoAABKANgQShAQABEA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Port">
+    <Position X="16.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAgAAAAAAAAAhAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Product" Collapsed="true">
+    <Position X="12" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAIAAAAQAEAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProductionReport" Collapsed="true">
+    <Position X="14.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAgAAAAAAAAAAAAAAAAAACAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NodeData">
+    <Position X="23.25" Y="6.25" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="NodeData.Categorie" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeData.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="NodeData.Type" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeData.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="NodeData.TechLevel" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeData.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAgIAAAoEAAAAABAwCAEwEAEAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NodeInformationView">
+    <Position X="19.25" Y="6.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>gBQECiBAACIAAIAAIIIAAASKBAACQAAAAAAYkAAAgAg=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeInformationView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NodeManager" Collapsed="true">
+    <Position X="14.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQABAQAAiAAAAIAAAEAEAgHwBBEAIAggAAQgiAAgAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NodeView">
+    <Position X="25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAggAEAAAAABEAAQEQAAABBQAAAwAAgAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoFillInputPorts">
+    <Position X="30.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\Node Actions\AutoFillInputPorts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NodeActions">
+    <Position X="32.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\Node Actions\NodeActions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SellProducts">
+    <Position X="32.75" Y="14.25" Width="1.5" />
+    <NestedTypes>
+      <Class Name="SellProducts.ShopProductSettings" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\Game Element\Nodes\Scripts\Node Actions\SellProducts.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\Node Actions\SellProducts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SetVirtualInputConnections">
+    <Position X="35" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\Node Actions\SetVirtualInputConnections.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recipe">
+    <Position X="22.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAEAAAAAAAAACAAIAABAAAAAAAAAAgAAQAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Recipe\Recipe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecipeInformationData">
+    <Position X="28.5" Y="2" Width="2" />
+    <NestedTypes>
+      <Struct Name="RecipeInformationData.IngredientStatus" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\Game Element\Recipe\RecipeInformationData.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAgAAAQAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Recipe\RecipeInformationData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecipeInformationView">
+    <Position X="26.25" Y="2" Width="2" />
+    <NestedTypes>
+      <Struct Name="RecipeInformationView.IngredientSlot" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\Game Element\Recipe\RecipeInformationView.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="RecipeInformationView.IngredientView" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\Game Element\Recipe\RecipeInformationView.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ACBAABARAAAAgAAAAIAAAAAAAAAAAAAQAAAAAABAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Recipe\RecipeInformationView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecipeInfo">
+    <Position X="24.5" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Struct Name="RecipeInfo.IngredientInformation" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\CoreGame\Game Element\Recipe\RecipeInformationView.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAIAAAAAAAAAAAAAgAACAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Recipe\RecipeInformationView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InformationView">
+    <Position X="19.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InformationView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reward" Collapsed="true">
+    <Position X="7.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAIBAAEAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Reward\Reward.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RewardView" Collapsed="true">
+    <Position X="9" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Reward\RewardView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimpleGuiView" Collapsed="true">
+    <Position X="7.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAABAAAAAEAAABBAAAQAAAAAAIIA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Reward\SimpleGuiView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataSystem.OptionData" Collapsed="true">
+    <Position X="8.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIgBAAAIAAaAAAAAACAAAAAIAAAAAEACAKCAAAg=</HashCode>
+      <FileName>Assets\CoreGame\SaveData\OptionData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GeneralStatistics" Collapsed="true">
+    <Position X="9.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAIAAAAAEgAAAAAAAAAAAAAAAAAhAAAAAAAIAAA=</HashCode>
+      <FileName>Assets\CoreGame\SaveData\GeneralStatistics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="ProductionQueue">
+    <Position X="8.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAQAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeController.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="NodeState">
+    <Position X="14.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAIQAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeState.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="EffectState">
+    <Position X="16.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeState.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ConnectionState">
+    <Position X="12.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\Game Element\Nodes\Scripts\NodeState.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="SelectableObject" Collapsed="true">
+    <Position X="4" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\CoreGame\GameManager\Scripts\InputManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

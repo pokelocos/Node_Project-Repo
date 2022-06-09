@@ -177,14 +177,14 @@ namespace RA.CommandConsole
             {
                 var attribute = method.GetCustomAttributes(typeof(CommandAttribute),false)[0] as CommandAttribute;
                 var action = (Action)method.CreateDelegate(typeof(Action));
-                commands.Add(new DebugCommand(attribute.Id, attribute.Description, attribute.Format, action));
+                commands.Add(new DebugCommand(attribute.Id, attribute.Description, attribute.Format,action));
             }
             return commands;
         }
 
         // TEST de trabajar con headers y commandos, dejar si funciona!
         [Command("help", "show a list of commands.", "help")]
-        public static void Help()
+        public static void Help(string s)
         {
             showHelp = true;
         }

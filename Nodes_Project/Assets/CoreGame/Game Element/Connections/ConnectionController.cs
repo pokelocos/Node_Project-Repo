@@ -2,7 +2,7 @@
 using UnityEngine;
 using RA.InputManager;
 
-public class ConnectionController : MonoBehaviour, SelectableObject
+public class ConnectionController : MonoBehaviour, ISelectableObject
 {
     [Header("Pref references")]
     [SerializeField] private new BoxCollider2D collider;

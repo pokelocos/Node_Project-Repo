@@ -567,9 +567,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea328a08247fb384a8dcaf1a0b0cd9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyAlpha: 0
-  price: {fileID: 1861832095733901994}
-  price_shadow: {fileID: 1095234455369938459}
+  alpha: 0
+  text: {fileID: 1861832095733901994}
+  text_shadow: {fileID: 1095234455369938459}
 --- !u!1 &3243514718196432142
 GameObject:
   m_ObjectHideFlags: 0

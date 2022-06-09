@@ -9,7 +9,7 @@ using UnityEngine;
 [Serializable]
 public struct NodeState
 {
-    public string dataName; // string (???)
+    public string dataName;
     [SerializeField] public Tuple<float,float> position;
     public float currentTime;
 

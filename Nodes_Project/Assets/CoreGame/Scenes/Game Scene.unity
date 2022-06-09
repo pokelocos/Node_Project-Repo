@@ -2971,6 +2971,103 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 314725208}
   m_CullTransparentMesh: 1
+--- !u!1001 &318371509
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 173761490571038755, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_Name
+      value: Command Console
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173761490571038766, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3b0be5f95095ff94a95be375b9423b7d, type: 3}
 --- !u!1 &320656474
 GameObject:
   m_ObjectHideFlags: 0
@@ -7864,11 +7961,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lastpoint: 0
   winPoints: 5
-  money_text: {fileID: 5513884294901367542}
-  days_text: {fileID: 5513884295121992213}
-  balance_text: {fileID: 939515036}
-  starAmount_text: {fileID: 171667080}
-  pause_frame: {fileID: 1444026143}
   warningPanel: {fileID: 7364404065723753361}
   losePanel: {fileID: 1518826406}
   winPanel: {fileID: 1363881876}
@@ -7879,6 +7971,7 @@ MonoBehaviour:
   timeManager: {fileID: 1489572406}
   nodeManager: {fileID: 410381991}
   rewardManger: {fileID: 1581601503}
+  guiManager: {fileID: 0}
   node_Pref: {fileID: 1317468285442944896, guid: ecf4fc846b445984fba3a0403c91a930, type: 3}
   effect_Pref: {fileID: 3807606518162504767, guid: 28264236dfd67f24daad5268dc666332, type: 3}
   connetion_Pref: {fileID: 8083677087911218066, guid: 8ca29e1d80a23fa4a9f0bf0051b2636e, type: 3}
@@ -19103,18 +19196,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2032068197}
   m_CullTransparentMesh: 1
---- !u!114 &2043669590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5513884295112510633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41ea4f3482c212244b467c5f6065f262, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2044155954
 GameObject:
   m_ObjectHideFlags: 0
@@ -22808,7 +22889,6 @@ GameObject:
   - component: {fileID: 5513884295112510634}
   - component: {fileID: 1830033463}
   - component: {fileID: 250622715}
-  - component: {fileID: 2043669590}
   m_Layer: 5
   m_Name: InGame_UI_Canvas
   m_TagString: Untagged

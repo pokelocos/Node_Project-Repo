@@ -16,6 +16,7 @@ namespace MicroFactory
         [SerializeField] private List<_NodesGameMode> nodes;
         [SerializeField] private List<EffectData> effects;
         [SerializeField] private List<_ConnectionGameMode> conections;
+
         public bool allowMods = false; // ??
         public bool incrementalDificulty = false; // dificty change relative a player lvl
 
